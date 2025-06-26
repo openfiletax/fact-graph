@@ -1,0 +1,48 @@
+<script type=module src="./fg.js"></script>
+<script type=module src="./loader.js"></script>
+
+<style>
+label { display: block; }
+#graph { display: block; }
+#error {
+  background-color: bisque;
+  width: fit-content;
+  padding: 10px;
+
+  &::before { content: 'error: ' }
+
+  &.hidden { display: none; }
+}
+</style>
+
+<title>Fact Graph Demo</title>
+<h1>Fact Graph Demo </h1>
+
+Load Fact Dictionary:
+
+<label>
+  <input type="file" id="input" multiple onchange="loadDictionary(event)"/>
+</label>
+
+<datalist id=facts></datalist>
+
+<h2>Set Facts</h2>
+
+<form onsubmit="setFact(event)">
+  <label>Fact Path: <input type=text list=facts name=fact></label>
+  <label>Value: <input type=text name=value></label>
+  <button>Save</button>
+</form>
+
+<div id=error class=hidden></div>
+
+<h2>Get Facts</h2>
+<form onsubmit="getFact(event)">
+  <label>Fact Path: <input type=text list=facts name=get-fact> </label>
+  <button>Get</button
+</form>
+<div id="fact-result"></div>
+
+<h2>Current Graph</h2>
+<pre id=graph></pre>
+
