@@ -52,17 +52,6 @@ src/main/resources/test/run/toprocess/
 *~
 \#*
 
-#spotbugs
-direct-file/**/src/main/resources/spotbugs/output/spotbugs.xml
-direct-file/**/spotbugs/output/
-
-# vscode
-.vscode
-!direct-file/.vscode
-!direct-file/df-client/.vscode
-
-direct-file/scripts/*.csv
-
 # files created when building sbom.json files
 sbom.json
 

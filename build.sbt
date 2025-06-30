@@ -31,14 +31,11 @@ lazy val factGraph = crossProject(JSPlatform, JVMPlatform)
     organization := "gov.irs.factgraph",
     scalaVersion := scala3Version,
     scalaJSLinkerConfig ~= {
-      // Alex Mark originally rejected exporting ESModules because the compiler couldn't
-      // minimize them as effectively as CommonJS modules. CommonJS is not an option anymore
-      // because I want this to work natively in the browser, but bundle size issue shouldn't
-      // be ignored. More detail here: https://github.com/usds/direct-file/pull/359/
+      // TODO: https://github.com/usds/direct-file/pull/359/
       _.withModuleKind(ModuleKind.ESModule)
       // We export as MJS so that the NodeJS will run the tests with ESModules
+      // This could be changed to %s.js
       .withOutputPatterns(OutputPatterns.fromJSFile("%s.mjs"))
-      .withOutputPatterns(OutputPatterns.fromJSFile("%s.js"))
     },
     libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.15" % Test,
     libraryDependencies += "io.github.cquiroz" %%% "scala-java-time" % "2.5.0",
