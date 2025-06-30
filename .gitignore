@@ -1,61 +1,19 @@
-*.class
-maven-wrapper.jar
-*.log
-*.log.*
-.DS_Store
-audit_log.txt
+# sbt
+target/
+project/
 
-# Local maven properties
-**/application-local.*
+# node
+node_modules/
 
-# MS Word temporary files
-~$*
+# Metals
+.bsp/
+.bloop/
+.metals/
+.scala-build
+metals.sbt
 
 # Jetbrains products
 .idea
 .idea_modules
 /.worksheet/
 *.iml
-
-node_modules/
-bin
-
-# sbt specific
-dist/*
-target/
-lib_managed/
-src_managed/
-project/boot/
-project/plugins/project/
-project/local-plugins.sbt
-.history
-.ensime
-.ensime_cache/
-.sbt-scripted/
-local.sbt
-
-# Bloop
-.bsp
-
-# Metals
-.bloop/
-.metals/
-metals.sbt
-.scala-build
-src/main/resources/test/run/processed/
-src/main/resources/test/run/tobatch/
-src/main/resources/test/run/batched/
-src/main/resources/test/run/submitted/
-src/main/resources/test/run/input/
-src/main/resources/test/run/acks/
-src/main/resources/test/run/toprocess/
-*~
-\#*
-
-# files created when building sbom.json files
-sbom.json
-
-# files created or generated locally for controlled launch via email allowlist that shouldn't be in vcs.
-emails.csv
-hex_key.txt
-allowlist-export.csv

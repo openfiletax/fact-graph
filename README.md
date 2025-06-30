@@ -1,9 +1,10 @@
 # Fact Graph
 
-A knowledge graph for supporting modeling the United States Internal Revenue Code, and other logic.
+A knowledge graph for modeling the United States Internal Revenue Code, and other logic.
 It can be used in JavaScript as well as any JVM language (Java, Kotlin, Scala, Clojure, etc.).
 
-User documentation is forthcoming, and will be linked here; the remainder of this README covers installing and modifying the code.
+User documentation is forthcoming, and will be linked here;
+the remainder of this README covers installing and modifying the code.
 
 ## Installation
 
@@ -42,7 +43,7 @@ To run the tests from a completely fresh build, you can run `sbt clean test`
 
 ### IntelliJ
 
-IntelliJ has a scala extension.
+IntelliJ has a [scala plugin](https://www.jetbrains.com/help/idea/get-started-with-scala.html).
 Install it, ensure that IntelliJ can find the JDK you installed, and no additional setup should be necessary.
 
 ### VS Code
