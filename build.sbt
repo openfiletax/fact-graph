@@ -2,7 +2,7 @@ import org.scalajs.linker.interface.OutputPatterns
 
 val projectName = "fact-graph"
 val factGraphVersion = "3.1.0-SNAPSHOT"
-val scala3Version = "3.3.3"
+val scala3Version = "3.3.6"
 
 lazy val root = project
   .in(file("."))
