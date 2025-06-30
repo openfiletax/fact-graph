@@ -2,8 +2,7 @@ package gov.irs.factgraph
 
 import gov.irs.factgraph.compnodes.RootNode
 import gov.irs.factgraph.definitions.{FactDictionaryConfigElement, FactDictionaryConfigTrait}
-import gov.irs.factgraph.definitions.meta.{EnumDeclarationTrait, MetaConfigTrait}
-import gov.irs.factgraph.Meta
+import gov.irs.factgraph.definitions.meta.MetaConfigTrait
 
 import scala.collection.mutable
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}

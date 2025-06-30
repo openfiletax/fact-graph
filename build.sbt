@@ -11,8 +11,8 @@ lazy val root = project
     name := projectName,
     version := factGraphVersion,
     scalaVersion := scala3Version,
-    publish := {},
-    publishLocal := {},
+    organization := "gov.irs.factgraph",
+    publish / skip := true
   )
 
 // without extra libraries the javascript built is around 400kb.
