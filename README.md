@@ -59,6 +59,10 @@ Install it, ensure that IntelliJ can find the JDK you installed, and no addition
 
 NeoVim also has a [Metals extension](https://github.com/scalameta/nvim-metals).
 
+## Worksheets
+
+In the [\_tutorial](./shared/src/main/scala/_tutorial) directory is a set of worksheets that teach the basics of the Fact Graph.
+With the [appropriate setup](https://docs.scala-lang.org/scala3/book/tools-worksheets.html), IDEs can run these worksheets and display their output alongside them, like a Jupyter notebook.
 
 ## Debug the factgraph in JS
 
