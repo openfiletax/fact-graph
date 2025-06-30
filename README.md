@@ -12,14 +12,14 @@ The Fact Graph is a Scala project, so it requires Scala, a JDK, and sbt (scala b
 On MacOS, you can install these with Homebrew:
 
 ```sh
-brew install scala openjdk@21 sbt
+brew install scala openjdk sbt
 ```
 
 Depending on how much Java stuff you already have on your local development machine, you may need to ensure that sbt is able to find the JDK.
 
 ```sh
-brew link --force openjdk@21
-export JAVA_HOME=$(brew --prefix openjdk@21)
+brew link --force openjdk
+export JAVA_HOME=$(brew --prefix openjdk)
 ```
 
 A NodeJS installation is also required to run the test suite against the JS build.

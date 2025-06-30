@@ -94,7 +94,10 @@ object FactDictionary:
       case Left(e) => throw e
     }
 
-    val factDictionaryModule = moduleXml.head
+    fromXml(moduleXml.head)
+  }
+
+  def fromXml(factDictionaryModule: scala.xml.NodeSeq): FactDictionary = {
     val facts = factDictionaryModule \\ "Fact"
     println("Parsing %s facts".format(facts.length))
 
@@ -103,3 +106,4 @@ object FactDictionary:
     val config = FactDictionaryConfigElement(meta, factConfigs)
     fromConfig(config)
   }
+

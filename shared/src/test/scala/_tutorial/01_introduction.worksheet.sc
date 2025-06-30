@@ -1,6 +1,6 @@
-import gov.irs.factgraph.{FactDictionary, Graph}
 import gov.irs.factgraph.persisters.InMemoryPersister
 import gov.irs.factgraph.types.Dollar
+import gov.irs.factgraph.{FactDictionary, Graph}
 
 // ###############################
 // ##  1. What's a Fact Graph?  ##
