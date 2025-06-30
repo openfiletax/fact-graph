@@ -1,17 +1,18 @@
 import org.scalajs.linker.interface.OutputPatterns
+
+val projectName = "fact-graph"
+val factGraphVersion = "3.1.0-SNAPSHOT"
 val scala3Version = "3.3.3"
 
 lazy val root = project
   .in(file("."))
   .aggregate(factGraph.js, factGraph.jvm)
   .settings(
-    name := "fact-graph",
-    version := "3.1.0-SNAPSHOT",
-    organization := "gov.irs.factgraph",
+    name := projectName,
+    version := factGraphVersion,
     scalaVersion := scala3Version,
     publish := {},
     publishLocal := {},
-    Test / testOptions += Tests.Argument("-oI")
   )
 
 // without extra libraries the javascript built is around 400kb.
@@ -19,10 +20,10 @@ lazy val factGraph = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Full)
   .in(file("."))
   .settings(
-    name := "fact-graph",
-    version := "3.1.0-SNAPSHOT",
-    organization := "gov.irs.factgraph",
+    name := projectName,
+    version := factGraphVersion,
     scalaVersion := scala3Version,
+    organization := "gov.irs.factgraph",
     scalaJSLinkerConfig ~= {
       // TODO: https://github.com/IRSDigitalService/trust/pull/359
       _.withModuleKind(ModuleKind.ESModule)
