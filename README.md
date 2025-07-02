@@ -64,6 +64,8 @@ NeoVim also has a [Metals extension](https://github.com/scalameta/nvim-metals).
 In the [\_tutorial](./shared/src/main/scala/_tutorial) directory is a set of worksheets that teach the basics of the Fact Graph.
 With the [appropriate setup](https://docs.scala-lang.org/scala3/book/tools-worksheets.html), IDEs can run these worksheets and display their output alongside them, like a Jupyter notebook.
 
+I was able to get this working in VSCode but not IntelliJ (IntelliJ had trouble importing the package.)
+
 ## Debug the factgraph in JS
 
 There are some global variables exposed to be run in the console, after the factgraph loads, to troubleshoot:
@@ -73,3 +75,8 @@ There are some global variables exposed to be run in the console, after the fact
 > debugFactGraphMeta
 > debugScalaFactGraphLib
 ```
+
+## Useful documentation
+
+* [ScalaTest](https://www.scalatest.org/) - the testing framework we use
+* [scala-xml](https://www.scala-lang.org/api/2.12.19/scala-xml/scala/xml/) - the standard implementation of XML (don't be put off by the sparse-seeming API docs, the function definitions have very good examples)
