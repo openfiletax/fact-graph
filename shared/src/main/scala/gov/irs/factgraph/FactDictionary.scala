@@ -23,10 +23,6 @@ class FactDictionary:
   def getPaths(): Iterable[Path] =
     definitions.keys
 
-  @JSExport
-  def hasPath(path: String): Boolean =
-    definitions.contains(Path(path))
-
   def freeze(): Unit =
     for {
       (_, definition) <- definitions
@@ -37,9 +33,12 @@ class FactDictionary:
       )
     frozen = true
 
+  @JSExport
+  def getDefinition(path: String): FactDefinition | Null =
+    apply(path: String)
+
   def apply(path: Path): Option[FactDefinition] = definitions.get(path)
 
-  @JSExport("getDefinition")
   def apply(path: String): FactDefinition | Null =
     definitions.get(Path(path)) match
       case Some(value) => value
