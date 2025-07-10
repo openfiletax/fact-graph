@@ -51,9 +51,9 @@ object FactConfigElement {
 // This gets the single child of a <Derived> or <Placeholder>
 // TODO <Derived> and <Placeholder> need their own types
 def readSingleCompNode(derivedOrPlaceholder: scala.xml.Node) = {
-  val children = derivedOrPlaceholder \ "_"
+  val children = (derivedOrPlaceholder \ "_").filter(node => !node.isInstanceOf[xml.Comment])
   if (children.length != 1) {
-    throw FactGraphValidationException(s"Derived or Placeholder node has ${children.length} children") 
+    throw FactGraphValidationException(s"Derived or Placeholder node has ${children.length} children")
   }
   CompNodeConfig.fromXml(children.head)
 }

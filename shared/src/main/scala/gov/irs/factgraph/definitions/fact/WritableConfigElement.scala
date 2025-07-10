@@ -26,7 +26,9 @@ object WritableConfigElement {
   def fromXml(node: scala.xml.Node): WritableConfigElement = {
     val limits = (node \ "Limit").map(LimitConfig.fromXml)
 
-    val nonLimitNodes = (node \ "_").filter(node => node.label != "Limit")
+    val nonLimitNodes = (node \ "_")
+      .filter(node => node.label != "Limit")
+      .filter(node => !node.isInstanceOf[xml.Comment])
 
     val writableNode = nonLimitNodes.length match {
       case 0 => throw FactGraphValidationException("Writable node is missing a non-Limit child")
