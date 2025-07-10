@@ -9,6 +9,9 @@ import gov.irs.factgraph.monads.MaybeVector
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.WritableType
 import js.JSConverters._
+import gov.irs.factgraph.types.Dollar
+import gov.irs.factgraph.compnodes.DollarNode
+import gov.irs.factgraph.compnodes.EnumNode
 
 
 @JSExportTopLevel("Graph")
@@ -53,9 +56,14 @@ class JSGraph(
 
     // Convert enums to their enum value
     val definition = this.dictionary.getDefinition(path)
-    if (definition.value.ValueClass == classOf[gov.irs.factgraph.types.Enum]) {
-      val optionsPath = definition.value.asInstanceOf[gov.irs.factgraph.compnodes.EnumNode].enumOptionsPath
+    if (definition.value.isInstanceOf[EnumNode]) {
+      val optionsPath = definition.value.asInstanceOf[EnumNode].enumOptionsPath
       typedValue = gov.irs.factgraph.types.Enum.apply(value, optionsPath)
+    }
+
+    // This should be possible with a switch statement
+    if (definition.value.isInstanceOf[DollarNode]) {
+      typedValue = Dollar(value)
     }
 
     this.set(path, typedValue)
