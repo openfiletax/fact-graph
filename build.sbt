@@ -1,6 +1,6 @@
 import org.scalajs.linker.interface.OutputPatterns
 
-val projectName = "fact-graph"
+val projectName = "factgraph"
 val factGraphVersion = "3.1.0-SNAPSHOT"
 val scala3Version = "3.3.6"
 
@@ -11,7 +11,7 @@ lazy val root = project
     name := projectName,
     version := factGraphVersion,
     scalaVersion := scala3Version,
-    organization := "gov.irs.factgraph",
+    organization := "gov.irs",
     publish / skip := true
   )
 
@@ -23,7 +23,7 @@ lazy val factGraph = crossProject(JSPlatform, JVMPlatform)
     name := projectName,
     version := factGraphVersion,
     scalaVersion := scala3Version,
-    organization := "gov.irs.factgraph",
+    organization := "gov.irs",
     scalaJSLinkerConfig ~= {
       // TODO: https://github.com/IRSDigitalService/trust/pull/359
       _.withModuleKind(ModuleKind.ESModule)

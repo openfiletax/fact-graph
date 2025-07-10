@@ -32,6 +32,7 @@ A NodeJS installation is also required to run the test suite against the JS buil
 * `sbt clean` - delete the build artifacts
 * `sbt test` - run the tests (both Java and JS)
 * `sbt testOnly tinSpec.scala` - run just the `tinSpec.scala` test
+* `sbt publishLocal` - publish to your local repository to use Fact Graph with other projects
 
 Some commands depend on other commands.
 For instance, `sbt test` will run `sbt fastOptJS` to compile the JS build, if necessary.
