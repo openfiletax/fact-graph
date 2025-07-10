@@ -38,15 +38,20 @@ class JSGraph(
           s"getFact returned multiple results for path $path, which is unsupported",
         )
 
-  // Stringly-typed wrapper on top of set
-  // This is useful for setting fact values from forms, for instance
+  // In HTML, form value are always strings
+  // This method simplifies the interface for facts so that the consumer of the fact graph only
+  // has to supply a string: the fact graph will convert it to the appropriate type based on the
+  // definition, or throw an exception if that type is incorrect.
   def set(path: String, value: String): Unit = {
+
+    // Convert "true" and "false" to booleans
     var typedValue: WritableType = value match {
       case "true" => true
       case "false" => false
       case x => value
     }
 
+    // Convert enums to their enum value
     val definition = this.dictionary.getDefinition(path)
     if (definition.value.ValueClass == classOf[gov.irs.factgraph.types.Enum]) {
       val optionsPath = definition.value.asInstanceOf[gov.irs.factgraph.compnodes.EnumNode].enumOptionsPath
