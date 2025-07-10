@@ -41,11 +41,18 @@ class JSGraph(
   // Stringly-typed wrapper on top of set
   // This is useful for setting fact values from forms, for instance
   def set(path: String, value: String): Unit = {
-    val typedValue: WritableType = value match {
+    var typedValue: WritableType = value match {
       case "true" => true
       case "false" => false
       case x => value
     }
+
+    val definition = this.dictionary.getDefinition(path)
+    if (definition.value.ValueClass == classOf[gov.irs.factgraph.types.Enum]) {
+      val optionsPath = definition.value.asInstanceOf[gov.irs.factgraph.compnodes.EnumNode].enumOptionsPath
+      typedValue = gov.irs.factgraph.types.Enum.apply(value, optionsPath)
+    }
+
     this.set(path, typedValue)
   }
 
