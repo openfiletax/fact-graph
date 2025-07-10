@@ -23,6 +23,10 @@ class FactDictionary:
   def getPaths(): Iterable[Path] =
     definitions.keys
 
+  @JSExport
+  def hasPath(path: String): Boolean =
+    definitions.contains(Path(path))
+
   def freeze(): Unit =
     for {
       (_, definition) <- definitions
