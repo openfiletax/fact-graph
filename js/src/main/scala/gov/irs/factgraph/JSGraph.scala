@@ -46,7 +46,6 @@ class JSGraph(
   // has to supply a string: the fact graph will convert it to the appropriate type based on the
   // definition, or throw an exception if that type is incorrect.
   def set(path: String, value: String): Unit = {
-
     // Convert "true" and "false" to booleans
     var typedValue: WritableType = value match {
       case "true" => true

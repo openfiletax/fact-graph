@@ -7,6 +7,7 @@ import gov.irs.factgraph.types.{Collection, CollectionItem, WritableType, Enum}
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import scala.collection.mutable
 import scala.scalajs.js.annotation.JSExportAll
+import java.util.UUID
 
 class Graph(val dictionary: FactDictionary, val persister: Persister):
   val root: Fact = Fact(this)
@@ -69,9 +70,9 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
           s"path '$path' resolves to a vector",
         )
 
-  @JSExport("set")
+  @JSExport
   def set(path: String, value: WritableType): Unit = set(Path(path), value)
-  
+
   @JSExport("setWithPath")
   def set(path: Path, value: WritableType): Unit = {
     for {
@@ -80,8 +81,35 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
     } fact.set(value)
   }
 
-  @JSExport("delete")
+  @JSExport
+  def addToCollection(path: String, collectionId: String): Unit = {
+    val uuid = UUID.fromString(collectionId)
+
+    val collection = this.get(path) match
+      case Result.Complete(v) => v.asInstanceOf[Collection]
+      case Result.Placeholder(_) => throw new UnsupportedOperationException(s"path $path is a collection with a placeholder")
+      case Result.Incomplete => Collection(Vector.empty[UUID])
+
+    val newItems = collection.items :+ uuid
+    this.set(path, Collection(newItems))
+  }
+
+  @JSExport
+  def removeFromCollection(path: String, collectionId: String): Unit = {
+    val uuid = UUID.fromString(collectionId)
+
+    val collection = this.get(path) match
+      case Result.Complete(v) => v.asInstanceOf[Collection]
+      case Result.Placeholder(_) => throw new UnsupportedOperationException(s"path $path is a collection with a placeholder")
+      case Result.Incomplete => Collection(Vector.empty[UUID])
+
+    val newItems = collection.items.filter(item => item != uuid)
+    this.set(path, Collection(newItems))
+  }
+
+  @JSExport
   def delete(path: String): Unit = delete(Path(path))
+
   @JSExport("deleteWithPath")
   def delete(path: Path): Unit =
     for {
