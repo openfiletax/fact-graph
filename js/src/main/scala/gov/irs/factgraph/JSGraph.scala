@@ -53,7 +53,6 @@ class JSGraph(
       case x => value
     }
 
-    // Convert enums to their enum value
     val definition = this.dictionary.getDefinition(path)
     if (definition.value.isInstanceOf[EnumNode]) {
       val optionsPath = definition.value.asInstanceOf[EnumNode].enumOptionsPath

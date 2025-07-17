@@ -13,9 +13,12 @@ import fs2.data.xml.*
 import fs2.data.xml.dom.*
 import fs2.data.xml.scalaXml.*
 import gov.irs.factgraph.definitions.fact.FactConfigElement
+import scala.util.matching.Regex
 
 
 class FactDictionary:
+  private val UUID_REGEX: Regex = "(?i)#[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}".r
+
   private val definitions: mutable.Map[Path, FactDefinition] = mutable.Map()
   private var frozen: Boolean = false
   private var meta: MetaConfigTrait = Meta.empty()
@@ -41,8 +44,15 @@ class FactDictionary:
 
   def apply(path: String): FactDefinition | Null =
     definitions.get(Path(path)) match
-      case Some(value) => value
+      case Some(value) => return value
       case _           => null
+
+    // Try to match a definition after removing the UUIDs
+    val withWildcard = UUID_REGEX.replaceAllIn(path, "*")
+    definitions.get(Path(withWildcard)) match
+      case Some(value) => return value
+      case _           => null
+
 
   @JSExport
   def getMeta(): MetaConfigTrait = meta
