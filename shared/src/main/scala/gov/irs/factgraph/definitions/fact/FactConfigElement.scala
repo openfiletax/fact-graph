@@ -12,8 +12,8 @@ case class FactConfigElement(
     writable: Option[WritableConfigTrait],
     derived: Option[CompNodeConfigTrait],
     placeholder: Option[CompNodeConfigTrait],
-    overrideCondition: Option[CompNodeConfigTrait],
-    overrideDefault: Option[CompNodeConfigTrait]
+    overrideCondition: Option[CompNodeConfigTrait] = None,
+    overrideDefault: Option[CompNodeConfigTrait] = None
 ) extends FactConfigTrait
 
 object FactConfigElement {
