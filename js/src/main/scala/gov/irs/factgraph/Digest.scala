@@ -6,7 +6,7 @@ import gov.irs.factgraph.definitions.fact.{
   FactConfigElement,
   WritableConfigElementDigestWrapper,
   CompNodeConfigDigestWrapper,
-  CompNodeDigestWrapper,
+  CompNodeDigestWrapper
 }
 
 @JSExportTopLevel("DigestNodeWrapper")
@@ -15,10 +15,13 @@ class DigestNodeWrapper(
     val writable: WritableConfigElementDigestWrapper | Null,
     val derived: CompNodeConfigDigestWrapper | Null,
     val placeholder: CompNodeConfigDigestWrapper | Null,
+    val overrideCondition: CompNodeConfigDigestWrapper | Null,
+    val overrideDefault: CompNodeConfigDigestWrapper | Null
 ) extends js.Object:
-  /** A digest-node is the JSON serialization of a Fact, as produced by the direct-file Java application, from the XML
-    * fact dictionary. This wrapper allows us to map digest JSON nodes into FactConfigElements, handling the necessary
-    * type conversion and null safety matches
+  /** A digest-node is the JSON serialization of a Fact, as produced by the
+    * direct-file Java application, from the XML fact dictionary. This wrapper
+    * allows us to map digest JSON nodes into FactConfigElements, handling the
+    * necessary type conversion and null safety matches
     */
   def writableOption = this.writable match
     case null => None
@@ -33,6 +36,14 @@ class DigestNodeWrapper(
     case null => None
     case _    => Some(CompNodeDigestWrapper.toNative(this.placeholder))
 
+  def overrideConditionOption = this.overrideCondition match
+    case null => None
+    case _    => Some(CompNodeDigestWrapper.toNative(this.overrideCondition))
+
+  def overrideDefaultOption = this.overrideDefault match
+    case null => None
+    case _    => Some(CompNodeDigestWrapper.toNative(this.overrideCondition))
+
 @JSExportTopLevel("DigestNodeWrapperFactory")
 object DigestNodeWrapper:
   @JSExport
@@ -41,4 +52,6 @@ object DigestNodeWrapper:
     wrapper.writableOption,
     wrapper.derivedOption,
     wrapper.placeholderOption,
+    wrapper.overrideConditionOption,
+    wrapper.overrideDefaultOption
   )

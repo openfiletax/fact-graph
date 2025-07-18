@@ -1,6 +1,10 @@
 package gov.irs.factgraph.definitions.fact
 
-import gov.irs.factgraph.definitions.fact.{CompNodeConfigTrait, FactConfigTrait, WritableConfigTrait}
+import gov.irs.factgraph.definitions.fact.{
+  CompNodeConfigTrait,
+  FactConfigTrait,
+  WritableConfigTrait
+}
 import gov.irs.factgraph.exceptions.FactGraphValidationException
 
 case class FactConfigElement(
@@ -8,6 +12,8 @@ case class FactConfigElement(
     writable: Option[WritableConfigTrait],
     derived: Option[CompNodeConfigTrait],
     placeholder: Option[CompNodeConfigTrait],
+    overrideCondition: Option[CompNodeConfigTrait],
+    overrideDefault: Option[CompNodeConfigTrait]
 ) extends FactConfigTrait
 
 object FactConfigElement {
@@ -26,14 +32,20 @@ object FactConfigElement {
     val writable = writableConfigNodes.length match {
       case 0 => Option.empty
       case 1 => Option(WritableConfigElement.fromXml(writableConfigNodes.head))
-      case _ => throw FactGraphValidationException(s"Fact $path has more than one writable node")
+      case _ =>
+        throw FactGraphValidationException(
+          s"Fact $path has more than one writable node"
+        )
     }
 
     val derivedConfigNodes = factNode \ "Derived"
     val derived = derivedConfigNodes.length match {
       case 0 => Option.empty
       case 1 => Option(readSingleCompNode(derivedConfigNodes.head))
-      case _ => throw FactGraphValidationException(s"Fact $path has more than one derived node ")
+      case _ =>
+        throw FactGraphValidationException(
+          s"Fact $path has more than one derived node "
+        )
     }
 
     // Both writeable and derived facts can have placeholders, though
@@ -41,20 +53,49 @@ object FactConfigElement {
     val placeholder = placeholderNodes.length match {
       case 0 => Option.empty
       case 1 => Option(readSingleCompNode(placeholderNodes.head))
-      case _ => throw FactGraphValidationException(s"Fact $path has more than one placeholder")
+      case _ =>
+        throw FactGraphValidationException(
+          s"Fact $path has more than one placeholder"
+        )
     }
 
-    FactConfigElement(path, writable, derived, placeholder)
+    // Both writeable and derived facts can have overrides, though
+    val overrideNodes = factNode \ "Override"
+    val (overrideCondition, overrideDefault) = overrideNodes.length match {
+      case 0 => (Option.empty, Option.empty)
+      case 1 =>
+        val conditionNode = overrideNodes \ "Condition"
+        val condition = Option(readSingleCompNode(conditionNode.head))
+
+        val defaultNode = overrideNodes \ "Default"
+        val default = Option(readSingleCompNode(defaultNode.head))
+        (condition, default)
+      case _ =>
+        throw FactGraphValidationException(
+          s"Fact $path has more than one override"
+        )
+    }
+
+    FactConfigElement(
+      path,
+      writable,
+      derived,
+      placeholder,
+      overrideCondition,
+      overrideDefault
+    )
   }
 }
 
 // This gets the single child of a <Derived> or <Placeholder>
 // TODO <Derived> and <Placeholder> need their own types
 def readSingleCompNode(derivedOrPlaceholder: scala.xml.Node) = {
-  val children = (derivedOrPlaceholder \ "_").filter(node => !node.isInstanceOf[xml.Comment])
+  val children =
+    (derivedOrPlaceholder \ "_").filter(node => !node.isInstanceOf[xml.Comment])
   if (children.length != 1) {
-    throw FactGraphValidationException(s"Derived or Placeholder node has ${children.length} children")
+    throw FactGraphValidationException(
+      s"Derived or Placeholder node has ${children.length} children"
+    )
   }
   CompNodeConfig.fromXml(children.head)
 }
-

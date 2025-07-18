@@ -2,7 +2,10 @@ package gov.irs.factgraph.compnodes
 
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.*
-import gov.irs.factgraph.definitions.fact.{CompNodeConfigTrait, LimitConfigTrait}
+import gov.irs.factgraph.definitions.fact.{
+  CompNodeConfigTrait,
+  LimitConfigTrait
+}
 import gov.irs.factgraph.persisters.Persister
 import gov.irs.factgraph.util.Seq.itemsHaveSameRuntimeClass
 
@@ -21,20 +24,20 @@ trait CompNode:
 
   private[compnodes] def fromExpression(expr: Expression[Value]): CompNode
   private[compnodes] def switch(
-      cases: List[(BooleanNode, CompNode)],
+      cases: List[(BooleanNode, CompNode)]
   ): CompNode =
     if (!itemsHaveSameRuntimeClass(cases.map(_._2)))
       throw new UnsupportedOperationException(
-        "cannot switch between nodes of different types",
+        "cannot switch between nodes of different types"
       )
 
     fromExpression(
       Expression.Switch(
-        cases.map((b, a) => (b.expr, a.expr.asInstanceOf[Expression[Value]])),
-      ),
+        cases.map((b, a) => (b.expr, a.expr.asInstanceOf[Expression[Value]]))
+      )
     )
   private[compnodes] def dependency(path: Path): CompNode = fromExpression(
-    Expression.Dependency(path),
+    Expression.Dependency(path)
   )
   def extract(key: PathItem): Option[CompNode] = None
 
@@ -92,6 +95,7 @@ object CompNode:
     Multiply,
     Not,
     NotEqual,
+    Override,
     Paste,
     Placeholder,
     Regex,
@@ -105,7 +109,7 @@ object CompNode:
     Trim,
     ToUpper,
     TruncateCents,
-    TruncateNameForMeF,
+    TruncateNameForMeF
   )
 
   private val factories = mutable.Map(defaultFactories.map(_.asTuple)*)
@@ -113,19 +117,19 @@ object CompNode:
   def register(f: CompNodeFactory): Unit = factories.addOne(f.asTuple)
 
   def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
-      FactDictionary,
+      FactDictionary
   ): CompNode =
     val factory = factories.getOrElse(
       e.typeName,
       throw new UnsupportedOperationException(
-        s"${e.typeName} is not a registered CompNode",
-      ),
+        s"${e.typeName} is not a registered CompNode"
+      )
     )
 
     factory.fromDerivedConfig(e)
 
   def getConfigChildNode(e: CompNodeConfigTrait)(using Factual)(using
-      FactDictionary,
+      FactDictionary
   ): CompNode =
     val children = e.children
       .map(fromDerivedConfig(_))
@@ -134,11 +138,11 @@ object CompNode:
       case child :: Nil => child
       case _ =>
         throw new IllegalArgumentException(
-          s"<${e.typeName}> must have exactly one child node: $e",
+          s"<${e.typeName}> must have exactly one child node: $e"
         )
 
   def getConfigChildNodes(e: CompNodeConfigTrait)(using Factual)(using
-      FactDictionary,
+      FactDictionary
   ): Seq[CompNode] =
     val children = e.children
       .map(fromDerivedConfig(_))
@@ -146,12 +150,12 @@ object CompNode:
     children match
       case Nil =>
         throw new IllegalArgumentException(
-          s"<${e.typeName}> must have at least one child node: $e",
+          s"<${e.typeName}> must have at least one child node: $e"
         )
       case _ => children.toSeq
 
-  def getConfigChildNode(e: CompNodeConfigTrait, label: String)(using Factual)(using
-      FactDictionary,
+  def getConfigChildNode(e: CompNodeConfigTrait, label: String)(using Factual)(
+      using FactDictionary
   ): CompNode =
     val children = e.children
       .filter(x => x.typeName == label)
@@ -162,11 +166,11 @@ object CompNode:
       case child :: Nil => child
       case _ =>
         throw new IllegalArgumentException(
-          s"<${e.typeName}> must have exactly one <$label>: $e",
+          s"<${e.typeName}> must have exactly one <$label>: $e"
         )
 
-  def getConfigChildNodes(e: CompNodeConfigTrait, label: String)(using Factual)(using
-      FactDictionary,
+  def getConfigChildNodes(e: CompNodeConfigTrait, label: String)(using Factual)(
+      using FactDictionary
   ): Seq[CompNode] =
     val children = e.children
       .filter(x => x.typeName == label)
@@ -176,6 +180,6 @@ object CompNode:
     children match
       case Nil =>
         throw new IllegalArgumentException(
-          s"<${e.typeName}> must have at least one <$label>: $e",
+          s"<${e.typeName}> must have at least one <$label>: $e"
         )
       case _ => children.toSeq
