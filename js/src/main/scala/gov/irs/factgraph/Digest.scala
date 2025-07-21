@@ -9,6 +9,8 @@ import gov.irs.factgraph.definitions.fact.{
   CompNodeDigestWrapper
 }
 
+// We aren't actively using DigestNodes right now so these override options
+// should be double checked if we start using this
 @JSExportTopLevel("DigestNodeWrapper")
 class DigestNodeWrapper(
     val path: String,
