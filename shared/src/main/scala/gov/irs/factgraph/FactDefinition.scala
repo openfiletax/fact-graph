@@ -32,6 +32,13 @@ final class FactDefinition(
   @JSExport
   lazy val value: CompNode = cnBuilder
 
+  // Example prior to split: 'DollarNode(Aggregate(Dependency(/jobs/*/income),gov.irs.factgraph.compnodes.SumOperator@2))'
+  @JSExport
+  lazy val typeNode: String = cnBuilder.toString().split("\\(")(0)
+
+  @JSExport
+  lazy val isBoolean: Boolean = this.typeNode == "BooleanNode"
+
   @JSExport
   lazy val limits: Seq[Limit] = limitsBuilder.map(x => x)
 
