@@ -70,6 +70,13 @@ class JSGraph(
       .toJSArray
   }
 
+  def getCollectionIds(collectionPath: String): js.Array[String] = {
+    val pathWithWildcard = collectionPath + "/*"
+    this.getCollectionPaths(pathWithWildcard)
+      .map(path => path.replace(collectionPath + "/#", ""))
+      .toJSArray
+  }
+
   @JSExport("toJSON")
   def toJson(indent: Int = -1): String =
     this.persister.toJson(indent)
@@ -99,17 +106,13 @@ class JSGraph(
 @JSExportTopLevel("GraphFactory")
 object JSGraph:
   @JSExport("apply")
-  def apply(
-      dictionary: FactDictionary
-  ): JSGraph =
-    this(dictionary, InMemoryPersisterJS.create())
+  def apply(dictionary: FactDictionary): JSGraph = new JSGraph(dictionary, InMemoryPersister())
 
-  @JSExport("apply")
-  def apply(
-      dictionary: FactDictionary,
-      persister: Persister
-  ): JSGraph =
+  @JSExport("fromJSON")
+  def fromJSON(dictionary: FactDictionary, serializedFactGraph: String): JSGraph = {
+    val persister = InMemoryPersister(serializedFactGraph)
     new JSGraph(dictionary, persister)
+  }
 
 final class SaveReturnValue(
     val valid: Boolean,
