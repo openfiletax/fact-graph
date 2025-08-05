@@ -31,10 +31,10 @@ lazy val factGraph = crossProject(JSPlatform, JVMPlatform)
       // This could be changed to %s.js
       .withOutputPatterns(OutputPatterns.fromJSFile("%s.mjs"))
     },
-    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.15" % Test,
-    libraryDependencies += "io.github.cquiroz" %%% "scala-java-time" % "2.5.0",
-    libraryDependencies += "com.lihaoyi" %%% "upickle" % "3.1.0",
+    libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.19" % Test,
     libraryDependencies += "org.scala-lang.modules" %%% "scala-xml" % "2.4.0",
+    libraryDependencies += "com.lihaoyi" %%% "upickle" % "4.2.1",
+    libraryDependencies += "io.github.cquiroz" %%% "scala-java-time" % "2.5.0",
     libraryDependencies += "co.fs2" %%% "fs2-core" % "3.12.0",
     libraryDependencies += "co.fs2" %%% "fs2-scodec" % "3.12.0",
     libraryDependencies += "org.gnieh" %%% "fs2-data-xml-scala" % "1.12.0",

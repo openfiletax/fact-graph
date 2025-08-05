@@ -17,7 +17,7 @@ class MigrationsSpec extends AnyFunSpec {
       val persister = InMemoryPersister(jsonFactGraph)
 
       val testFact = persister.store(Path("/test")).asInstanceOf[Int]
-      val expectedSerialization = """{"/test":{"$type":"gov.irs.factgraph.persisters.IntWrapper","item":42},"/meta/migrationsApplied":{"$type":"gov.irs.factgraph.persisters.IntWrapper","item":2}}"""
+      val expectedSerialization = """{"/test":{"$type":"IntWrapper","item":42},"/meta/migrationsApplied":{"$type":"IntWrapper","item":2}}"""
       assert(testFact == 42)
       assert(persister.toJson() == expectedSerialization)
     }

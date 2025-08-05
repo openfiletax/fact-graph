@@ -146,7 +146,7 @@ class InMemoryPersisterSpec extends AnyFunSpec:
         // This /meta/migrationsApplied value needs to be incremented when you add a new migration
         persister.save()
         assert(
-          persister.toJson() == """{"/test":{"$type":"gov.irs.factgraph.persisters.IntWrapper","item":42},"/meta/migrationsApplied":{"$type":"gov.irs.factgraph.persisters.IntWrapper","item":2}}"""
+          persister.toJson() == """{"/test":{"$type":"IntWrapper","item":42},"/meta/migrationsApplied":{"$type":"IntWrapper","item":2}}"""
         )
       }
     }
@@ -500,7 +500,7 @@ class InMemoryPersisterSpec extends AnyFunSpec:
             "${pathString}": {
               "$$type": "gov.irs.factgraph.persisters.EnumWrapper",
               "item": {
-                "value": ["${value}"],
+                "value": "${value}",
                 "enumOptionsPath": "${optionsPath}"
               }
             }

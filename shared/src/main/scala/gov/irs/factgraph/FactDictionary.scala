@@ -5,7 +5,7 @@ import gov.irs.factgraph.definitions.{FactDictionaryConfigElement, FactDictionar
 import gov.irs.factgraph.definitions.meta.MetaConfigTrait
 
 import scala.collection.mutable
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
+import scala.scalajs.js.annotation.JSExport
 import gov.irs.factgraph.compnodes.MultiEnumNode
 import gov.irs.factgraph.compnodes.EnumNode
 import fs2.{Fallible, Stream}

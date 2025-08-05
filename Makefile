@@ -5,3 +5,7 @@ dev:
 .PHONY: publish
 publish:
 	sbt compile fastOptJS publishLocal
+
+.PHONY: test
+test:
+	sbt test
