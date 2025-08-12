@@ -60,7 +60,13 @@ class JSGraph(
       case _: DayNode     => Day(value)
       case _              => value
 
-    this.set(path, typedValue)
+    // Surface limit violations
+    val rawSave = this.set(path, typedValue)
+    import js.JSConverters._
+    return SaveReturnValue(
+      rawSave._1,
+      rawSave._2.map(f => LimitViolationWrapper.fromLimitViolation(f)).toJSArray
+    )
   }
 
   def paths(): js.Array[String] = {
@@ -85,15 +91,6 @@ class JSGraph(
     val rawExpl = this.explain(path)
     import js.JSConverters._
     return rawExpl.solves.map(l => l.map(p => p.toString).toJSArray).toJSArray
-
-  @JSExport("save")
-  def jsSave(): SaveReturnValue =
-    val rawSave = this.save();
-    import js.JSConverters._
-    return SaveReturnValue(
-      rawSave._1,
-      rawSave._2.map(f => LimitViolationWrapper.fromLimitViolation(f)).toJSArray
-    )
 
   @JSExport("checkPersister")
   def jsCheckPersister(): js.Array[PersisterSyncIssueWrapper] =

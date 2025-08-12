@@ -71,9 +71,11 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
         )
 
   @JSExport
-  def set(path: String, value: WritableType): Unit = set(Path(path), value)
+  def set(path: String, value: WritableType): (Boolean, Seq[LimitViolation]) = {
+    set(Path(path), value)
+    this.save()
+  }
 
-  @JSExport("setWithPath")
   def set(path: Path, value: WritableType): Unit = {
     for {
       result <- this(path)
