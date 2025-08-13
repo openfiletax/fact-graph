@@ -110,7 +110,10 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
   }
 
   @JSExport
-  def delete(path: String): Unit = delete(Path(path))
+  def delete(path: String):  (Boolean, Seq[LimitViolation]) = {
+    delete(Path(path))
+    this.save()
+  }
 
   @JSExport("deleteWithPath")
   def delete(path: Path): Unit =
