@@ -28,6 +28,10 @@ final case class DayNode(expr: Expression[Day]) extends CompNode:
         Some(
           IntNode(Expression.Extract((x: Result[Day]) => x.map(y => y.day))),
         )
+      case PathItem.Child(Symbol("ordinal")) =>
+        Some(
+          IntNode(Expression.Extract((x: Result[Day]) => x.map(y => y.ordinal))),
+        )	
       case _ => None
 
 object DayNode extends CompNodeFactory with WritableNodeFactory:

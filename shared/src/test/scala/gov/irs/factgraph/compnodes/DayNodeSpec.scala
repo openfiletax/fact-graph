@@ -318,5 +318,80 @@ class DayNodeSpec extends AnyFunSpec {
       }
     }
 
+    describe("ordinal"){
+      it("can be gathered as an int") {
+        val dictionary = FactDictionary()
+        FactDefinition.fromConfig(
+          FactConfigElement(
+            "/test",
+            Some(
+              new WritableConfigElement("Day"),
+            ),
+            None,
+            None,
+          ),
+        )(using dictionary)
+
+        val graph = Graph(dictionary)
+        var incomplete = graph(Path("/test/ordinal"))(0).get
+        assert(incomplete.get(0) == Result.Incomplete)
+
+        val fact = graph(Path("/test"))(0).get
+        fact.set(Day("2022-02-01"))
+        graph.save()
+        var year = graph(Path("/test/ordinal"))(0).get
+        assert(year.get(0) == Result.Complete(32))
+      }
+
+      it("gathers correctly in leap years") {
+        val dictionary = FactDictionary()
+        FactDefinition.fromConfig(
+          FactConfigElement(
+            "/test",
+            Some(
+              new WritableConfigElement("Day"),
+            ),
+            None,
+            None,
+          ),
+        )(using dictionary)
+
+        val graph = Graph(dictionary)
+        var incomplete = graph(Path("/test/ordinal"))(0).get
+        assert(incomplete.get(0) == Result.Incomplete)
+
+        val fact = graph(Path("/test"))(0).get
+        fact.set(Day("2024-12-31"))
+        graph.save()
+        var year = graph(Path("/test/ordinal"))(0).get
+        assert(year.get(0) == Result.Complete(366))
+      }
+
+      it("can change values") {
+        val dictionary = FactDictionary()
+        FactDefinition.fromConfig(
+          FactConfigElement(
+            "/test",
+            Some(
+              new WritableConfigElement("Day"),
+            ),
+            None,
+            None,
+          ),
+        )(using dictionary)
+
+        val graph = Graph(dictionary)
+        val fact = graph(Path("/test"))(0).get
+        fact.set(Day("2022-01-14"))
+        graph.save()
+        var year = graph(Path("/test/ordinal"))(0).get
+        assert(year.get(0) == Result.Complete(14))
+
+        fact.set(Day("2023-02-01"))
+        graph.save()
+        year = graph(Path("/test/ordinal"))(0).get
+        assert(year.get(0) == Result.Complete(32))
+      }
+    }
   }
 }

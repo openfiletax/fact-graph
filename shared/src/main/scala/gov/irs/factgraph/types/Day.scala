@@ -30,6 +30,8 @@ final case class Day(@BeanProperty date: java.time.LocalDate) derives ReadWriter
   def month: Int = date.getMonth().getValue
   @JSExport
   def day: Int = date.getDayOfMonth()
+  @JSExport
+  def ordinal: Int = date.getDayOfYear()
 
   override def toString: String = date.toString
 
