@@ -28,7 +28,7 @@ class ExampleAgiSpec extends AnyFunSuite {
     //Load the XML file from disk as a String
     val factsFile = Source.fromResource("exampleAgiFacts.xml").getLines().mkString("\n")
     //Instantiate a FactDictionary object from the XML
-    val factDictionary = FactDictionary.importFromXml(factsFile)
+    val factDictionary = FactDictionaryForTests.importFromXml(factsFile)
 
     private def makeGraphWith(facts: (Path, WritableType)*): Graph = {
         //Instantiate a Graph object
@@ -62,9 +62,6 @@ class ExampleAgiSpec extends AnyFunSuite {
             total1099Income -> Dollar(3000.00),
             totalAdjustments -> Dollar(2000.00))
 
-        //When AGI is calculated
-        graph.save()
-
          //Then the AGI should be the sum of income minus adjustments
         val agi = graph.get(totalAdjustedGrossIncome)
         assert(agi.value.contains(Dollar(52500.00)))
@@ -78,12 +75,20 @@ class ExampleAgiSpec extends AnyFunSuite {
             total1099Income -> Dollar(0.00),
             totalAdjustments -> Dollar(0.00))
 
-        //When AGI is calculated
-        graph.save()
-
          //Then the AGI should be the sum of income minus adjustments
         val agi = graph.get(totalAdjustedGrossIncome)
         assert(agi.value.contains(Dollar(0.00)))
+    }
+
+    test("handles writing to derived facts") {
+        // This is a fairly pointless test, but shows that we can now set derived values directly
+        val graph = makeGraphWith(
+            totalAdjustedGrossIncome -> Dollar(500.00)
+        )
+
+        // Then the AGI should be the value that we set
+        val agi = graph.get(totalAdjustedGrossIncome)
+        assert(agi.value.contains(Dollar(500.00)))
     }
 
     test("calculates a negative amount when adjustments greater than combined income values") {
@@ -93,9 +98,6 @@ class ExampleAgiSpec extends AnyFunSuite {
             totalInterestIncome -> Dollar(1500.00),
             total1099Income -> Dollar(3000.00),
             totalAdjustments -> Dollar(20000.00))
-
-        //When AGI is calculated
-        graph.save()
 
          //Then the AGI should be the sum of income minus adjustments
         val agi = graph.get(totalAdjustedGrossIncome)
@@ -110,9 +112,6 @@ class ExampleAgiSpec extends AnyFunSuite {
             total1099Income -> Dollar(3000.00),
             totalAdjustments -> Dollar(20000.00))
 
-        //When AGI is calculated
-        graph.save()
-
          //Then the AGI should be the sum of income minus adjustments
         val agi = graph.get(totalAdjustedGrossIncome)
         assert(agi.value.contains(Dollar(-15500.00)))
@@ -126,9 +125,6 @@ class ExampleAgiSpec extends AnyFunSuite {
             total1099Income -> Dollar(300000.00),
             totalAdjustments -> Dollar(2000000.00))
 
-        //When AGI is calculated
-        graph.save()
-
          //Then the AGI should be the sum of income minus adjustments
         val agi = graph.get(totalAdjustedGrossIncome)
         assert(agi.value.contains(Dollar(4800000.00))) // 5MM + 1.5MM + 300K - 2MM
@@ -139,8 +135,6 @@ class ExampleAgiSpec extends AnyFunSuite {
             yearOfBirth -> 2009,
             isUsCitizen -> true
         )
-
-        graph.save()
 
         val is16OrOlder = graph.get(age16OrOlder)
         val taxpayerAge = graph.get(age)
@@ -156,8 +150,6 @@ class ExampleAgiSpec extends AnyFunSuite {
             isUsCitizen -> true
         )
 
-        graph.save()
-
         val is16OrOlder = graph.get(age16OrOlder)
         val taxpayerAge = graph.get(age)
         val isEligibleForDirectFile = graph.get(eligibleForDirectFile)
@@ -171,8 +163,6 @@ class ExampleAgiSpec extends AnyFunSuite {
             yearOfBirth -> 2009,
             isUsCitizen -> false
         )
-
-        graph.save()
 
         val is16OrOlder = graph.get(age16OrOlder)
         val taxpayerAge = graph.get(age)
@@ -188,8 +178,6 @@ class ExampleAgiSpec extends AnyFunSuite {
             isUsCitizen -> false
         )
 
-        graph.save()
-
         val is16OrOlder = graph.get(age16OrOlder)
         val taxpayerAge = graph.get(age)
         val isEligibleForDirectFile = graph.get(eligibleForDirectFile)
@@ -203,8 +191,6 @@ class ExampleAgiSpec extends AnyFunSuite {
             dateOfBirth -> Day("2000-01-01"),
             filingDeadline2026 -> Day("2026-04-15")
         )
-
-        graph.save()
 
         val tpDateOfBirth: Day = graph.get(dateOfBirth).get.asInstanceOf[Day]
         assert(tpDateOfBirth.year == 2000)

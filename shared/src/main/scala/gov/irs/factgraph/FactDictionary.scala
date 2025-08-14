@@ -80,7 +80,9 @@ class FactDictionary:
       )
     meta = metaConfigTrait
 
-object FactDictionary:
+trait DefaultFactDictConfig {
+  val meta = Meta("1.0")
+
   def apply(): FactDictionary =
     val dictionary = new FactDictionary()
     FactDefinition(RootNode(), Path.Root, Seq.empty, dictionary)
@@ -114,8 +116,13 @@ object FactDictionary:
     println("Parsing %s facts".format(facts.length))
 
     val factConfigs = facts.map(FactConfigElement.fromXml)
-    val meta = Meta("1.0")
     val config = FactDictionaryConfigElement(meta, factConfigs)
     fromConfig(config)
   }
+}
 
+object FactDictionary extends DefaultFactDictConfig
+
+object FactDictionaryForTests extends DefaultFactDictConfig {
+  override val meta: Meta = Meta("1.0", true)
+}

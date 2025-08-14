@@ -27,6 +27,13 @@ final class Fact(
     case None         => this
 
   override def get: MaybeVector[Result[value.Value]] =
+    val factValue = graph.getOverridenFacts().get(path)
+    if (factValue.isDefined) {
+      val fact = factValue.getOrElse(throw Exception(s"some issue found while getting ${path}"))
+      val result = Result.Complete(fact)
+      return MaybeVector(result).asInstanceOf[MaybeVector[Result[value.Value]]]
+    }
+
     graph.resultCache
       .getOrElseUpdate(path, { value.get })
       .asInstanceOf[MaybeVector[Result[value.Value]]]
@@ -44,7 +51,8 @@ final class Fact(
     *   Whether to allow setting a Collection in a way that removes items.
     */
   def set(a: WritableType, allowCollectionItemDelete: Boolean = false): Unit =
-    if (!value.expr.isWritable)
+    val allowSettingDerivedFacts = graph.getDictionary().getMeta().isTestDictionary
+    if (!value.expr.isWritable && !allowSettingDerivedFacts)
       throw new Exception(s"${path} is not writable")
 
     if (!allowCollectionItemDelete)
@@ -63,8 +71,11 @@ final class Fact(
       throw new Exception(
         s"${path} is expecting '${value.ValueClass}', received '${a.getClass()}' instead",
       )
-
-    graph.persister.setFact(this, a)
+    if (allowSettingDerivedFacts && !value.expr.isWritable) {
+      graph.getOverridenFacts().addOne(path, a)
+    } else {
+      graph.persister.setFact(this, a)
+    }
 
   def validate(): Seq[LimitViolation] =
     limits.map(x => x.run()).filter(x => x.isDefined).map(x => x.get)

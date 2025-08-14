@@ -15,8 +15,11 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
   private[factgraph] val factCache = mutable.HashMap[Path, Option[Fact]]()
   private[factgraph] val resultCache =
     mutable.HashMap[Path, MaybeVector[Result[Any]]]()
+  private val overriddenFacts: mutable.Map[Path, WritableType] = mutable.Map()
 
   export root.apply
+
+  def getOverridenFacts(): mutable.Map[Path, WritableType] = overriddenFacts
 
   @JSExport("get")
   def get(path: String): Result[Any] = get(Path(path))
@@ -73,14 +76,14 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
   @JSExport
   def set(path: String, value: WritableType): (Boolean, Seq[LimitViolation]) = {
     set(Path(path), value)
-    this.save()
   }
 
-  def set(path: Path, value: WritableType): Unit = {
+  def set(path: Path, value: WritableType): (Boolean, Seq[LimitViolation]) = {
     for {
       result <- this(path)
       fact <- result
     } fact.set(value)
+    this.save()
   }
 
   @JSExport

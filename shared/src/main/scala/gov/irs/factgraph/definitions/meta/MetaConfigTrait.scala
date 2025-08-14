@@ -4,4 +4,5 @@ import gov.irs.factgraph.FactDictionary
 
 trait MetaConfigTrait {
   def version: String
+  def isTestDictionary: Boolean = false
 }
