@@ -11,6 +11,7 @@ import gov.irs.factgraph.types.{Enum, Day, Dollar, WritableType}
 import js.JSConverters._
 import gov.irs.factgraph.compnodes.{BooleanNode, DayNode, DollarNode, EnumNode}
 import scala.annotation.switch
+import gov.irs.factgraph.compnodes.IntNode
 
 @JSExportTopLevel("Graph")
 @JSExportAll
@@ -55,6 +56,7 @@ class JSGraph(
 
     typedValue = definition.value match
       case _: BooleanNode => value.toBoolean
+      case _: IntNode     => value.toInt
       case a: EnumNode    => Enum.apply(value, a.enumOptionsPath)
       case _: DollarNode  => Dollar(value)
       case _: DayNode     => Day(value)
