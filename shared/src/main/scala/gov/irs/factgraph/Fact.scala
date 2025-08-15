@@ -81,6 +81,13 @@ final class Fact(
     limits.map(x => x.run()).filter(x => x.isDefined).map(x => x.get)
 
   def delete(): Unit =
+    val isTestDictionary = graph.getDictionary().getMeta().isTestDictionary
+    val factValue = graph.getOverridenFacts().get(path)
+    if (isTestDictionary && factValue.isDefined) {
+      graph.getOverridenFacts() -= path
+      return
+    }
+
     val collectionPath = parent.get.path
     graph.getVect(collectionPath) match
       case MaybeVector.Single(Result(Collection(collection), _)) =>

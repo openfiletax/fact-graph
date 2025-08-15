@@ -113,17 +113,17 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
   }
 
   @JSExport
-  def delete(path: String):  (Boolean, Seq[LimitViolation]) = {
+  def delete(path: String): (Boolean, Seq[LimitViolation]) = {
     delete(Path(path))
-    this.save()
   }
 
   @JSExport("deleteWithPath")
-  def delete(path: Path): Unit =
+  def delete(path: Path): (Boolean, Seq[LimitViolation]) =
     for {
       result <- this(path)
       fact <- result
     } fact.delete()
+    this.save()
 
   def checkPersister(): Seq[PersisterSyncIssue] =
     persister.syncWithDictionary(this)

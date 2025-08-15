@@ -91,6 +91,23 @@ class ExampleAgiSpec extends AnyFunSuite {
         assert(agi.value.contains(Dollar(500.00)))
     }
 
+    test("handles deletes when using overridden facts") {
+        val graph = makeGraphWith(
+            totalAdjustedGrossIncome -> Dollar(500.00),
+            totalWages -> Dollar(10000.00),
+            totalInterestIncome -> Dollar(1500.00),
+            total1099Income -> Dollar(3000.00),
+            totalAdjustments -> Dollar(20000.00)
+        )
+
+        // Then the AGI should be the value that we set
+        var agi = graph.get(totalAdjustedGrossIncome)
+        assert(agi.value.contains(Dollar(500.00)))
+        graph.delete(totalAdjustedGrossIncome)
+        agi = graph.get(totalAdjustedGrossIncome)
+        assert(agi.value.contains(Dollar(-5500.00)))
+    }
+
     test("calculates a negative amount when adjustments greater than combined income values") {
         //Given income values that sum up to be less than the adjustment amount
         val graph = makeGraphWith(
