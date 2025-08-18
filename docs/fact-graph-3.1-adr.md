@@ -118,9 +118,9 @@ The Java interface should be essentially identical.
 #### Collapsing interfaces
 
 To better encapsulate its functionality, the Fact Graph needs a *much* simpler interface.
-Many of these improvements are relatively low-hanging fruit: the parser constructs should be made private, factory patterns should be collapsed (i.e. [`FactDictionaryFactory`](./js/src/main/scala/gov/irs/factgraph/JSFactDictionary.scala) should just be a `FactDictionary`), and a variety of interfaces can instead by objects.
+Many of these improvements are relatively low-hanging fruit: the parser constructs should be made private, factory patterns should be collapsed (i.e. [`FactDictionaryFactory`](https://github.com/IRS-Public/direct-file/blob/e0d5c84451cc52b72d20d04652e306bf4af1a43c/direct-file/fact-graph-scala/js/src/main/scala/gov/irs/factgraph/JSFactDictionary.scala) should just be a `FactDictionary`), and a variety of interfaces can instead by objects.
 
-A slightly harder problem is the [persistence](shared/src/main/scala/gov/irs/factgraph/persisters/InMemoryPersister.scala) interface.
+A slightly harder problem is the [persistence](https://github.com/IRS-Public/direct-file/blob/e0d5c84451cc52b72d20d04652e306bf4af1a43c/direct-file/fact-graph-scala/shared/src/main/scala/gov/irs/factgraph/persisters/InMemoryPersister.scala) [interface](https://github.com/IRS-Public/direct-file/blob/e0d5c84451cc52b72d20d04652e306bf4af1a43c/direct-file/fact-graph-scala/shared/src/main/scala/gov/irs/factgraph/persisters/Persister.scala).
 The desired API is quite simple: a fact graph instance should exist in-memory and offer a serialization method which returns its JSON representation;
 The consumer of the library is responsible for when and how to persist this JSON.
 This is how Direct File works in practice, and the API can be simplified to reflect that.
@@ -147,7 +147,7 @@ Second, the Fact Dictionary XML needs to be specified.
 This would be one of the more important outcomes of this effort, because it would establish Fact Dictionaries as a standardized way to model legal logic.
 The process of documenting the XML specification will also make it much clearer which semantic gaps still remain.
 
-Finally, it would be nice to revive the Fact Graph [tutorials](./shared/src/main/scala/_tutorial) that currently sit inert in the repo.
+Finally, it would be nice to revive the Fact Graph [tutorials](https://github.com/IRSDigitalService/fact-graph/blob/42f862f2d9698db1521c386a838d870dafffcf14/shared/src/main/scala/_tutorial) that currently sit inert in the repo.
 These sheets make reference to a `FactDictionary.fromXml` method that was removed from the library because the native XML parsing module was JVM-only.
 I added that method back, which should be most of the work of making the worksheets function again.
 People interested in the Fact Graph benefit from an on-boarding walkthrough that introduces the concepts gently, with logic that's less complicated than the DF 2025 Tax Scope.
@@ -279,7 +279,7 @@ This data should get serialized with the in-progress fact graph.
 }
 ```
 
-The above example demonstrates how this mechanism consolidates a couple unfinished ideas in the current Fact Graph: [metadata, versioning](./shared/src/main/scala/gov/irs/factgraph/Meta.scala), and [migrations](./shared/src/main/scala/gov/irs/factgraph/Migrations.scala).
+The above example demonstrates how this mechanism consolidates a couple unfinished ideas in the current Fact Graph: [metadata, versioning](https://github.com/IRSDigitalService/fact-graph/blob/42f862f2d9698db1521c386a838d870dafffcf14/shared/src/main/scala/gov/irs/factgraph/Meta.scala), and [migrations](https://github.com/IRSDigitalService/fact-graph/blob/61b5fd9dca40df378e77ddb8a35cc4cadca1e0f0/shared/src/main/scala/gov/irs/factgraph/Migrations.scala).
 
 I believe there should also be a space for library-defined configuration knobs (`<Config>`, probably), but that can be added later when it's more obvious what those knobs would be.
 
