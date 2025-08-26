@@ -2,12 +2,13 @@ package gov.irs.factgraph
 import gov.irs.factgraph.definitions.FactDictionaryConfigTrait
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import gov.irs.factgraph.compnodes.RootNode
+import scala.xml.NodeSeq
 
 @JSExportTopLevel("FactDictionaryFactory")
 object JSFactDictionary:
   def apply(): FactDictionary =
     val dictionary = new FactDictionary()
-    FactDefinition(RootNode(), Path.Root, Seq.empty, dictionary)
+    FactDefinition(RootNode(), Path.Root, Seq.empty, NodeSeq.Empty, dictionary)
     dictionary
 
   @JSExport

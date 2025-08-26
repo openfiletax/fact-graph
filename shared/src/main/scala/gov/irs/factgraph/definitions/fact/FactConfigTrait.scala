@@ -6,9 +6,11 @@ import gov.irs.factgraph.definitions.fact.{
 }
 
 import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.xml.NodeSeq
 
 trait FactConfigTrait {
   def path: String
+  def node: NodeSeq
   def writable: Option[WritableConfigTrait]
   def derived: Option[CompNodeConfigTrait]
   def placeholder: Option[CompNodeConfigTrait]

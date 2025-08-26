@@ -6,6 +6,7 @@ import gov.irs.factgraph.definitions.fact.{
   WritableConfigTrait
 }
 import gov.irs.factgraph.exceptions.FactGraphValidationException
+import scala.xml.NodeSeq
 
 case class FactConfigElement(
     path: String,
@@ -13,7 +14,8 @@ case class FactConfigElement(
     derived: Option[CompNodeConfigTrait],
     placeholder: Option[CompNodeConfigTrait],
     overrideCondition: Option[CompNodeConfigTrait] = None,
-    overrideDefault: Option[CompNodeConfigTrait] = None
+    overrideDefault: Option[CompNodeConfigTrait] = None,
+    node: NodeSeq = NodeSeq.Empty
 ) extends FactConfigTrait
 
 object FactConfigElement {
@@ -82,7 +84,8 @@ object FactConfigElement {
       derived,
       placeholder,
       overrideCondition,
-      overrideDefault
+      overrideDefault,
+      factNode
     )
   }
 }

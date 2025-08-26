@@ -15,6 +15,7 @@ import gov.irs.factgraph.limits.*
 import gov.irs.factgraph.compnodes.Placeholder
 import scala.scalajs.js.annotation.JSExport
 import scala.scalajs.js.annotation.JSExportAll
+import scala.xml.NodeSeq
 
 final class FactDefinition(
     private val cnBuilder: Factual ?=> CompNode,
@@ -157,12 +158,14 @@ object FactDefinition:
       cnBuilder: Factual ?=> CompNode,
       path: Path,
       limits: Factual ?=> Seq[Limit],
+      rawXml: NodeSeq,
       dictionary: FactDictionary
   ): FactDefinition =
     require(path.isAbstract)
 
     val definition = new FactDefinition(cnBuilder, path, limits, dictionary)
     dictionary.addDefinition(definition)
+    dictionary.addDefinitionAsNodes(path, rawXml)
 
     definition
 
@@ -206,4 +209,4 @@ object FactDefinition:
         Seq.empty
 
     val dictionary = summon[FactDictionary]
-    this(cnBuilder, Path(e.path), limits, dictionary)
+    this(cnBuilder, Path(e.path), limits, e.node, dictionary)

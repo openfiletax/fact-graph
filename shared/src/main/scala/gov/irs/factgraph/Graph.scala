@@ -1,5 +1,10 @@
 package gov.irs.factgraph
 
+import Console.{GREEN, RED, RESET, YELLOW}
+import fs2.{Fallible, Stream}
+import fs2.data.xml.*
+import fs2.data.xml.dom.*
+import fs2.data.xml.scalaXml.*
 import gov.irs.factgraph.limits.LimitViolation
 import gov.irs.factgraph.monads.*
 import gov.irs.factgraph.persisters.*
@@ -8,6 +13,12 @@ import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import scala.collection.mutable
 import scala.scalajs.js.annotation.JSExportAll
 import java.util.UUID
+import scala.xml.Node
+import scala.xml.NodeSeq
+import scala.xml.XML
+import scala.xml.PrettyPrinter
+import scala.xml.Text
+import scala.xml.Elem
 
 class Graph(val dictionary: FactDictionary, val persister: Persister):
   val root: Fact = Fact(this)
@@ -149,6 +160,137 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
     yield pathWithoutWildcards.toString
 
     paths.toSeq
+
+  private def transformFactPath(currentPath: String, originalPath: String): String =
+    var pathPrefix = Path(originalPath).asAbstract.toString.split("\\*")(0)
+    val collectionId = Path(originalPath).getMemberId match
+      case Some(value) => "#" + value
+      case None        => null
+
+    var pathString = currentPath
+    if (collectionId != null) {
+      if (pathString.startsWith("..")) {
+        val pathEnding = pathString.replace("..", "")
+        pathString = pathPrefix + collectionId + pathEnding
+      } else {
+        pathString = pathString.replace("*", collectionId)
+      }
+    }
+    pathString
+
+  private def getFactValueFromNode(node: NodeSeq, originalPath: String): String =
+    val path = node \ "@path"
+    var pathString = path.toString
+    pathString = transformFactPath(pathString, originalPath)
+    val currentFact = this.get(Path(pathString))
+    val currentFactValue = if (currentFact.hasValue && currentFact.complete) {
+      s"${RESET}${GREEN}${currentFact.get.toString}${RESET}"
+    } else if (currentFact.hasValue && !currentFact.complete) {
+      s"${YELLOW}${currentFact.get.toString}"
+    } else {
+      s"${RED}Incomplete"
+    }
+    currentFactValue
+
+  private def prettifyFactWithValue(node: Node, originalPath: String, input: String): String =
+    val currentFactValue = getFactValueFromNode(node, originalPath)
+    val stringifiedNode = node.toString
+    val factStartingNode = stringifiedNode.split(">", 2)(0) + ">"
+    val output = input.replace(factStartingNode, s"$factStartingNode ⮕ $currentFactValue")
+    output
+
+  private def prettifyDependencyWithValue(node: Node, originalPath: String, input: String): String =
+    if (Path((node \ "@path").toString).isWildcard) return input
+
+    val currentFactValue = getFactValueFromNode(node, originalPath)
+    val stringifiedNode = node.toString
+    val output = input.replace(stringifiedNode, s"$stringifiedNode ⮕ $currentFactValue")
+    output
+
+  @JSExport
+  def debugFact(originalPath: String): Unit =
+    dictionary.getDefinitionsAsNodes().get(Path(originalPath).asAbstract) match
+      case Some(value) => {
+        var debugString = value.toString
+        debugString = prettifyFactWithValue(value.head, originalPath, debugString)
+        val dependencyNodes = value \\ "Dependency"
+        val uniqueDeps = dependencyNodes.distinct
+        uniqueDeps.foreach { node =>
+          debugString = prettifyDependencyWithValue(node, originalPath, debugString)
+        }
+        println(debugString)
+      }
+      case None => throw new Exception(s"Invalid path: $originalPath")
+
+  @JSExport
+  def debugFactRecurse(originalPath: String): Unit =
+    def parseDependencies(node: NodeSeq, queue: mutable.Queue[(NodeSeq, String)]): Unit =
+      val dependencyNodes = node \\ "Dependency"
+      val dependencyNodesAndPaths = dependencyNodes.map(depNode => (depNode, depNode \\ "@path"))
+      for ((dep, path) <- dependencyNodesAndPaths) {
+        queue.enqueue((dep, path.toString))
+      }
+    
+    def isFakeDayFact(factPath: String): Boolean =
+      if (dictionary.getDefinition(factPath) != null) return false
+      
+      val index = factPath.lastIndexOf("/")
+      val updatedFactPath = factPath.dropRight(factPath.length - index)
+      dictionary.getDefinition(updatedFactPath).typeNode == "DayNode" 
+
+
+    var node = dictionary.getDefinitionsAsNodes().getOrElse(
+      Path(originalPath).asAbstract,
+      throw new Exception(s"Invalid path: $originalPath")
+    )
+    var debugString = node.toString
+
+    val remainingPaths = mutable.Queue[(NodeSeq, String)]()
+    parseDependencies(node, remainingPaths)
+
+    // Expand dependencies
+    while (remainingPaths.nonEmpty) {
+      val currentPath = remainingPaths.dequeue()
+      val factPath = transformFactPath(currentPath(1), originalPath)
+      if (!isFakeDayFact(factPath) && !dictionary.getDefinition(factPath).isWritable && !Path(factPath).isWildcard) {
+        val dependencyFactNode = dictionary.getDefinitionsAsNodes().getOrElse(
+          Path(factPath).asAbstract,
+          throw new Exception(s"Invalid path: ${factPath}")
+        )
+        parseDependencies(dependencyFactNode, remainingPaths)
+        debugString = debugString.replace(currentPath(0).toString, dependencyFactNode.toString)
+      }
+    }
+
+    // Convert string to xml and then update xml with appropriate values because formatting is otherwise preserved
+    val sections = debugString.split("\n")
+    val debugStringWithoutSpacing = StringBuilder()
+    sections.foreach(section => debugStringWithoutSpacing.addAll(section.stripLeading()))
+    val xmlString = debugStringWithoutSpacing.toString()
+
+    val evts = Stream.emits(xmlString)
+      .through(events[Fallible, Char]())
+      .through(documents)
+    val reconstructedXml = evts.compile.toList match {
+      case Right(x) => x
+      case Left(e)  => throw e
+    }
+    val printer = new PrettyPrinter(100, 2)
+
+    val expandedFact: NodeSeq = reconstructedXml.head
+    var expandedFactOutput = printer.format(expandedFact.head)
+    val facts = expandedFact \\ "Fact"
+    val uniqueFacts = facts.distinct
+    uniqueFacts.foreach { factNode =>
+      expandedFactOutput = prettifyFactWithValue(factNode, originalPath, expandedFactOutput)
+    }
+
+    val deps = expandedFact \\ "Dependency"
+    val uniqueDeps = deps.distinct
+    uniqueDeps.foreach { depNode =>
+      expandedFactOutput = prettifyDependencyWithValue(depNode, originalPath, expandedFactOutput)
+    }
+    println(expandedFactOutput)
 
 object Graph:
   def apply(dictionary: FactDictionary): Graph =

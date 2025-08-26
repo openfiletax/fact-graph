@@ -14,12 +14,14 @@ import fs2.data.xml.dom.*
 import fs2.data.xml.scalaXml.*
 import gov.irs.factgraph.definitions.fact.FactConfigElement
 import scala.util.matching.Regex
+import scala.xml.NodeSeq
 
 
 class FactDictionary:
   private val UUID_REGEX: Regex = "(?i)#[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}".r
 
   private val definitions: mutable.Map[Path, FactDefinition] = mutable.Map()
+  private val definitionsAsNodes: mutable.Map[Path, NodeSeq] = mutable.Map()
   private var frozen: Boolean = false
   private var meta: MetaConfigTrait = Meta.empty()
 
@@ -53,6 +55,7 @@ class FactDictionary:
       case Some(value) => return value
       case _           => null
 
+  def getDefinitionsAsNodes(): mutable.Map[Path, NodeSeq] = definitionsAsNodes
 
   @JSExport
   def getMeta(): MetaConfigTrait = meta
@@ -73,6 +76,13 @@ class FactDictionary:
 
     definitions.addOne(definition.asTuple)
 
+  protected[factgraph] def addDefinitionAsNodes(path: Path, rawXml: NodeSeq): Unit =
+    if (frozen)
+      throw new UnsupportedOperationException(
+        "cannot add definitions to a frozen FactDictionary",
+      )
+    definitionsAsNodes.addOne(path, rawXml)
+
   protected[factgraph] def addMeta(metaConfigTrait: MetaConfigTrait): Unit =
     if (frozen)
       throw new UnsupportedOperationException(
@@ -85,7 +95,7 @@ trait DefaultFactDictConfig {
 
   def apply(): FactDictionary =
     val dictionary = new FactDictionary()
-    FactDefinition(RootNode(), Path.Root, Seq.empty, dictionary)
+    FactDefinition(RootNode(), Path.Root, Seq.empty, NodeSeq.Empty, dictionary)
     dictionary
 
   @JSExport
