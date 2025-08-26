@@ -113,8 +113,6 @@ trait DefaultFactDictConfig {
 
   def fromXml(factDictionaryModule: scala.xml.NodeSeq): FactDictionary = {
     val facts = factDictionaryModule \\ "Fact"
-    println("Parsing %s facts".format(facts.length))
-
     val factConfigs = facts.map(FactConfigElement.fromXml)
     val config = FactDictionaryConfigElement(meta, factConfigs)
     fromConfig(config)
