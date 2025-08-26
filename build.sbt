@@ -4,6 +4,8 @@ val projectName = "factgraph"
 val factGraphVersion = "3.1.0-SNAPSHOT"
 val scala3Version = "3.3.6"
 
+scalafmtConfig := file(".scalafmt.conf")
+
 lazy val root = project
   .in(file("."))
   .aggregate(factGraph.js, factGraph.jvm)

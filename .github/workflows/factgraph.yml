@@ -1,0 +1,42 @@
+name: fact-graph
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Cancel redundant builds on same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # do not cancel redundant builds on main or release branches
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/heads/release/') }}
+
+env:
+  JAVA_VERSION: 21
+  FG_PATH: fact-graph
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Install sbt via Coursier v2.1.24
+      run: |
+        curl -fL "https://github.com/coursier/coursier/releases/download/v2.1.24/cs-x86_64-pc-linux.gz" | gzip -d > cs
+        chmod +x cs
+        ./cs --version  # verify that we're using v2.1.24
+        ./cs install sbt
+        echo "$HOME/.local/share/coursier/bin" >> $GITHUB_PATH
+
+    - name: Checkout Fact Graph
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        path: fact-graph # Leaving this as is just in case a dependency gets added later
+
+    - name: Run Tests
+      working-directory: ${{ env.FG_PATH }}
+      run: make ci_test

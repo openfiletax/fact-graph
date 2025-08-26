@@ -12,6 +12,7 @@ import gov.irs.factgraph.definitions.meta.{ EnumDeclarationTrait, MetaConfigTrai
 import gov.irs.factgraph.monads.{ MaybeVector, Result }
 import gov.irs.factgraph.types.{ Collection, CollectionItem }
 import org.scalatest.funspec.AnyFunSpec
+import scala.xml.NodeSeq
 
 class FactDefinitionSpec extends AnyFunSpec:
   describe("FactDefinition") {
@@ -20,8 +21,9 @@ class FactDefinitionSpec extends AnyFunSpec:
         val value = IntNode(42)
         val path = Path("/test")
         val dictionary = FactDictionary()
+        val node = NodeSeq.Empty
 
-        val definition = FactDefinition(value, path, Seq.empty, dictionary)
+        val definition = FactDefinition(value, path, Seq.empty, node, dictionary)
 
         assert(definition.value == value)
         assert(definition.path == path)
@@ -33,9 +35,10 @@ class FactDefinitionSpec extends AnyFunSpec:
           val value = IntNode(42)
           val path = Path("test")
           val dictionary = FactDictionary()
+          val node = NodeSeq.Empty
 
           assertThrows[IllegalArgumentException] {
-            FactDefinition(value, path, Seq.empty, dictionary)
+            FactDefinition(value, path, Seq.empty, node, dictionary)
           }
         }
       }
