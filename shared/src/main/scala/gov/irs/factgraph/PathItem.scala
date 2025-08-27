@@ -1,6 +1,6 @@
 package gov.irs.factgraph
-import upickle.default.ReadWriter
 import java.util.UUID
+import upickle.default.ReadWriter
 
 enum PathItem derives ReadWriter:
   case Child(key: Symbol)
@@ -46,9 +46,9 @@ object PathItem:
   val MemberPrefix = '#'
 
   def apply(str: String): PathItem = str match
-    case WildcardKey => PathItem.Wildcard
-    case UnknownKey  => PathItem.Unknown
-    case ParentKey   => PathItem.Parent
+    case WildcardKey                        => PathItem.Wildcard
+    case UnknownKey                         => PathItem.Unknown
+    case ParentKey                          => PathItem.Parent
     case _ if str.charAt(0) == MemberPrefix =>
       PathItem.Member(UUID.fromString(str.substring(1)))
     case _ => PathItem.Child(Symbol(str))

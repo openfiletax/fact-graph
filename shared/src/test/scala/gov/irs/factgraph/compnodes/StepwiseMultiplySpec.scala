@@ -1,10 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.*
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class StepwiseMultiplySpec extends AnyFunSpec:
   describe("StepwiseMultiply") {
@@ -20,9 +20,9 @@ class StepwiseMultiplySpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Dollar",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("9999.99")
-                  )
-                )
+                    CommonOptionConfigTraits.value("9999.99"),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Rate",
@@ -30,12 +30,12 @@ class StepwiseMultiplySpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Rational",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("50/1000")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("50/1000"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
 
         assert(node.get(0) == Result.Complete(Dollar("450.00")))
@@ -53,9 +53,9 @@ class StepwiseMultiplySpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "String",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("Hello")
-                    )
-                  )
+                      CommonOptionConfigTraits.value("Hello"),
+                    ),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "Rate",
@@ -63,12 +63,12 @@ class StepwiseMultiplySpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "String",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("World")
-                    )
-                  )
-                )
-              )
-            )
+                      CommonOptionConfigTraits.value("World"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           )
         }
       }

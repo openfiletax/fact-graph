@@ -1,10 +1,10 @@
 package gov.irs.factgraph
-import gov.irs.factgraph.Meta
-import gov.irs.factgraph.types.Enum
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
-import scala.scalajs.js
-import gov.irs.factgraph.definitions.meta.{EnumDeclarationOptionsTrait, EnumDeclarationTrait}
+import gov.irs.factgraph.definitions.meta.{ EnumDeclarationOptionsTrait, EnumDeclarationTrait }
 import gov.irs.factgraph.definitions.meta.MetaConfigTrait
+import gov.irs.factgraph.types.Enum
+import gov.irs.factgraph.Meta
+import scala.scalajs.js
+import scala.scalajs.js.annotation.{ JSExport, JSExportTopLevel }
 
 final case class JSEnumDeclarationOptions(val value: String) extends EnumDeclarationOptionsTrait
 

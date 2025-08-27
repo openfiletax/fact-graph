@@ -1,16 +1,10 @@
 package gov.irs.factgraph.operators
 
-import org.scalatest.funspec.AnyFunSpec
-
 import gov.irs.factgraph.*
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigElement, FactConfigElement, WritableConfigElement }
 import gov.irs.factgraph.types.*
-import gov.irs.factgraph.definitions.fact.{
-  CompNodeConfigElement,
-  FactConfigElement,
-  WritableConfigElement
-}
-
 import java.util.UUID
+import org.scalatest.funspec.AnyFunSpec
 
 class AggregateOperatorSpec extends AnyFunSpec:
   describe("AggregateOperator") {
@@ -26,35 +20,35 @@ class AggregateOperatorSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Dependency",
                 Seq.empty,
-                "/collection/*/int"
-              )
-            )
-          )
+                "/collection/*/int",
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection",
         Some(
-          new WritableConfigElement("Collection")
+          new WritableConfigElement("Collection"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/int",
         Some(
-          new WritableConfigElement("Int")
+          new WritableConfigElement("Int"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     val graph = Graph(dictionary)
@@ -97,10 +91,10 @@ class AggregateOperatorSpec extends AnyFunSpec:
                     List(
                       Explanation.Writable(
                         true,
-                        Path(s"/collection/#$uuid1/int")
-                      )
-                    )
-                  )
+                        Path(s"/collection/#$uuid1/int"),
+                      ),
+                    ),
+                  ),
                 ),
                 Explanation.Dependency(
                   true,
@@ -110,14 +104,14 @@ class AggregateOperatorSpec extends AnyFunSpec:
                     List(
                       Explanation.Writable(
                         true,
-                        Path(s"/collection/#$uuid2/int")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
+                        Path(s"/collection/#$uuid2/int"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
       }
     }

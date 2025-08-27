@@ -1,10 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.*
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.Rational
+import org.scalatest.funspec.AnyFunSpec
 
 class RationalNodeSpec extends AnyFunSpec:
   describe("RationalNode") {
@@ -20,7 +20,7 @@ class RationalNodeSpec extends AnyFunSpec:
         val config = new CompNodeConfigElement(
           "Rational",
           Seq.empty,
-          CommonOptionConfigTraits.value("2/3")
+          CommonOptionConfigTraits.value("2/3"),
         )
         val node = CompNode.fromDerivedConfig(config).asInstanceOf[RationalNode]
         assert(node.get(0) == Result.Complete(Rational("2/3")))
@@ -37,7 +37,7 @@ class RationalNodeSpec extends AnyFunSpec:
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("False"))
+                  Seq(new CompNodeConfigElement("False")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -45,18 +45,18 @@ class RationalNodeSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "Rational",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("1/2")
-                    )
-                  )
-                )
-              )
+                      CommonOptionConfigTraits.value("1/2"),
+                    ),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Case",
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("True"))
+                  Seq(new CompNodeConfigElement("True")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -64,13 +64,13 @@ class RationalNodeSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "Rational",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("2/3")
-                    )
-                  )
-                )
-              )
-            )
-          )
+                      CommonOptionConfigTraits.value("2/3"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
 
@@ -89,11 +89,11 @@ class RationalNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Rational",
               Seq.empty,
-              CommonOptionConfigTraits.value("1/2")
-            )
+              CommonOptionConfigTraits.value("1/2"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       FactDefinition.fromConfig(
@@ -104,11 +104,11 @@ class RationalNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Dependency",
               Seq.empty,
-              CommonOptionConfigTraits.path("../value")
-            )
+              CommonOptionConfigTraits.path("../value"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)
@@ -137,11 +137,11 @@ class RationalNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Rational")
+              new WritableConfigElement("Rational"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)

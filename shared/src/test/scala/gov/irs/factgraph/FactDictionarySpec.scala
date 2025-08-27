@@ -1,18 +1,15 @@
 package gov.irs.factgraph
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.compnodes.RootNode
 import gov.irs.factgraph.definitions.*
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
   FactConfigElement,
-  FactConfigTrait
+  FactConfigTrait,
 }
-import gov.irs.factgraph.definitions.meta.{
-  EnumDeclarationTrait,
-  MetaConfigTrait
-}
+import gov.irs.factgraph.definitions.meta.{ EnumDeclarationTrait, MetaConfigTrait }
+import org.scalatest.funspec.AnyFunSpec
 
 class FactDictionarySpec extends AnyFunSpec:
   describe("FactDictionary") {
@@ -36,11 +33,11 @@ class FactDictionarySpec extends AnyFunSpec:
                 CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("42")
-                )
+                  CommonOptionConfigTraits.value("42"),
+                ),
               ),
-              None
-            )
+              None,
+            ),
           )(using dictionary)
         }
       }
@@ -58,11 +55,11 @@ class FactDictionarySpec extends AnyFunSpec:
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
+                CommonOptionConfigTraits.value("42"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         assert(dictionary.getOptionsPathForEnum("/test") == None)
@@ -84,19 +81,19 @@ class FactDictionarySpec extends AnyFunSpec:
                   Seq(
                     (
                       CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                      OPTIONS_PATH
+                      OPTIONS_PATH,
                     ),
-                    (CommonOptionConfigTraits.VALUE, "C")
-                  )
-                )
-              )
+                    (CommonOptionConfigTraits.VALUE, "C"),
+                  ),
+                ),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         assert(
-          dictionary.getOptionsPathForEnum("/enum-path").get == OPTIONS_PATH
+          dictionary.getOptionsPathForEnum("/enum-path").get == OPTIONS_PATH,
         )
       }
     }
@@ -107,7 +104,7 @@ class FactDictionarySpec extends AnyFunSpec:
         val initialMeta = dictionary.getMeta()
         dictionary.addMeta(
           new MetaConfigTrait:
-            override def version: String = "1"
+            override def version: String = "1",
         )
         assert(initialMeta.version != dictionary.getMeta().version)
         assert(dictionary.getMeta().version == "1")

@@ -1,8 +1,8 @@
 package gov.irs.factgraph.limits
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path}
-import gov.irs.factgraph.compnodes.{BooleanNode, CompNode, Dependency, Length, LessThanOrEqual, StringNode}
-import gov.irs.factgraph.definitions.fact.{CompNodeConfigTrait, LimitConfigTrait}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path }
+import gov.irs.factgraph.compnodes.{ BooleanNode, CompNode, Dependency, Length, LessThanOrEqual, StringNode }
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigTrait, LimitConfigTrait }
 import gov.irs.factgraph.limits.LimitFactory
 
 case class MaxLength(limiter: BooleanNode, context: LimitContext) extends Limit
@@ -23,7 +23,9 @@ object MaxLength extends LimitFactory {
       new LimitContext(Key, e.level, lhs, rhs),
     )
 
-  override def fromConfig(e: LimitConfigTrait)(using Factual)(using
+  override def fromConfig(e: LimitConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): Limit =
     this(e)

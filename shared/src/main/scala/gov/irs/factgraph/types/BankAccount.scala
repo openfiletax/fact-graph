@@ -1,13 +1,11 @@
 package gov.irs.factgraph.types
-import upickle.default.ReadWriter
-
+import gov.irs.factgraph.validation.{ ValidationFailure, ValidationFailureReason }
 import java.lang.Enum
 import scala.beans.BeanProperty
-import scala.scalajs.js.annotation.{JSExportTopLevel, JSExport, JSExportAll}
 import scala.scalajs.js
-
-import gov.irs.factgraph.validation.{ValidationFailure, ValidationFailureReason}
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
 import scala.util.matching.Regex
+import upickle.default.ReadWriter
 
 @JSExportAll
 enum UserFriendlyBankAccountFailureReason:
@@ -99,15 +97,15 @@ final case class BankAccount(
     .Map[BankAccountFieldName, BankAccountFieldValidationFailure]()
 
   // Validate accountType
-  try {
+  try
     precondition(
       AllowedAccountTypes.contains(accountType),
       "accountType must be a valid BankAccountType",
       BankAccountFailureReason.InvalidAccountType,
     )
-  } catch {
+  catch {
     case e: BankAccountFieldValidationFailure => fieldErrors("accountType") = e
-    case _ =>
+    case _                                    =>
       fieldErrors("accountType") = BankAccountFieldValidationFailure(
         "accountType preconditions failed with unknown failure",
         None.orNull,

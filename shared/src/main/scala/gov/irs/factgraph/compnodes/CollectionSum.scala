@@ -1,11 +1,10 @@
 package gov.irs.factgraph.compnodes
 
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
-import gov.irs.factgraph.operators.AggregateOperator
 import gov.irs.factgraph.monads.*
+import gov.irs.factgraph.operators.AggregateOperator
 import gov.irs.factgraph.types.*
-
 import scala.annotation.unused
 
 // Sum is used across a collection. If you're trying to add
@@ -41,11 +40,13 @@ object CollectionSum extends CompNodeFactory:
           s"cannot sum a ${node.getClass.getName}",
         )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     this(CompNode.getConfigChildNode(e))
-private final class SumOperator[A: Numeric] extends AggregateOperator[A, A]:
+final private class SumOperator[A: Numeric] extends AggregateOperator[A, A]:
   override def apply(vect: MaybeVector[Thunk[Result[A]]]): Result[A] =
     accumulator(vect.toList, Result(Numeric[A].zero, vect.complete))
 

@@ -1,10 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait}
-import gov.irs.factgraph.operators.CollectOperator
-import gov.irs.factgraph.types.{Collection, CollectionItem}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path, PathItem }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait }
 import gov.irs.factgraph.monads.*
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path, PathItem}
+import gov.irs.factgraph.operators.CollectOperator
+import gov.irs.factgraph.types.{ Collection, CollectionItem }
 
 object Filter extends CompNodeFactory:
   override val Key: String = "Filter"
@@ -26,20 +26,22 @@ object Filter extends CompNodeFactory:
           s"cannot find fact at path '$path' from '${fact.path}'",
         )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val cnBuilder: Factual ?=> BooleanNode =
       CompNode.getConfigChildNode(e) match
         case node: BooleanNode => node
-        case _ =>
+        case _                 =>
           throw new UnsupportedOperationException(
             s"invalid child type: $e",
           )
 
     this(Path(e.getOptionValue(CommonOptionConfigTraits.PATH).get), cnBuilder)
 
-private final class FilterOperator extends CollectOperator[Collection, Boolean]:
+final private class FilterOperator extends CollectOperator[Collection, Boolean]:
   override def apply(
       vect: MaybeVector[(CollectionItem, Thunk[Result[Boolean]])],
   ): Result[Collection] =

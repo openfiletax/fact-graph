@@ -1,16 +1,12 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.*
-import gov.irs.factgraph.definitions.meta.{
-  EnumDeclarationOptionsTrait,
-  EnumDeclarationTrait,
-  MetaConfigTrait
-}
+import gov.irs.factgraph.definitions.meta.{ EnumDeclarationOptionsTrait, EnumDeclarationTrait, MetaConfigTrait }
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.persisters.InMemoryPersister
 import gov.irs.factgraph.types.*
+import org.scalatest.funspec.AnyFunSpec
 
 class MultiEnumNodeSpec extends AnyFunSpec {
   describe("MultiEnumNode") {
@@ -18,12 +14,12 @@ class MultiEnumNodeSpec extends AnyFunSpec {
       it("creates nodes from values") {
         val node =
           MultiEnumNode(
-            MultiEnum("test", "/enum-options")
+            MultiEnum("test", "/enum-options"),
           )
         assert(
           node.get(0) == Result.Complete(
-            MultiEnum(Set("test"), "/enum-options")
-          )
+            MultiEnum(Set("test"), "/enum-options"),
+          ),
         )
       }
     }
@@ -40,16 +36,16 @@ class MultiEnumNodeSpec extends AnyFunSpec {
               CommonOptionConfigTraits.create(
                 Seq(
                   (CommonOptionConfigTraits.ENUM_OPTIONS_PATH, "/options-path"),
-                  (CommonOptionConfigTraits.VALUE, "A")
-                )
-              )
-            )
+                  (CommonOptionConfigTraits.VALUE, "A"),
+                ),
+              ),
+            ),
           )(using given_Factual)(using dictionary)
           .asInstanceOf[MultiEnumNode]
       assert(
         node.get(0) == Result.Complete(
-          MultiEnum(Set("A"), "/options-path")
-        )
+          MultiEnum(Set("A"), "/options-path"),
+        ),
       )
     }
 
@@ -63,10 +59,10 @@ class MultiEnumNodeSpec extends AnyFunSpec {
               Seq.empty,
               CommonOptionConfigTraits.create(
                 Seq(
-                  (CommonOptionConfigTraits.VALUE, "C")
-                )
-              )
-            )
+                  (CommonOptionConfigTraits.VALUE, "C"),
+                ),
+              ),
+            ),
           )(using given_Factual)(using dictionary)
       }
     }
@@ -82,16 +78,16 @@ class MultiEnumNodeSpec extends AnyFunSpec {
               CommonOptionConfigTraits.create(
                 Seq(
                   (CommonOptionConfigTraits.ENUM_OPTIONS_PATH, "/options-path"),
-                  (CommonOptionConfigTraits.VALUE, "A,B")
-                )
-              )
-            )
+                  (CommonOptionConfigTraits.VALUE, "A,B"),
+                ),
+              ),
+            ),
           )(using given_Factual)(using dictionary)
           .asInstanceOf[MultiEnumNode]
       assert(
         node.get(0) == Result.Complete(
-          MultiEnum(Set("A", "B"), "/options-path")
-        )
+          MultiEnum(Set("A", "B"), "/options-path"),
+        ),
       )
     }
 
@@ -108,7 +104,7 @@ class MultiEnumNodeSpec extends AnyFunSpec {
             Seq(
               new CompNodeConfigElement(
                 "When",
-                Seq(new CompNodeConfigElement("False"))
+                Seq(new CompNodeConfigElement("False")),
               ),
               new CompNodeConfigElement(
                 "Then",
@@ -120,22 +116,22 @@ class MultiEnumNodeSpec extends AnyFunSpec {
                       Seq(
                         (
                           CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                          "/options-path"
+                          "/options-path",
                         ),
-                        (CommonOptionConfigTraits.VALUE, "A")
-                      )
-                    )
-                  )
-                )
-              )
-            )
+                        (CommonOptionConfigTraits.VALUE, "A"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
           new CompNodeConfigElement(
             "Case",
             Seq(
               new CompNodeConfigElement(
                 "When",
-                Seq(new CompNodeConfigElement("True"))
+                Seq(new CompNodeConfigElement("True")),
               ),
               new CompNodeConfigElement(
                 "Then",
@@ -147,26 +143,26 @@ class MultiEnumNodeSpec extends AnyFunSpec {
                       Seq(
                         (
                           CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                          "/options-path"
+                          "/options-path",
                         ),
-                        (CommonOptionConfigTraits.VALUE, "B,C")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                        (CommonOptionConfigTraits.VALUE, "B,C"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
       val node =
         CompNode.fromDerivedConfig(config)(using given_Factual)(using
-          dictionary
+          dictionary,
         )
       assert(
         node.get(0) == Result.Complete(
-          MultiEnum(Set("B", "C"), "/options-path")
-        )
+          MultiEnum(Set("B", "C"), "/options-path"),
+        ),
       )
     }
   }
@@ -184,13 +180,13 @@ class MultiEnumNodeSpec extends AnyFunSpec {
             CommonOptionConfigTraits.create(
               Seq(
                 (CommonOptionConfigTraits.ENUM_OPTIONS_PATH, "/options-path"),
-                (CommonOptionConfigTraits.VALUE, "C")
-              )
-            )
-          )
+                (CommonOptionConfigTraits.VALUE, "C"),
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -201,11 +197,11 @@ class MultiEnumNodeSpec extends AnyFunSpec {
           new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("../value")
-          )
+            CommonOptionConfigTraits.path("../value"),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     val graph = Graph(dictionary)
@@ -215,8 +211,8 @@ class MultiEnumNodeSpec extends AnyFunSpec {
       assert(dependent.value.isInstanceOf[MultiEnumNode])
       assert(
         dependent.get(0) == Result.Complete(
-          MultiEnum("C", "/options-path")
-        )
+          MultiEnum("C", "/options-path"),
+        ),
       )
     }
   }
@@ -225,11 +221,11 @@ class MultiEnumNodeSpec extends AnyFunSpec {
       val node = MultiEnumNode(Expression.Constant(None), Path("test"))
       val newNode =
         node.fromExpression(
-          Expression.Constant(Some(MultiEnum("B", "test")))
+          Expression.Constant(Some(MultiEnum("B", "test"))),
         )
 
       assert(
-        newNode.get(0) == Result.Complete(MultiEnum("B", "test"))
+        newNode.get(0) == Result.Complete(MultiEnum("B", "test")),
       )
     }
   }
@@ -243,12 +239,12 @@ class MultiEnumNodeSpec extends AnyFunSpec {
           Some(
             new WritableConfigElement(
               "MultiEnum",
-              CommonOptionConfigTraits.optionsPath("/options-path")
-            )
+              CommonOptionConfigTraits.optionsPath("/options-path"),
+            ),
           ),
           None,
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)
@@ -263,8 +259,8 @@ class MultiEnumNodeSpec extends AnyFunSpec {
 
       assert(
         fact.get(0) == Result.Complete(
-          MultiEnum(Set("C", "D"), "/options-path")
-        )
+          MultiEnum(Set("C", "D"), "/options-path"),
+        ),
       )
     }
 
@@ -277,12 +273,12 @@ class MultiEnumNodeSpec extends AnyFunSpec {
             "/anotherName",
             Some(
               new WritableConfigElement(
-                "MultiEnum"
-              )
+                "MultiEnum",
+              ),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -301,16 +297,16 @@ class MultiEnumNodeSpec extends AnyFunSpec {
               CommonOptionConfigTraits.create(
                 Seq(
                   (CommonOptionConfigTraits.ENUM_OPTIONS_PATH, "/options-path"),
-                  (CommonOptionConfigTraits.VALUE, "A, B")
-                )
-              )
-            )
+                  (CommonOptionConfigTraits.VALUE, "A, B"),
+                ),
+              ),
+            ),
           )(using given_Factual)(using dictionary)
           .asInstanceOf[MultiEnumNode]
       assert(
         node.get(0) == Result.Complete(
-          MultiEnum(Set("A", "B"), "/options-path")
-        )
+          MultiEnum(Set("A", "B"), "/options-path"),
+        ),
       )
     }
   }
@@ -325,12 +321,12 @@ class MultiEnumNodeSpec extends AnyFunSpec {
             Some(
               new WritableConfigElement(
                 "MultiEnum",
-                CommonOptionConfigTraits.optionsPath("/options-path")
-              )
+                CommonOptionConfigTraits.optionsPath("/options-path"),
+              ),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(
@@ -338,9 +334,9 @@ class MultiEnumNodeSpec extends AnyFunSpec {
           InMemoryPersister(
             "/alreadySaved" -> MultiEnum(
               Set("D", "C"),
-              "/options-path"
-            )
-          )
+              "/options-path",
+            ),
+          ),
         )
         val fact = graph(Path("/alreadySaved"))(0).get
 
@@ -354,10 +350,10 @@ class MultiEnumNodeSpec extends AnyFunSpec {
                   new CompNodeConfigElement(
                     "Dependency",
                     Seq.empty,
-                    CommonOptionConfigTraits.path("../alreadySaved")
-                  )
+                    CommonOptionConfigTraits.path("../alreadySaved"),
+                  ),
                 ),
-                Seq.empty
+                Seq.empty,
               ),
               new CompNodeConfigElement(
                 "Right",
@@ -369,16 +365,16 @@ class MultiEnumNodeSpec extends AnyFunSpec {
                       Seq(
                         (
                           CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                          "/options-path"
+                          "/options-path",
                         ),
-                        (CommonOptionConfigTraits.VALUE, "C,D")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
+                        (CommonOptionConfigTraits.VALUE, "C,D"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )(using fact)(using dictionary)
         val falseNode = CompNode.fromDerivedConfig(
           new CompNodeConfigElement(
@@ -390,10 +386,10 @@ class MultiEnumNodeSpec extends AnyFunSpec {
                   new CompNodeConfigElement(
                     "Dependency",
                     Seq.empty,
-                    CommonOptionConfigTraits.path("../alreadySaved")
-                  )
+                    CommonOptionConfigTraits.path("../alreadySaved"),
+                  ),
                 ),
-                Seq.empty
+                Seq.empty,
               ),
               new CompNodeConfigElement(
                 "Right",
@@ -405,16 +401,16 @@ class MultiEnumNodeSpec extends AnyFunSpec {
                       Seq(
                         (
                           CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                          "/options-path"
+                          "/options-path",
                         ),
-                        (CommonOptionConfigTraits.VALUE, "C")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
+                        (CommonOptionConfigTraits.VALUE, "C"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )(using fact)(using dictionary)
 
         assert(trueNode.get(using fact)(0) == Result.Complete(true))

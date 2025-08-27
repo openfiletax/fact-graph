@@ -1,21 +1,19 @@
 package gov.irs.factgraph
 
-import gov.irs.factgraph.compnodes.RootNode
-import gov.irs.factgraph.definitions.{FactDictionaryConfigElement, FactDictionaryConfigTrait}
-import gov.irs.factgraph.definitions.meta.MetaConfigTrait
-
-import scala.collection.mutable
-import scala.scalajs.js.annotation.JSExport
-import gov.irs.factgraph.compnodes.MultiEnumNode
-import gov.irs.factgraph.compnodes.EnumNode
-import fs2.{Fallible, Stream}
+import fs2.{ Fallible, Stream }
 import fs2.data.xml.*
 import fs2.data.xml.dom.*
 import fs2.data.xml.scalaXml.*
+import gov.irs.factgraph.compnodes.EnumNode
+import gov.irs.factgraph.compnodes.MultiEnumNode
+import gov.irs.factgraph.compnodes.RootNode
+import gov.irs.factgraph.definitions.{ FactDictionaryConfigElement, FactDictionaryConfigTrait }
 import gov.irs.factgraph.definitions.fact.FactConfigElement
+import gov.irs.factgraph.definitions.meta.MetaConfigTrait
+import scala.collection.mutable
+import scala.scalajs.js.annotation.JSExport
 import scala.util.matching.Regex
 import scala.xml.NodeSeq
-
 
 class FactDictionary:
   private val UUID_REGEX: Regex = "(?i)#[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}".r
@@ -109,13 +107,14 @@ trait DefaultFactDictConfig {
   @JSExport
   def importFromXml(xmlString: String): FactDictionary = {
     // We're using a different parser because XML.loadString requires the JVM
-    val evts = Stream.emits(xmlString)
+    val evts = Stream
+      .emits(xmlString)
       .through(events[Fallible, Char]())
       .through(documents)
 
     val moduleXml = evts.compile.toList match {
       case Right(x) => x
-      case Left(e) => throw e
+      case Left(e)  => throw e
     }
 
     fromXml(moduleXml.head)

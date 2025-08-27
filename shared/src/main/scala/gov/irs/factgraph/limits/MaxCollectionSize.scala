@@ -1,6 +1,6 @@
 package gov.irs.factgraph.limits
 
-import gov.irs.factgraph.{FactDictionary, Factual, Path, Expression}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path }
 import gov.irs.factgraph.compnodes.{
   BooleanNode,
   CollectionNode,
@@ -10,7 +10,7 @@ import gov.irs.factgraph.compnodes.{
   IntNode,
   LessThanOrEqual,
 }
-import gov.irs.factgraph.definitions.fact.{CompNodeConfigTrait, LimitConfigTrait}
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigTrait, LimitConfigTrait }
 import gov.irs.factgraph.limits.LimitFactory
 import gov.irs.factgraph.types.Collection
 
@@ -31,7 +31,9 @@ object MaxCollectionSize extends LimitFactory {
     )
     Max(LessThanOrEqual(lhs, rhs), new LimitContext(Key, e.level, lhs, rhs))
 
-  override def fromConfig(e: LimitConfigTrait)(using Factual)(using
+  override def fromConfig(e: LimitConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): Limit =
     this(e)

@@ -1,8 +1,8 @@
 package gov.irs.factgraph
 
 import gov.irs.factgraph.compnodes.CompNode
-import gov.irs.factgraph.monads.*
 import gov.irs.factgraph.limits.*
+import gov.irs.factgraph.monads.*
 
 trait Factual:
   def value: CompNode

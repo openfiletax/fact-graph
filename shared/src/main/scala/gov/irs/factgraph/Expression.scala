@@ -1,9 +1,9 @@
 package gov.irs.factgraph
 
-import gov.irs.factgraph.operators.*
+import gov.irs.factgraph.compnodes.{ Override, Placeholder }
 import gov.irs.factgraph.monads.*
-import gov.irs.factgraph.types.{CollectionItem, WritableType}
-import gov.irs.factgraph.compnodes.{Override, Placeholder}
+import gov.irs.factgraph.operators.*
+import gov.irs.factgraph.types.{ CollectionItem, WritableType }
 
 enum Expression[A]:
   case Constant(a: Option[A])
@@ -13,54 +13,53 @@ enum Expression[A]:
   case Extract[A, X](f: (source: Result[X]) => Result[A]) extends Expression[A]
   case Unary[A, X](
       x: Expression[X],
-      op: UnaryOperator[A, X]
+      op: UnaryOperator[A, X],
   ) extends Expression[A]
   case Binary[A, L, R](
       lhs: Expression[L],
       rhs: Expression[R],
-      op: BinaryOperator[A, L, R]
+      op: BinaryOperator[A, L, R],
   ) extends Expression[A]
   case Arity4[A, W, X, Y, Z](
       arg1: Expression[W],
       arg2: Expression[X],
       arg3: Expression[Y],
       arg4: Expression[Z],
-      op: Arity4Operator[A, W, X, Y, Z]
+      op: Arity4Operator[A, W, X, Y, Z],
   ) extends Expression[A]
   case Reduce(
       xs: List[Expression[A]],
-      op: ReduceOperator[A]
+      op: ReduceOperator[A],
   )
   // Returns the set of strings where the corresponding booleans are true.
   // If any string or boolean are incomplete, ConditionalList will return
   // Result.Incomplete
-  case ConditionalList(options: List[(Expression[Boolean], Expression[String])])
-      extends Expression[List[String]]
+  case ConditionalList(options: List[(Expression[Boolean], Expression[String])]) extends Expression[List[String]]
   case Aggregate[A, X](
       x: Expression[X],
-      op: AggregateOperator[A, X]
+      op: AggregateOperator[A, X],
   ) extends Expression[A]
   case Collect[A, X](
       path: Path,
       x: Expression[X],
-      op: CollectOperator[A, X]
+      op: CollectOperator[A, X],
   ) extends Expression[A]
 
   def isWritable: Boolean = this match
     case Writable(_) => true
-    case _ =>
+    case _           =>
       Placeholder.isWritablePlaceholder(this) || Override.isWritableOverride(
-        this
+        this,
       )
 
   def get(using Factual): MaybeVector[Result[A]] = this match
-    case Constant(a)          => MaybeVector(Result(a))
-    case Writable(klass)      => MaybeVector(getSavedResult(klass))
-    case Dependency(path)     => dependency(path, dependencies.result)
-    case Switch(cases)        => switch(cases, switches.result)
-    case Extract(f)           => extract(f)
-    case Unary(x, op)         => op(x.get)
-    case Binary(lhs, rhs, op) => op(lhs.get, rhs.getThunk)
+    case Constant(a)                        => MaybeVector(Result(a))
+    case Writable(klass)                    => MaybeVector(getSavedResult(klass))
+    case Dependency(path)                   => dependency(path, dependencies.result)
+    case Switch(cases)                      => switch(cases, switches.result)
+    case Extract(f)                         => extract(f)
+    case Unary(x, op)                       => op(x.get)
+    case Binary(lhs, rhs, op)               => op(lhs.get, rhs.getThunk)
     case Arity4(arg1, arg2, arg3, arg4, op) =>
       op(arg1.get, arg2.get, arg3.get, arg4.get)
     case Reduce(xs, op)       => op(xs.head.get, xs.tail.map(_.getThunk))
@@ -69,16 +68,16 @@ enum Expression[A]:
     case Collect(path, x, op) => MaybeVector(collect(path, x, op))
 
   def getThunk(using Factual): MaybeVector[Thunk[Result[A]]] = this match
-    case Constant(a)          => MaybeVector(Thunk(() => Result(a)))
-    case Writable(klass)      => MaybeVector(Thunk(() => getSavedResult(klass)))
-    case Dependency(path)     => dependency(path, dependencies.thunk)
-    case Switch(cases)        => switch(cases, switches.thunk)
-    case Extract(f)           => extractThunk(f)
-    case Unary(x, op)         => op.thunk(x.getThunk)
-    case Binary(lhs, rhs, op) => op.thunk(lhs.getThunk, rhs.getThunk)
+    case Constant(a)                        => MaybeVector(Thunk(() => Result(a)))
+    case Writable(klass)                    => MaybeVector(Thunk(() => getSavedResult(klass)))
+    case Dependency(path)                   => dependency(path, dependencies.thunk)
+    case Switch(cases)                      => switch(cases, switches.thunk)
+    case Extract(f)                         => extractThunk(f)
+    case Unary(x, op)                       => op.thunk(x.getThunk)
+    case Binary(lhs, rhs, op)               => op.thunk(lhs.getThunk, rhs.getThunk)
     case Arity4(arg1, arg2, arg3, arg4, op) =>
       op.thunk(arg1.getThunk, arg2.getThunk, arg3.getThunk, arg4.getThunk)
-    case Reduce(xs, op) => op.thunk(xs.head.getThunk, xs.tail.map(_.getThunk))
+    case Reduce(xs, op)       => op.thunk(xs.head.getThunk, xs.tail.map(_.getThunk))
     case ConditionalList(l)   => MaybeVector(Thunk(() => conditionSet(l)))
     case Aggregate(x, op)     => MaybeVector(op.thunk(x.getThunk))
     case Collect(path, x, op) => MaybeVector(Thunk(() => collect(path, x, op)))
@@ -87,11 +86,11 @@ enum Expression[A]:
     case Constant(_) => MaybeVector(Explanation.Constant)
     case Writable(_) =>
       for result <- get yield Explanation.Writable(result.complete, fact.path)
-    case Dependency(path)     => dependency(path, dependencies.explain)
-    case Switch(cases)        => switchExplain(cases)
-    case Extract(f)           => fact(PathItem.Parent)(0).get.explain
-    case Unary(x, op)         => op.explain(x)
-    case Binary(lhs, rhs, op) => op.explain(lhs, rhs)
+    case Dependency(path)                   => dependency(path, dependencies.explain)
+    case Switch(cases)                      => switchExplain(cases)
+    case Extract(f)                         => fact(PathItem.Parent)(0).get.explain
+    case Unary(x, op)                       => op.explain(x)
+    case Binary(lhs, rhs, op)               => op.explain(lhs, rhs)
     case Arity4(arg1, arg2, arg3, arg4, op) =>
       op.explain(arg1, arg2, arg3, arg4)
     case Reduce(xs, op)       => op.explain(xs)
@@ -118,9 +117,9 @@ enum Expression[A]:
 
   private def dependency[X](
       path: Path,
-      f: (Result[Factual], Path, Path) => MaybeVector[X]
+      f: (Result[Factual], Path, Path) => MaybeVector[X],
   )(using
-      fact: Factual
+      fact: Factual,
   ): MaybeVector[X] =
     for {
       result <- fact(path)
@@ -131,7 +130,7 @@ enum Expression[A]:
     def result(
         result: Result[Factual],
         _1: Path,
-        _2: Path
+        _2: Path,
     ): MaybeVector[Result[A]] = result match
       case Result(fact, complete) =>
         val results = fact.get.asInstanceOf[MaybeVector[Result[A]]]
@@ -141,7 +140,7 @@ enum Expression[A]:
     def thunk(
         result: Result[Factual],
         _1: Path,
-        _2: Path
+        _2: Path,
     ): MaybeVector[Thunk[Result[A]]] =
       result match
         case Result(fact, complete) =>
@@ -163,7 +162,7 @@ enum Expression[A]:
     def explain(
         result: Result[Factual],
         source: Path,
-        target: Path
+        target: Path,
     ): MaybeVector[Explanation] =
       result match
         case Result(fact, complete) =>
@@ -173,26 +172,26 @@ enum Expression[A]:
             complete,
             source,
             target,
-            List(List(explanation))
+            List(List(explanation)),
           )
         case _ =>
           MaybeVector(Explanation.Dependency(false, source, target, List()))
 
   private def switch[X](
       cases: List[(Expression[Boolean], Expression[A])],
-      f: List[(Thunk[Result[Boolean]], Thunk[Result[A]])] => X
+      f: List[(Thunk[Result[Boolean]], Thunk[Result[A]])] => X,
   )(using Factual): MaybeVector[X] =
     val thunks = cases.map((bool, a) => (bool.getThunk, a.getThunk))
     MaybeVector.vectorizeListTuple2(f, thunks)
 
   private def switchExplain(
-      cases: List[(Expression[Boolean], Expression[A])]
+      cases: List[(Expression[Boolean], Expression[A])],
   )(using Factual): MaybeVector[Explanation] =
     val caseVectors = cases.map((bool, a) =>
       (
         bool.getThunk,
         bool.explain,
-        a.explain
+        a.explain,
       ), // Potential optimization: thunk the explanations
     )
 
@@ -200,14 +199,14 @@ enum Expression[A]:
 
   private object switches:
     def result(
-        cases: List[(Thunk[Result[Boolean]], Thunk[Result[A]])]
+        cases: List[(Thunk[Result[Boolean]], Thunk[Result[A]])],
     ): Result[A] =
       resultRecurse(cases, true)
 
     @annotation.tailrec
     private def resultRecurse(
         cases: List[(Thunk[Result[Boolean]], Thunk[Result[A]])],
-        accComplete: Boolean
+        accComplete: Boolean,
     ): Result[A] = cases match
       case (bool, a) :: next =>
         val complete = bool.get.complete && accComplete
@@ -218,39 +217,39 @@ enum Expression[A]:
       case Nil => Result.Incomplete
 
     def thunk(
-        cases: List[(Thunk[Result[Boolean]], Thunk[Result[A]])]
+        cases: List[(Thunk[Result[Boolean]], Thunk[Result[A]])],
     ): Thunk[Result[A]] =
       Thunk(() => result(cases))
 
     def explain(
-        cases: List[(Thunk[Result[Boolean]], Explanation, Explanation)]
+        cases: List[(Thunk[Result[Boolean]], Explanation, Explanation)],
     ): Explanation =
       explainRecurse(cases, Explanation.Operation(List()))
 
     @annotation.tailrec
     def explainRecurse(
         cases: List[(Thunk[Result[Boolean]], Explanation, Explanation)],
-        explanation: Explanation
+        explanation: Explanation,
     ): Explanation = cases match
       case (bool, boolExp, aExp) :: next =>
         bool.get match
           case Result.Complete(true) =>
             Explanation.Operation(
-              explanation.children :+ List(boolExp, aExp)
+              explanation.children :+ List(boolExp, aExp),
             )
           case Result.Complete(false) =>
             explainRecurse(
               next,
-              Explanation.Operation(explanation.children :+ List(boolExp))
+              Explanation.Operation(explanation.children :+ List(boolExp)),
             )
           case _ =>
             Explanation.Operation(
-              explanation.children :+ List(boolExp)
+              explanation.children :+ List(boolExp),
             )
       case Nil => explanation
 
   private def extract[X](
-      f: (source: Result[X]) => Result[A]
+      f: (source: Result[X]) => Result[A],
   )(using fact: Factual): MaybeVector[Result[A]] =
     val parent = fact(PathItem.Parent)(0).get
     for {
@@ -258,7 +257,7 @@ enum Expression[A]:
     } yield f(result.asInstanceOf[Result[X]])
 
   private def extractThunk[X](
-      f: (source: Result[X]) => Result[A]
+      f: (source: Result[X]) => Result[A],
   )(using fact: Factual): MaybeVector[Thunk[Result[A]]] =
     val parent = fact(PathItem.Parent)(0).get
     for {
@@ -268,7 +267,7 @@ enum Expression[A]:
     } yield f(result.asInstanceOf[Result[X]])
 
   def collect[X](path: Path, x: Expression[X], op: CollectOperator[A, X])(using
-      fact: Factual
+      fact: Factual,
   ): Result[A] =
     val vect = for {
       item <- fact(path :+ PathItem.Wildcard)
@@ -278,34 +277,28 @@ enum Expression[A]:
     op(vect)
 
   def conditionSet(list: List[(Expression[Boolean], Expression[String])])(using
-      fact: Factual
+      fact: Factual,
   ): Result[List[String]] =
     val thunks = list.map(o => (o._1.getThunk, o._2.getThunk))
 
     // If any predicates or options are incomplete, we return Incomplete.
-    if (
-      thunks.exists((b, s) =>
-        b(0).get.complete == false || s(0).get.complete == false
-      )
-    ) {
+    if (thunks.exists((b, s) => b(0).get.complete == false || s(0).get.complete == false)) {
       return Result.Incomplete
     }
 
     val strings = for {
-      f <- thunks.filter((b, s) => {
+      f <- thunks.filter((b, s) =>
         // if a boolean node is false, we exclude its
         // value from the returned list.
         b(0).get.complete && b(0).get.get == true &&
-        // Similarly, if the value we're returning is incomplete, we exclude it.
-        s(0).get.complete
-      })
-    } yield {
-      f._2(0).get.get
-    }
+          // Similarly, if the value we're returning is incomplete, we exclude it.
+          s(0).get.complete,
+      )
+    } yield f._2(0).get.get
     Result.Complete(strings.toList)
 
-  def conditionExplain(list: List[(Expression[Boolean], Expression[String])])(
-      using fact: Factual
+  def conditionExplain(list: List[(Expression[Boolean], Expression[String])])(using
+      fact: Factual,
   ): MaybeVector[Explanation] =
     // First we call explain on each bool and string
     val explanations = for (bool, str) <- list yield (bool.explain, str.explain)
@@ -316,7 +309,7 @@ enum Expression[A]:
     MaybeVector.vectorizeListTuple2(
       (expList: List[(Explanation, Explanation)]) =>
         Explanation.opWithInclusiveChildren(
-          expList.flatten { case (a, b) => List(a, b) }
+          expList.flatten { case (a, b) => List(a, b) },
         ),
-      explanations
+      explanations,
     )

@@ -1,7 +1,7 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path}
-import gov.irs.factgraph.definitions.fact.{CompNodeConfigTrait, WritableConfigTrait}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path }
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigTrait, WritableConfigTrait }
 
 final case class BooleanNode(expr: Expression[Boolean]) extends CompNode:
   type Value = Boolean
@@ -17,7 +17,9 @@ final case class BooleanNode(expr: Expression[Boolean]) extends CompNode:
 object BooleanNode extends WritableNodeFactory:
   override val Key: String = "Boolean"
 
-  override def fromWritableConfig(e: WritableConfigTrait)(using Factual)(using
+  override def fromWritableConfig(e: WritableConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     new BooleanNode(
@@ -31,13 +33,17 @@ object BooleanNode extends WritableNodeFactory:
   object True extends CompNodeFactory:
     override val Key: String = "True"
     val node: BooleanNode = new BooleanNode(Expression.Constant(Some(true)))
-    override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+    override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+        Factual,
+    )(using
         FactDictionary,
     ): CompNode = node
 
   object False extends CompNodeFactory:
     override val Key: String = "False"
     val node: BooleanNode = new BooleanNode(Expression.Constant(Some(false)))
-    override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+    override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+        Factual,
+    )(using
         FactDictionary,
     ): CompNode = node

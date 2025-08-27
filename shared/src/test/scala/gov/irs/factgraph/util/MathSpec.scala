@@ -1,8 +1,7 @@
 package gov.irs.factgraph.util
 
-import org.scalatest.funspec.AnyFunSpec
-
 import gov.irs.factgraph.util.Math.gcd
+import org.scalatest.funspec.AnyFunSpec
 
 class MathSpec extends AnyFunSpec:
   describe("gcd()") {

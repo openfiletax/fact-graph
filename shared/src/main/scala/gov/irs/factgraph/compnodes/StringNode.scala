@@ -1,7 +1,7 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path}
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait }
 
 final case class StringNode(expr: Expression[String]) extends CompNode:
   type Value = String
@@ -15,7 +15,9 @@ final case class StringNode(expr: Expression[String]) extends CompNode:
 object StringNode extends CompNodeFactory with WritableNodeFactory:
   override val Key: String = "String"
 
-  override def fromWritableConfig(e: WritableConfigTrait)(using Factual)(using
+  override def fromWritableConfig(e: WritableConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     new StringNode(
@@ -26,7 +28,9 @@ object StringNode extends CompNodeFactory with WritableNodeFactory:
     Expression.Constant(Some(value)),
   )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     this(e.getOptionValue(CommonOptionConfigTraits.VALUE).getOrElse(""))

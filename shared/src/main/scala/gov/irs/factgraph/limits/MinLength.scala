@@ -1,6 +1,6 @@
 package gov.irs.factgraph.limits
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path }
 import gov.irs.factgraph.compnodes.{
   BooleanNode,
   CompNode,
@@ -10,7 +10,7 @@ import gov.irs.factgraph.compnodes.{
   LessThanOrEqual,
   StringNode,
 }
-import gov.irs.factgraph.definitions.fact.{CompNodeConfigTrait, LimitConfigTrait}
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigTrait, LimitConfigTrait }
 import gov.irs.factgraph.limits.LimitFactory
 
 case class MinLength(limiter: BooleanNode, context: LimitContext) extends Limit
@@ -31,7 +31,9 @@ object MinLength extends LimitFactory {
       new LimitContext(Key, e.level, lhs, rhs),
     )
 
-  override def fromConfig(e: LimitConfigTrait)(using Factual)(using
+  override def fromConfig(e: LimitConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): Limit =
     this(e)

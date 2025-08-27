@@ -1,8 +1,8 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path, PathItem}
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait}
-import gov.irs.factgraph.monads.{MaybeVector, Result}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path, PathItem }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait }
+import gov.irs.factgraph.monads.{ MaybeVector, Result }
 import gov.irs.factgraph.types.BankAccount
 
 final case class BankAccountNode(expr: Expression[BankAccount]) extends CompNode:
@@ -39,7 +39,9 @@ final case class BankAccountNode(expr: Expression[BankAccount]) extends CompNode
 object BankAccountNode extends CompNodeFactory with WritableNodeFactory:
   override val Key: String = "BankAccount"
 
-  override def fromWritableConfig(e: WritableConfigTrait)(using Factual)(using
+  override def fromWritableConfig(e: WritableConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     new BankAccountNode(
@@ -50,7 +52,9 @@ object BankAccountNode extends CompNodeFactory with WritableNodeFactory:
     Expression.Constant(Some(value)),
   )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     throw new NotImplementedError("BankAccoutNode.fromDerivedConfig")

@@ -1,16 +1,11 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
+import gov.irs.factgraph.*
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigElement, FactConfigElement, WritableConfigElement }
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.*
-import gov.irs.factgraph.*
-import gov.irs.factgraph.definitions.fact.{
-  CompNodeConfigElement,
-  FactConfigElement,
-  WritableConfigElement
-}
-
 import java.util.UUID
+import org.scalatest.funspec.AnyFunSpec
 
 class SumSpec extends AnyFunSpec:
   describe("CollectionSum") {
@@ -26,13 +21,13 @@ class SumSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Dependency",
                 Seq.empty,
-                "/collection/*/int"
-              )
-            )
-          )
+                "/collection/*/int",
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -46,13 +41,13 @@ class SumSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Dependency",
                 Seq.empty,
-                "/collection/*/rational"
-              )
-            )
-          )
+                "/collection/*/rational",
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -66,68 +61,68 @@ class SumSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Dependency",
                 Seq.empty,
-                "/collection/*/dollar"
-              )
-            )
-          )
+                "/collection/*/dollar",
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection",
         Some(
-          new WritableConfigElement("Collection")
+          new WritableConfigElement("Collection"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/int",
         Some(
-          new WritableConfigElement("Int")
+          new WritableConfigElement("Int"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/rational",
         Some(
-          new WritableConfigElement("Rational")
+          new WritableConfigElement("Rational"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/dollar",
         Some(
-          new WritableConfigElement("Dollar")
+          new WritableConfigElement("Dollar"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/string",
         Some(
-          new WritableConfigElement("String")
+          new WritableConfigElement("String"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     val graph = Graph(dictionary)
@@ -215,13 +210,13 @@ class SumSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Dependency",
                     Seq.empty,
-                    "/collection/*/string"
-                  )
-                )
-              )
+                    "/collection/*/string",
+                  ),
+                ),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         definition.meta

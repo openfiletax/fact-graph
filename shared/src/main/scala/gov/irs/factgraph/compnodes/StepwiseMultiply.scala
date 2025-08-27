@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.types.*
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
 import gov.irs.factgraph.operators.BinaryOperator
+import gov.irs.factgraph.types.*
 
 object StepwiseMultiply extends CompNodeFactory:
   override val Key: String = "StepwiseMultiply"
@@ -19,7 +19,9 @@ object StepwiseMultiply extends CompNodeFactory:
       ),
     )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val multiplicand = CompNode.getConfigChildNode(e, "Multiplicand")
@@ -27,11 +29,11 @@ object StepwiseMultiply extends CompNodeFactory:
 
     (multiplicand, rate) match
       case (m: DollarNode, r: RationalNode) => this(m, r)
-      case _ =>
+      case _                                =>
         throw new UnsupportedOperationException(
           s"invalid child types: ${e.typeName}",
         )
 
-private final class StepwiseMultiplyOperator extends BinaryOperator[Dollar, Dollar, Rational]:
+final private class StepwiseMultiplyOperator extends BinaryOperator[Dollar, Dollar, Rational]:
   override protected def operation(x: Dollar, y: Rational): Dollar =
     Dollar(x.intValue / y.denominator * y.numerator)

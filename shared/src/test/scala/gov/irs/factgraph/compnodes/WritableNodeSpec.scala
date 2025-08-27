@@ -1,12 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
-import gov.irs.factgraph.definitions.fact.{
-  WritableConfigElement,
-  WritableConfigTrait
-}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
+import gov.irs.factgraph.definitions.fact.{ WritableConfigElement, WritableConfigTrait }
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class WritableNodeSpec extends AnyFunSpec:
   describe("WritableNode") {
@@ -14,7 +11,7 @@ class WritableNodeSpec extends AnyFunSpec:
       object DummyNode extends WritableNodeFactory:
         override val Key: String = "Dummy"
         override def fromWritableConfig(e: WritableConfigTrait)(using
-            Factual
+            Factual,
         )(using FactDictionary): CompNode =
           new IntNode(Expression.Writable(classOf[Int]))
 

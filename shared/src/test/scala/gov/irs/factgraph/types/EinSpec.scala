@@ -10,7 +10,7 @@ class EinSpec extends AnyFunSpec:
         List("-", ".", ",", " ", "/", "\\", "").foreach(punc =>
           val einStr = s"${prefix}${punc}${serial}"
           val ein = Ein(einStr)
-          assert((ein.prefix, ein.serial) == (prefix, serial))
+          assert((ein.prefix, ein.serial) == (prefix, serial)),
         )
       }
       it("Never strips leading 0's") {
@@ -38,13 +38,12 @@ class EinSpec extends AnyFunSpec:
 
   describe("EinFailureReason") {
     describe(".toUserFriendlyReason") {
-      for (detailedFailureReason <- EinFailureReason.values) {
+      for (detailedFailureReason <- EinFailureReason.values)
         it(
-          s"converts $detailedFailureReason into a valid UserFriendlyEinFailureReason"
+          s"converts $detailedFailureReason into a valid UserFriendlyEinFailureReason",
         ) {
           val userFriendlyReason = detailedFailureReason.toUserFriendlyReason()
           assert(userFriendlyReason.isInstanceOf[UserFriendlyEinFailureReason])
         }
-      }
     }
   }

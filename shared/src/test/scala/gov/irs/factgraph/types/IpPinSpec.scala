@@ -6,30 +6,27 @@ class IpPinSpec extends AnyFunSpec:
   describe("IpPin") {
     describe("preconditions for the ippin fields") {
       it("throws an error because ippin is the wrong length") {
-        try {
+        try
           new IpPin("123")
-        } catch {
-          case e: IpPinValidationFailure => {
+        catch {
+          case e: IpPinValidationFailure =>
             assert(e.validationMessage.toString() == "InvalidIpPin")
-          }
         }
       }
       it("throws an error because ippin has invalid characters") {
-        try {
+        try
           new IpPin("abcded")
-        } catch {
-          case e: IpPinValidationFailure => {
+        catch {
+          case e: IpPinValidationFailure =>
             assert(e.validationMessage.toString() == "InvalidIpPin")
-          }
         }
       }
       it("throws an error because pin has all zeroes") {
-        try {
+        try
           new IpPin("000000")
-        } catch {
-          case e: IpPinValidationFailure => {
+        catch {
+          case e: IpPinValidationFailure =>
             assert(e.validationMessage.toString() == "InvalidAllZerosIpPin")
-          }
         }
       }
     }

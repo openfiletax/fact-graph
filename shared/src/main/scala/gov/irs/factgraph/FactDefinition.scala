@@ -1,18 +1,11 @@
 package gov.irs.factgraph
 
 import gov.irs.factgraph
-import gov.irs.factgraph.compnodes.{
-  BooleanNode,
-  CollectionItemNode,
-  CollectionNode,
-  CompNode,
-  Override,
-  WritableNode
-}
-import gov.irs.factgraph.definitions.fact.{FactConfigTrait, LimitConfigTrait}
-import gov.irs.factgraph.monads.*
-import gov.irs.factgraph.limits.*
+import gov.irs.factgraph.compnodes.{ BooleanNode, CollectionItemNode, CollectionNode, CompNode, Override, WritableNode }
 import gov.irs.factgraph.compnodes.Placeholder
+import gov.irs.factgraph.definitions.fact.{ FactConfigTrait, LimitConfigTrait }
+import gov.irs.factgraph.limits.*
+import gov.irs.factgraph.monads.*
 import scala.scalajs.js.annotation.JSExport
 import scala.scalajs.js.annotation.JSExportAll
 import scala.xml.NodeSeq
@@ -21,7 +14,7 @@ final class FactDefinition(
     private val cnBuilder: Factual ?=> CompNode,
     val path: Path,
     private val limitsBuilder: Factual ?=> Seq[Limit],
-    val dictionary: FactDictionary
+    val dictionary: FactDictionary,
 ) extends Factual:
   given Factual = this
 
@@ -46,7 +39,7 @@ final class FactDefinition(
   @JSExport
   lazy val meta: Factual.Meta = Factual.Meta(
     size,
-    abstractPath
+    abstractPath,
   )
 
   lazy val size: Factual.Size = value.getThunk match
@@ -93,7 +86,7 @@ final class FactDefinition(
     this(List(key))
 
   private def apply(
-      pathItems: List[PathItem]
+      pathItems: List[PathItem],
   ): MaybeVector[Result[FactDefinition]] = pathItems match
     case PathItem.Parent :: next => getNext(parent, next)
     case PathItem.Child(_) :: _  => applyChild(pathItems)
@@ -103,14 +96,14 @@ final class FactDefinition(
     case Nil                     => MaybeVector(Result.Complete(this))
 
   private def applyChild(
-      pathItems: List[PathItem]
+      pathItems: List[PathItem],
   ): MaybeVector[Result[FactDefinition]] = value match
     case CollectionItemNode(_, Some(alias)) =>
       this((alias :+ PathItem.Unknown) ++ pathItems)
     case _ => getNext(getChild(pathItems.head), pathItems.tail)
 
   private def applyWildcard(
-      pathItems: List[PathItem]
+      pathItems: List[PathItem],
   ): MaybeVector[Result[FactDefinition]] = value match
     case CollectionNode(_, Some(alias)) =>
       this(alias ++ pathItems)
@@ -119,7 +112,7 @@ final class FactDefinition(
     case _ => MaybeVector(Result.Incomplete)
 
   private def applyUnknown(
-      pathItems: List[PathItem]
+      pathItems: List[PathItem],
   ): MaybeVector[Result[FactDefinition]] = value match
     case CollectionNode(_, Some(alias)) =>
       this(alias ++ pathItems)
@@ -129,7 +122,7 @@ final class FactDefinition(
 
   private def getNext(
       optFact: Option[FactDefinition],
-      next: List[PathItem]
+      next: List[PathItem],
   ): MaybeVector[Result[FactDefinition]] =
     for {
       result <- MaybeVector(Result(optFact))
@@ -149,7 +142,7 @@ final class FactDefinition(
           Factual ?=> node,
           path :+ key.asAbstract,
           Seq.empty,
-          dictionary
+          dictionary,
         ),
       )
 
@@ -159,7 +152,7 @@ object FactDefinition:
       path: Path,
       limits: Factual ?=> Seq[Limit],
       rawXml: NodeSeq,
-      dictionary: FactDictionary
+      dictionary: FactDictionary,
   ): FactDefinition =
     require(path.isAbstract)
 
@@ -171,11 +164,9 @@ object FactDefinition:
 
   def fromConfig(e: FactConfigTrait)(using FactDictionary): FactDefinition =
     // if neither of them or both of them
-    if (
-      e.writable.isEmpty && e.derived.isEmpty || (e.writable.isDefined && e.derived.isDefined)
-    )
+    if (e.writable.isEmpty && e.derived.isEmpty || (e.writable.isDefined && e.derived.isDefined))
       throw new IllegalArgumentException(
-        s"Fact ${e.path} must have exactly one Writable or Derived"
+        s"Fact ${e.path} must have exactly one Writable or Derived",
       )
     val isWritable = e.writable.isDefined
 
@@ -194,7 +185,7 @@ object FactDefinition:
           Override(
             node2,
             CompNode.fromDerivedConfig(condition).asInstanceOf[BooleanNode],
-            CompNode.fromDerivedConfig(default)
+            CompNode.fromDerivedConfig(default),
           )
         case _ => node2
       }

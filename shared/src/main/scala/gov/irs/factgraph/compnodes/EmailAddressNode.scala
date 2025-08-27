@@ -1,7 +1,7 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path}
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait }
 import gov.irs.factgraph.types.EmailAddress
 
 final case class EmailAddressNode(expr: Expression[EmailAddress]) extends CompNode:
@@ -16,7 +16,9 @@ final case class EmailAddressNode(expr: Expression[EmailAddress]) extends CompNo
 object EmailAddressNode extends CompNodeFactory with WritableNodeFactory:
   override val Key: String = "EmailAddress"
 
-  override def fromWritableConfig(e: WritableConfigTrait)(using Factual)(using
+  override def fromWritableConfig(e: WritableConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     new EmailAddressNode(
@@ -27,7 +29,9 @@ object EmailAddressNode extends CompNodeFactory with WritableNodeFactory:
     Expression.Constant(Some(value)),
   )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     this(EmailAddress(e.getOptionValue(CommonOptionConfigTraits.VALUE).get))

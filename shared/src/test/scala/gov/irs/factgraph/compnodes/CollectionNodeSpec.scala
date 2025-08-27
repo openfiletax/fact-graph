@@ -1,17 +1,16 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
   FactConfigElement,
-  WritableConfigElement
+  WritableConfigElement,
 }
 import gov.irs.factgraph.monads.Result
-import gov.irs.factgraph.types.{Collection, CollectionItem}
-
+import gov.irs.factgraph.types.{ Collection, CollectionItem }
 import java.util.UUID
+import org.scalatest.funspec.AnyFunSpec
 
 class CollectionNodeSpec extends AnyFunSpec:
   describe("CollectionNode") {
@@ -29,7 +28,7 @@ class CollectionNodeSpec extends AnyFunSpec:
                 Seq(
                   new CompNodeConfigElement(
                     "When",
-                    Seq(new CompNodeConfigElement("False"))
+                    Seq(new CompNodeConfigElement("False")),
                   ),
                   new CompNodeConfigElement(
                     "Then",
@@ -37,18 +36,18 @@ class CollectionNodeSpec extends AnyFunSpec:
                       new CompNodeConfigElement(
                         "Dependency",
                         Seq.empty,
-                        "/filteredCollection"
-                      )
-                    )
-                  )
-                )
+                        "/filteredCollection",
+                      ),
+                    ),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Case",
                 Seq(
                   new CompNodeConfigElement(
                     "When",
-                    Seq(new CompNodeConfigElement("True"))
+                    Seq(new CompNodeConfigElement("True")),
                   ),
                   new CompNodeConfigElement(
                     "Then",
@@ -56,16 +55,16 @@ class CollectionNodeSpec extends AnyFunSpec:
                       new CompNodeConfigElement(
                         "Dependency",
                         Seq.empty,
-                        "/collection"
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
+                        "/collection",
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
-        None
+        None,
       )
       FactDefinition.fromConfig(config)(using dictionary)
 
@@ -73,7 +72,7 @@ class CollectionNodeSpec extends AnyFunSpec:
         "/collection",
         Some(new WritableConfigElement("Collection")),
         None,
-        None
+        None,
       )
       FactDefinition.fromConfig(config2)(using dictionary)
 
@@ -84,12 +83,12 @@ class CollectionNodeSpec extends AnyFunSpec:
           CompNodeConfigElement(
             "Filter",
             Seq(
-              new CompNodeConfigElement("False")
+              new CompNodeConfigElement("False"),
             ),
-            CommonOptionConfigTraits.path("/collection")
-          )
+            CommonOptionConfigTraits.path("/collection"),
+          ),
         ),
-        None
+        None,
       )
       FactDefinition.fromConfig(config3)(using dictionary)
 
@@ -97,7 +96,7 @@ class CollectionNodeSpec extends AnyFunSpec:
         "/anotherCollection",
         Some(new WritableConfigElement("Collection")),
         None,
-        None
+        None,
       )
       FactDefinition.fromConfig(config4)(using dictionary)
 
@@ -134,7 +133,7 @@ class CollectionNodeSpec extends AnyFunSpec:
                     Seq(
                       new CompNodeConfigElement(
                         "When",
-                        Seq(new CompNodeConfigElement("False"))
+                        Seq(new CompNodeConfigElement("False")),
                       ),
                       new CompNodeConfigElement(
                         "Then",
@@ -142,18 +141,18 @@ class CollectionNodeSpec extends AnyFunSpec:
                           new CompNodeConfigElement(
                             "Dependency",
                             Seq.empty,
-                            "/anotherCollection"
-                          )
-                        )
-                      )
-                    )
+                            "/anotherCollection",
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   new CompNodeConfigElement(
                     "Case",
                     Seq(
                       new CompNodeConfigElement(
                         "When",
-                        Seq(new CompNodeConfigElement("True"))
+                        Seq(new CompNodeConfigElement("True")),
                       ),
                       new CompNodeConfigElement(
                         "Then",
@@ -161,16 +160,16 @@ class CollectionNodeSpec extends AnyFunSpec:
                           new CompNodeConfigElement(
                             "Dependency",
                             Seq.empty,
-                            "/collection"
-                          )
-                        )
-                      )
-                    )
-                  )
-                )
-              )
+                            "/collection",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
-            None
+            None,
           )
           val definition = FactDefinition.fromConfig(config)(using dictionary)
 
@@ -185,7 +184,7 @@ class CollectionNodeSpec extends AnyFunSpec:
         "/filers",
         Some(new WritableConfigElement("Collection")),
         None,
-        None
+        None,
       )
       FactDefinition.fromConfig(config)(using dictionary)
 
@@ -193,7 +192,7 @@ class CollectionNodeSpec extends AnyFunSpec:
         "/filers/*/isBlind",
         Some(new WritableConfigElement("Boolean")),
         None,
-        None
+        None,
       )
       FactDefinition.fromConfig(config2)(using dictionary)
 
@@ -201,7 +200,7 @@ class CollectionNodeSpec extends AnyFunSpec:
         "/filers/*/age65OrOlder",
         Some(new WritableConfigElement("Boolean")),
         None,
-        None
+        None,
       )
       FactDefinition.fromConfig(config3)(using dictionary)
 
@@ -218,10 +217,10 @@ class CollectionNodeSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Dependency",
                     Seq.empty,
-                    CommonOptionConfigTraits.path("/filers/*/isBlind")
-                  )
+                    CommonOptionConfigTraits.path("/filers/*/isBlind"),
+                  ),
                 ),
-                Seq.empty
+                Seq.empty,
               ),
               new CompNodeConfigElement(
                 "Count",
@@ -229,16 +228,16 @@ class CollectionNodeSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Dependency",
                     Seq.empty,
-                    CommonOptionConfigTraits.path("/filers/*/age65OrOlder")
-                  )
+                    CommonOptionConfigTraits.path("/filers/*/age65OrOlder"),
+                  ),
                 ),
-                Seq.empty
-              )
+                Seq.empty,
+              ),
             ),
-            Seq.empty
-          )
+            Seq.empty,
+          ),
         ),
-        None
+        None,
       )
       FactDefinition.fromConfig(config4)(using dictionary)
 
@@ -316,7 +315,7 @@ class CollectionNodeSpec extends AnyFunSpec:
           "/test",
           Some(new WritableConfigElement("Collection")),
           None,
-          None
+          None,
         )
         FactDefinition.fromConfig(config)(using dictionary)
 
@@ -328,7 +327,7 @@ class CollectionNodeSpec extends AnyFunSpec:
         assert(fact.get(0) == Result.Incomplete)
 
         val collection = Collection(
-          Vector(UUID.fromString("d3f7782e-48c8-4717-8aa4-0a1d677022af"))
+          Vector(UUID.fromString("d3f7782e-48c8-4717-8aa4-0a1d677022af")),
         )
 
         fact.value match

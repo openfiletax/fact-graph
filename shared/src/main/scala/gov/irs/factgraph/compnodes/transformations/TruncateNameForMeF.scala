@@ -1,15 +1,15 @@
 package gov.irs.factgraph.compnodes.transformations
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
-import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
-import gov.irs.factgraph.operators.BinaryOperator
-import gov.irs.factgraph.monads.Result
-import gov.irs.factgraph.monads.Thunk
-import gov.irs.factgraph.operators.ReduceOperator
-import gov.irs.factgraph.operators.Arity4Operator
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
+import gov.irs.factgraph.compnodes.CompNode
 import gov.irs.factgraph.compnodes.CompNodeFactory
 import gov.irs.factgraph.compnodes.StringNode
-import gov.irs.factgraph.compnodes.CompNode
+import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
+import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.monads.Thunk
+import gov.irs.factgraph.operators.Arity4Operator
+import gov.irs.factgraph.operators.BinaryOperator
+import gov.irs.factgraph.operators.ReduceOperator
 
 object TruncateNameForMeF extends CompNodeFactory:
   override val Key: String = "TruncateNameForMeF"
@@ -32,7 +32,9 @@ object TruncateNameForMeF extends CompNodeFactory:
       ),
     )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val firstName = CompNode.getConfigChildNode(e, "FirstName")
@@ -52,7 +54,7 @@ object TruncateNameForMeF extends CompNodeFactory:
         "all children of TruncateNameForMeF must be StringNodes",
       )
 
-private final case class MeFName(
+final private case class MeFName(
     val firstName: Option[String],
     val middleInitial: Option[String],
     val lastName: Option[String],
@@ -81,7 +83,7 @@ private final case class MeFName(
       .head
       .trim()
 
-private final class TruncateNameForMeFOperator extends Arity4Operator[String, String, String, String, String]:
+final private class TruncateNameForMeFOperator extends Arity4Operator[String, String, String, String, String]:
 
   // TODO: We should override explain from Arity4Operator to account for allowing
   // args 2 and 4 to be incomplete, but won't at this time due to deadline pressure

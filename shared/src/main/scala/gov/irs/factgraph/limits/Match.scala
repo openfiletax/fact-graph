@@ -1,7 +1,7 @@
 package gov.irs.factgraph.limits
 
-import gov.irs.factgraph.{FactDictionary, Factual}
-import gov.irs.factgraph.compnodes.{BooleanNode, CompNode, Dependency, Not, Regex, StringNode}
+import gov.irs.factgraph.{ FactDictionary, Factual }
+import gov.irs.factgraph.compnodes.{ BooleanNode, CompNode, Dependency, Not, Regex, StringNode }
 import gov.irs.factgraph.definitions.fact.LimitConfigTrait
 
 case class Match(limiter: BooleanNode, context: LimitContext) extends Limit
@@ -20,7 +20,9 @@ object Match extends LimitFactory {
       new LimitContext(Key, e.level, lhs, pattern),
     )
 
-  override def fromConfig(e: LimitConfigTrait)(using Factual)(using
+  override def fromConfig(e: LimitConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): Limit =
     this(e)

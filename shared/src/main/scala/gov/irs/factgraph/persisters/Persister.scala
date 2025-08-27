@@ -1,7 +1,7 @@
 package gov.irs.factgraph.persisters
 
+import gov.irs.factgraph.{ Fact, Graph, Path, PersisterSyncIssue }
 import gov.irs.factgraph.limits.LimitViolation
-import gov.irs.factgraph.{Graph, Fact, Path, PersisterSyncIssue}
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.WritableType
 

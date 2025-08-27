@@ -1,9 +1,9 @@
 package gov.irs.factgraph.types
 
 import scala.beans.BeanProperty
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
 import scala.util.matching.Regex
-import scala.scalajs.js.annotation.{JSExportTopLevel, JSExport, JSExportAll}
-import upickle.default.{ReadWriter => RW, readwriter}
+import upickle.default.{ readwriter, ReadWriter => RW }
 
 @JSExportTopLevel("EmailAddress")
 // This could be an opaque type = String, but it makes serialization
@@ -20,5 +20,5 @@ object EmailAddress:
   @JSExportTopLevel("EmailAddressFactory")
   def apply(s: String): EmailAddress = s match
     case SimpleEmailPattern(email) => new EmailAddress(email)
-    case _ =>
+    case _                         =>
       throw new IllegalArgumentException("Email address must have an @ in it")

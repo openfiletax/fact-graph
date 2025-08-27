@@ -1,10 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait}
-import gov.irs.factgraph.operators.BinaryOperator
-import gov.irs.factgraph.types.{Collection, CollectionItem}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path, PathItem }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait }
 import gov.irs.factgraph.monads.*
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path, PathItem}
+import gov.irs.factgraph.operators.BinaryOperator
+import gov.irs.factgraph.types.{ Collection, CollectionItem }
 
 object FirstNCollectionItems extends CompNodeFactory:
   override val Key: String = "FirstNCollectionItems"
@@ -21,7 +21,9 @@ object FirstNCollectionItems extends CompNodeFactory:
       collection.alias,
     )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val collection = CompNode.getConfigChildNode(e, "Collection")
@@ -32,7 +34,7 @@ object FirstNCollectionItems extends CompNodeFactory:
       )
     this(collection.asInstanceOf[CollectionNode], count.asInstanceOf[IntNode])
 
-private final class FirstNCollectionItemsOperator extends BinaryOperator[Collection, Collection, Int]:
+final private class FirstNCollectionItemsOperator extends BinaryOperator[Collection, Collection, Int]:
   override def apply(
       lhs: Result[Collection],
       rhs: Thunk[Result[Int]],

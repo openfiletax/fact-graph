@@ -1,10 +1,10 @@
 package gov.irs.factgraph.types
 
-import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
-import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.monads.JSEither
-import gov.irs.factgraph.validation.{ValidationFailure, ValidationFailureReason}
+import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.validation.{ ValidationFailure, ValidationFailureReason }
 import gov.irs.factgraph.Graph
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
 
 @JSExportAll
 enum CollectionItemReferenceFailureReason extends ValidationFailureReason:
@@ -44,7 +44,7 @@ object CollectionItemReferenceFactory:
           )
         case Result.Complete(col: Collection) =>
           col.items.map(_.toString()).contains(value) match
-            case true => JSEither.Right(CollectionItemFactory.apply(value))
+            case true  => JSEither.Right(CollectionItemFactory.apply(value))
             case false =>
               JSEither.Left(
                 CollectionItemReferenceFailure(
@@ -55,7 +55,7 @@ object CollectionItemReferenceFactory:
               )
         case Result.Placeholder(col: Collection) =>
           col.items.map(_.toString()).contains(value) match
-            case true => JSEither.Right(CollectionItemFactory.apply(value))
+            case true  => JSEither.Right(CollectionItemFactory.apply(value))
             case false =>
               JSEither.Left(
                 CollectionItemReferenceFailure(

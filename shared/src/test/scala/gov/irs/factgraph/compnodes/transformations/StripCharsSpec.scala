@@ -1,11 +1,11 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{FactDefinition, FactDictionary, Graph}
+import gov.irs.factgraph.{ FactDefinition, FactDictionary, Graph }
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
   FactConfigElement,
-  WritableConfigElement
+  WritableConfigElement,
 }
 import gov.irs.factgraph.monads.Result
 import org.scalatest.funspec.AnyFunSpec
@@ -23,9 +23,9 @@ class StripCharsSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("abcdef")
-                )
-              )
+                  CommonOptionConfigTraits.value("abcdef"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Allow",
@@ -33,12 +33,12 @@ class StripCharsSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("cea")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("cea"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(String("ace")))
@@ -55,9 +55,9 @@ class StripCharsSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("s&a(p%e'r#a$v@i)")
-                )
-              )
+                  CommonOptionConfigTraits.value("s&a(p%e'r#a$v@i)"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Allow",
@@ -65,12 +65,12 @@ class StripCharsSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("a-z")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("a-z"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(String("saperavi")))
@@ -87,9 +87,9 @@ class StripCharsSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value(" back\\slash ")
-                )
-              )
+                  CommonOptionConfigTraits.value(" back\\slash "),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Allow",
@@ -97,12 +97,12 @@ class StripCharsSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("a-z\\\\")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("a-z\\\\"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(String("back\\slash")))
@@ -120,10 +120,10 @@ class StripCharsSpec extends AnyFunSpec:
                   "String",
                   Seq.empty,
                   CommonOptionConfigTraits.value(
-                    " ![El niño Ángel tiene £50]*ç "
-                  )
-                )
-              )
+                    " ![El niño Ángel tiene £50]*ç ",
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Allow",
@@ -131,12 +131,12 @@ class StripCharsSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("!-~£§ÁÉÍÑÓ×ÚÜáéíñóúü")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("!-~£§ÁÉÍÑÓ×ÚÜáéíñóúü"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(String("![ElniñoÁngeltiene£50]*")))
@@ -153,10 +153,10 @@ class StripCharsSpec extends AnyFunSpec:
                   "String",
                   Seq.empty,
                   CommonOptionConfigTraits.value(
-                    "#1 Biz & sons - well 2/4 or 50% of them(.*~;\")"
-                  )
-                )
-              )
+                    "#1 Biz & sons - well 2/4 or 50% of them(.*~;\")",
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Allow",
@@ -164,18 +164,18 @@ class StripCharsSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("A-Za-z0-9#/%\\-\\(\\)'& ")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("A-Za-z0-9#/%\\-\\(\\)'& "),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(
         node.get(0) == Result.Complete(
-          String("#1 Biz & sons - well 2/4 or 50% of them()")
-        )
+          String("#1 Biz & sons - well 2/4 or 50% of them()"),
+        ),
       )
     }
 
@@ -186,8 +186,8 @@ class StripCharsSpec extends AnyFunSpec:
           "/numberString",
           Some(new WritableConfigElement("String")),
           None,
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       FactDefinition.fromConfig(
         FactConfigElement(
@@ -197,11 +197,11 @@ class StripCharsSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("[0-9]")
-            )
+              CommonOptionConfigTraits.value("[0-9]"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       FactDefinition.fromConfig(
         FactConfigElement(
@@ -217,21 +217,21 @@ class StripCharsSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "Dependency",
                       Seq.empty,
-                      CommonOptionConfigTraits.path("/numberString")
-                    )
-                  )
+                      CommonOptionConfigTraits.path("/numberString"),
+                    ),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "Allow",
                   Seq(
-                    new CompNodeConfigElement("Dependency", Seq.empty, "/regex")
-                  )
-                )
-              )
-            )
+                    new CompNodeConfigElement("Dependency", Seq.empty, "/regex"),
+                  ),
+                ),
+              ),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)

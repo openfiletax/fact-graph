@@ -1,10 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.*
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class TruncateCentsSpec extends AnyFunSpec:
   describe("TruncateCents") {
@@ -17,10 +17,10 @@ class TruncateCentsSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("1/3")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("1/3"),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[RationalNode]
 
@@ -28,7 +28,7 @@ class TruncateCentsSpec extends AnyFunSpec:
     }
 
     it(
-      "returns a rational that has the additional decimal places truncated even when close to another number"
+      "returns a rational that has the additional decimal places truncated even when close to another number",
     ) {
       val node = CompNode
         .fromDerivedConfig(
@@ -38,10 +38,10 @@ class TruncateCentsSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("69980/1458")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("69980/1458"),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[RationalNode]
 
@@ -49,7 +49,7 @@ class TruncateCentsSpec extends AnyFunSpec:
     }
 
     it(
-      "returns the same rational number when there is nothing to truncate"
+      "returns the same rational number when there is nothing to truncate",
     ) {
       val node = CompNode
         .fromDerivedConfig(
@@ -59,10 +59,10 @@ class TruncateCentsSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("-3/6")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("-3/6"),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[RationalNode]
 

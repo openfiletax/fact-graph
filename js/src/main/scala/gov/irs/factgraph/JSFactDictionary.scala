@@ -1,7 +1,7 @@
 package gov.irs.factgraph
-import gov.irs.factgraph.definitions.FactDictionaryConfigTrait
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import gov.irs.factgraph.compnodes.RootNode
+import gov.irs.factgraph.definitions.FactDictionaryConfigTrait
+import scala.scalajs.js.annotation.{ JSExport, JSExportTopLevel }
 import scala.xml.NodeSeq
 
 @JSExportTopLevel("FactDictionaryFactory")
@@ -22,6 +22,5 @@ object JSFactDictionary:
     dictionary
 
   @JSExport
-  def importFromXml(xmlString: String): FactDictionary = {
+  def importFromXml(xmlString: String): FactDictionary =
     FactDictionary.importFromXml(xmlString)
-  }

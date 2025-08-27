@@ -1,14 +1,13 @@
 package gov.irs.factgraph.persisters
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
-import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.compnodes.*
 import gov.irs.factgraph.definitions.fact.*
+import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.*
-
-import scala.annotation.unused
 import java.util.UUID
+import org.scalatest.funspec.AnyFunSpec
+import scala.annotation.unused
 
 class InMemoryPersisterSpec extends AnyFunSpec:
   def addFactConfig(pathString: String, typeName: String, dictionary: FactDictionary): FactDefinition =
@@ -146,7 +145,7 @@ class InMemoryPersisterSpec extends AnyFunSpec:
         // This /meta/migrationsApplied value needs to be incremented when you add a new migration
         persister.save()
         assert(
-          persister.toJson() == """{"/test":{"$type":"IntWrapper","item":42},"/meta/migrationsApplied":{"$type":"IntWrapper","item":2}}"""
+          persister.toJson() == """{"/test":{"$type":"IntWrapper","item":42},"/meta/migrationsApplied":{"$type":"IntWrapper","item":2}}""",
         )
       }
     }

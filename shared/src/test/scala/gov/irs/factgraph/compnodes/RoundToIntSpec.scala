@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class RoundToInt extends AnyFunSpec:
   describe("RoundToInt") {
@@ -15,10 +15,10 @@ class RoundToInt extends AnyFunSpec:
             new CompNodeConfigElement(
               "Dollar",
               Seq.empty,
-              CommonOptionConfigTraits.value("1.50")
-            )
-          )
-        )
+              CommonOptionConfigTraits.value("1.50"),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(2))
@@ -32,10 +32,10 @@ class RoundToInt extends AnyFunSpec:
             new CompNodeConfigElement(
               "Dollar",
               Seq.empty,
-              CommonOptionConfigTraits.value("2.05")
-            )
-          )
-        )
+              CommonOptionConfigTraits.value("2.05"),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(2))

@@ -1,11 +1,11 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path}
-import gov.irs.factgraph.limits.Limit
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait}
-import gov.irs.factgraph.limits.ContainsLimit
-import gov.irs.factgraph.definitions.fact.LimitLevel
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigElement
+import gov.irs.factgraph.definitions.fact.LimitLevel
+import gov.irs.factgraph.limits.ContainsLimit
+import gov.irs.factgraph.limits.Limit
 import gov.irs.factgraph.limits.LimitContext
 
 final case class EnumNode(
@@ -23,7 +23,9 @@ final case class EnumNode(
 object EnumNode extends CompNodeFactory with WritableNodeFactory:
   override val Key: String = "Enum"
 
-  override def fromWritableConfig(e: WritableConfigTrait)(using Factual)(using
+  override def fromWritableConfig(e: WritableConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val dictionary = summon[FactDictionary]
@@ -43,7 +45,9 @@ object EnumNode extends CompNodeFactory with WritableNodeFactory:
     value.enumOptionsPath,
   )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val dictionary = summon[FactDictionary]

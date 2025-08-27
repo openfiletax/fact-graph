@@ -1,14 +1,12 @@
 package gov.irs.factgraph.types
-import upickle.default.ReadWriter
-
+import gov.irs.factgraph.compnodes.Add
+import gov.irs.factgraph.validation.{ ValidationFailure, ValidationFailureReason }
 import java.lang.Enum
 import scala.beans.BeanProperty
-import scala.scalajs.js.annotation.{JSExportTopLevel, JSExport, JSExportAll}
 import scala.scalajs.js
-
-import gov.irs.factgraph.validation.{ValidationFailure, ValidationFailureReason}
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
 import scala.util.matching.Regex
-import gov.irs.factgraph.compnodes.Add
+import upickle.default.ReadWriter
 
 @JSExportAll
 enum UserFriendlyAddressFailureReason:
@@ -130,7 +128,7 @@ case class Address(
     )
   } catch {
     case e: AddressFieldValidationFailure => addressErrors("streetAddress") = e
-    case _ =>
+    case _                                =>
       addressErrors("street") = AddressFieldValidationFailure(
         "AddressStreet preconditions failed with unknown failure",
         None.orNull,
@@ -138,7 +136,7 @@ case class Address(
       )
   }
   // try/catch for streets line2
-  try {
+  try
     if (!streetAddressLine2.isEmpty)
       precondition(
         StreetPattern.matches(streetAddressLine2),
@@ -152,7 +150,7 @@ case class Address(
           "StreetLine2 is above 35 characters",
           AddressFailureReason.InvalidStreetLine2Length,
         )
-  } catch {
+  catch {
     case e: AddressFieldValidationFailure =>
       addressErrors("streetAddressLine2") = e
     case _ =>
@@ -192,7 +190,7 @@ case class Address(
     }
   } catch {
     case e: AddressFieldValidationFailure => addressErrors("city") = e
-    case _ =>
+    case _                                =>
       addressErrors("city") = AddressFieldValidationFailure(
         "City preconditions failed with unknown failure",
         None.orNull,
@@ -245,7 +243,7 @@ case class Address(
 
   } catch {
     case e: AddressFieldValidationFailure => addressErrors("postalCode") = e
-    case _ =>
+    case _                                =>
       addressErrors("postalCode") = AddressFieldValidationFailure(
         "Zip/postal code preconditions failed with unknown failure",
         None.orNull,

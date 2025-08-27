@@ -7,4 +7,4 @@ final case class Thunk[+A](private val f: () => A):
     Thunk(() => f1(f()))
 
   def flatMap[B](f1: (=> A) => Thunk[B]): Thunk[B] =
-    f1({ f() })
+    f1(f())

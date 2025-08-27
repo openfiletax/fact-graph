@@ -1,6 +1,6 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path }
 import gov.irs.factgraph.definitions.fact.WritableConfigTrait
 import gov.irs.factgraph.types.CollectionItem
 import scala.scalajs.js.annotation.JSExport

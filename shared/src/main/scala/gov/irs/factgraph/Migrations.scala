@@ -2,7 +2,7 @@ package gov.irs.factgraph
 import gov.irs.factgraph.persisters.TypeContainer
 import gov.irs.factgraph.types.WritableType
 import ujson.Value
-import upickle.default.{read, write}
+import upickle.default.{ read, write }
 
 // When we make changes to the Fact Graph or Fact Dictionary, those changes not only get deployed to
 // our backend servers, they get deployed to the users' browsers as well.

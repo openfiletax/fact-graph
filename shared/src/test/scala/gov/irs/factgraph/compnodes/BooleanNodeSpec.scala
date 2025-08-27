@@ -1,14 +1,14 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
   FactConfigElement,
-  WritableConfigElement
+  WritableConfigElement,
 }
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class BooleanNodeSpec extends AnyFunSpec:
   describe("BooleanNode") {
@@ -54,16 +54,16 @@ class BooleanNodeSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "When",
                   Seq(
-                    new CompNodeConfigElement("False")
-                  )
+                    new CompNodeConfigElement("False"),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "Then",
                   Seq(
-                    new CompNodeConfigElement("False")
-                  )
-                )
-              )
+                    new CompNodeConfigElement("False"),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Case",
@@ -71,18 +71,18 @@ class BooleanNodeSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "When",
                   Seq(
-                    new CompNodeConfigElement("True")
-                  )
+                    new CompNodeConfigElement("True"),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "Then",
                   Seq(
-                    new CompNodeConfigElement("True")
-                  )
-                )
-              )
-            )
-          )
+                    new CompNodeConfigElement("True"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
         assert(node.get(0) == Result.Complete(true))
@@ -96,7 +96,7 @@ class BooleanNodeSpec extends AnyFunSpec:
         "/value",
         None,
         Some(new CompNodeConfigElement("True")),
-        None
+        None,
       )
       FactDefinition.fromConfig(config)(using dictionary)
 
@@ -107,10 +107,10 @@ class BooleanNodeSpec extends AnyFunSpec:
           new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("../value")
-          )
+            CommonOptionConfigTraits.path("../value"),
+          ),
         ),
-        None
+        None,
       )
       FactDefinition.fromConfig(secondConfig)(using dictionary)
 
@@ -139,7 +139,7 @@ class BooleanNodeSpec extends AnyFunSpec:
           "/test",
           Some(new WritableConfigElement("Boolean")),
           None,
-          None
+          None,
         )
         FactDefinition.fromConfig(config)(using dictionary)
 

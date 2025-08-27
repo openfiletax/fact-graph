@@ -1,18 +1,12 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{
-  Explanation,
-  Expression,
-  completeExpr,
-  incompleteExpr,
-  placeholderExpr
-}
+import gov.irs.factgraph.{ completeExpr, incompleteExpr, placeholderExpr, Explanation, Expression }
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.FactDefinition
 import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.Graph
+import org.scalatest.funspec.AnyFunSpec
 
 class PlaceholderSpec extends AnyFunSpec:
 
@@ -28,9 +22,9 @@ class PlaceholderSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1")
-                )
-              )
+                  CommonOptionConfigTraits.value("1"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Default",
@@ -38,12 +32,12 @@ class PlaceholderSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("2")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("2"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
       assert(node.get(0) == Result.Complete(1))
     }
@@ -60,9 +54,9 @@ class PlaceholderSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Int",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("1")
-                  )
-                )
+                    CommonOptionConfigTraits.value("1"),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Default",
@@ -70,12 +64,12 @@ class PlaceholderSpec extends AnyFunSpec:
                   CompNodeConfigElement(
                     "Dollar",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("1.00")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("1.00"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
       }
     }
@@ -104,17 +98,17 @@ class PlaceholderSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("String")
+              new WritableConfigElement("String"),
             ),
             None,
             Some(
               CompNodeConfigElement(
                 "String",
                 Seq.empty,
-                CommonOptionConfigTraits.value("Placeholder")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("Placeholder"),
+              ),
+            ),
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -143,29 +137,29 @@ class PlaceholderSpec extends AnyFunSpec:
                   CompNodeConfigElement(
                     "Int",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("1")
+                    CommonOptionConfigTraits.value("1"),
                   ),
                   CompNodeConfigElement(
                     "Int",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("2")
+                    CommonOptionConfigTraits.value("2"),
                   ),
                   CompNodeConfigElement(
                     "Int",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("3")
-                  )
-                )
-              )
+                    CommonOptionConfigTraits.value("3"),
+                  ),
+                ),
+              ),
             ),
             Some(
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("0")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("0"),
+              ),
+            ),
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -188,10 +182,10 @@ class PlaceholderSpec extends AnyFunSpec:
         op.explain(lhs, rhs)(0) == Explanation.Operation(
           List(
             List(
-              Explanation.Constant
-            )
-          )
-        )
+              Explanation.Constant,
+            ),
+          ),
+        ),
       )
     }
   }

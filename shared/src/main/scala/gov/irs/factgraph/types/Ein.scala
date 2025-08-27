@@ -1,6 +1,5 @@
 package gov.irs.factgraph.types
-import upickle.default.ReadWriter
-
+import gov.irs.factgraph.validation.{ ValidationFailure, ValidationFailureReason }
 import java.lang.Enum
 import scala.beans.BeanProperty
 import scala.compiletime.ops.boolean
@@ -8,8 +7,7 @@ import scala.scalajs.js.annotation.JSExport
 import scala.scalajs.js.annotation.JSExportAll
 import scala.scalajs.js.annotation.JSExportTopLevel
 import scala.util.matching.Regex
-
-import gov.irs.factgraph.validation.{ValidationFailure, ValidationFailureReason}
+import upickle.default.ReadWriter
 
 @JSExportAll
 enum UserFriendlyEinFailureReason:
@@ -104,7 +102,7 @@ object Ein:
 
   def apply(s: String): Ein = this.parseString(s) match
     case Some(tin) => tin
-    case None =>
+    case None      =>
       throw EinValidationFailure(
         "TINs must be 9 digits long",
         None.orNull,

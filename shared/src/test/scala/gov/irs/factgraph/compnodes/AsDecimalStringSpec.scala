@@ -1,14 +1,14 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class AsDecimalStringSpec extends AnyFunSpec:
   describe("AsDecimalString") {
     it(
-      "returns the decimal string representation of a rational node and adds appropriate scale"
+      "returns the decimal string representation of a rational node and adds appropriate scale",
     ) {
       val node = CompNode
         .fromDerivedConfig(
@@ -18,10 +18,10 @@ class AsDecimalStringSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("3/10")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("3/10"),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[StringNode]
 
@@ -36,10 +36,10 @@ class AsDecimalStringSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("1/3")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("1/3"),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[StringNode]
 
@@ -54,10 +54,10 @@ class AsDecimalStringSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("0/100")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("0/100"),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[StringNode]
 
@@ -72,10 +72,10 @@ class AsDecimalStringSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("-1/3")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("-1/3"),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[StringNode]
 
@@ -90,10 +90,10 @@ class AsDecimalStringSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("2/3")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("2/3"),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[StringNode]
 
@@ -108,11 +108,11 @@ class AsDecimalStringSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("2/3")
-              )
+                CommonOptionConfigTraits.value("2/3"),
+              ),
             ),
-            CommonOptionConfigTraits.scale("5")
-          )
+            CommonOptionConfigTraits.scale("5"),
+          ),
         )
         .asInstanceOf[StringNode]
 
@@ -128,11 +128,11 @@ class AsDecimalStringSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("2/3")
-              )
+                CommonOptionConfigTraits.value("2/3"),
+              ),
             ),
-            CommonOptionConfigTraits.scale("5.2")
-          )
+            CommonOptionConfigTraits.scale("5.2"),
+          ),
         )
       }
     }
@@ -146,11 +146,11 @@ class AsDecimalStringSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("2/3")
-              )
+                CommonOptionConfigTraits.value("2/3"),
+              ),
             ),
-            CommonOptionConfigTraits.scale("asdf")
-          )
+            CommonOptionConfigTraits.scale("asdf"),
+          ),
         )
       }
     }
@@ -164,10 +164,10 @@ class AsDecimalStringSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("42"),
+              ),
+            ),
+          ),
         )
       }
     }

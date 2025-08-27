@@ -1,11 +1,9 @@
 package gov.irs.factgraph.definitions.fact
 
+import gov.irs.factgraph.definitions.fact.{ LimitConfigTrait, LimitLevel }
 import gov.irs.factgraph.definitions.fact.WritableConfigElement
-
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import scala.scalajs.js
-import gov.irs.factgraph.definitions.fact.{LimitConfigTrait, LimitLevel}
-
+import scala.scalajs.js.annotation.{ JSExport, JSExportTopLevel }
 
 class WritableConfigElementDigestWrapper(
     val typeName: String,

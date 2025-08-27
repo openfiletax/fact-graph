@@ -1,10 +1,10 @@
 package gov.irs.factgraph.types
-import java.lang.{Enum => JavaEnum}
-import gov.irs.factgraph.validation.{ValidationFailure, ValidationFailureReason}
+import gov.irs.factgraph.compnodes.StripChars
 import gov.irs.factgraph.monads.JSEither
-import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
+import gov.irs.factgraph.validation.{ ValidationFailure, ValidationFailureReason }
+import java.lang.{ Enum => JavaEnum }
 import scala.scalajs.js
-import gov.irs.factgraph.compnodes.{StripChars}
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
 
 enum StringFailureReason extends JavaEnum[StringFailureReason], ValidationFailureReason:
   type UserFriendlyReason = StringFailureReason

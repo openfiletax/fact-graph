@@ -1,8 +1,8 @@
 package gov.irs.factgraph.types
-import scala.scalajs.js.annotation.JSExportTopLevel
-import scala.util.matching.Regex
 import gov.irs.factgraph.monads.JSEither
-import scala.util.{Try, Success, Failure}
+import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.util.{ Failure, Success, Try }
+import scala.util.matching.Regex
 
 object PinFactory:
   private val PinPattern: Regex = """^([0-9]{5})$""".r
@@ -15,7 +15,7 @@ object PinFactory:
       Try(new Pin(pin)) match
         case Success(v)                       => JSEither.Right(v)
         case Failure(e: PinValidationFailure) => JSEither.Left(e)
-        case Failure(exception) =>
+        case Failure(exception)               =>
           JSEither.Left(
             PinValidationFailure(
               "Invalid PIN case 1",

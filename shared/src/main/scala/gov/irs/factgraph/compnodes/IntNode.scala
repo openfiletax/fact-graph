@@ -1,7 +1,7 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path}
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait }
 
 final case class IntNode(expr: Expression[Int]) extends CompNode:
   type Value = Int
@@ -15,7 +15,9 @@ final case class IntNode(expr: Expression[Int]) extends CompNode:
 object IntNode extends CompNodeFactory with WritableNodeFactory:
   override val Key: String = "Int"
 
-  override def fromWritableConfig(e: WritableConfigTrait)(using Factual)(using
+  override def fromWritableConfig(e: WritableConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     new IntNode(
@@ -24,7 +26,9 @@ object IntNode extends CompNodeFactory with WritableNodeFactory:
 
   def apply(value: Int): IntNode = new IntNode(Expression.Constant(Some(value)))
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     this(e.getOptionValue(CommonOptionConfigTraits.VALUE).get.toInt)

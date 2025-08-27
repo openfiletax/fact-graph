@@ -26,7 +26,7 @@ enum Result[+A]:
   def get: A = this match
     case Complete(x)    => x
     case Placeholder(x) => x
-    case Incomplete =>
+    case Incomplete     =>
       throw new NoSuchElementException(
         "attempted to retrieve the value of an incomplete result",
       )

@@ -1,9 +1,8 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
-
-import gov.irs.factgraph.{Expression, Path}
+import gov.irs.factgraph.{ Expression, Path }
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class RootNodeSpec extends AnyFunSpec:
   describe("RootNode") {

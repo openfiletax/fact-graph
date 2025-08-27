@@ -1,10 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.*
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class MultiplySpec extends AnyFunSpec:
   describe("Multiply") {
@@ -15,19 +15,19 @@ class MultiplySpec extends AnyFunSpec:
           new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("1")
+            CommonOptionConfigTraits.value("1"),
           ),
           new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("2")
+            CommonOptionConfigTraits.value("2"),
           ),
           new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("3")
-          )
-        )
+            CommonOptionConfigTraits.value("3"),
+          ),
+        ),
       )
       val node = CompNode.fromDerivedConfig(config)
 
@@ -41,19 +41,19 @@ class MultiplySpec extends AnyFunSpec:
           new CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("1/2")
+            CommonOptionConfigTraits.value("1/2"),
           ),
           new CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("2/3")
+            CommonOptionConfigTraits.value("2/3"),
           ),
           new CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("3/4")
-          )
-        )
+            CommonOptionConfigTraits.value("3/4"),
+          ),
+        ),
       )
       val node = CompNode.fromDerivedConfig(config)
 
@@ -67,19 +67,19 @@ class MultiplySpec extends AnyFunSpec:
           new CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("1.23")
+            CommonOptionConfigTraits.value("1.23"),
           ),
           new CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("4.56")
+            CommonOptionConfigTraits.value("4.56"),
           ),
           new CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("7.89")
-          )
-        )
+            CommonOptionConfigTraits.value("7.89"),
+          ),
+        ),
       )
       val node = CompNode.fromDerivedConfig(config)
 
@@ -93,49 +93,49 @@ class MultiplySpec extends AnyFunSpec:
           new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("1")
+            CommonOptionConfigTraits.value("1"),
           ),
           new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("1")
+            CommonOptionConfigTraits.value("1"),
           ),
           new CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("2/3")
+            CommonOptionConfigTraits.value("2/3"),
           ),
           new CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("2/3")
+            CommonOptionConfigTraits.value("2/3"),
           ),
           new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("4")
+            CommonOptionConfigTraits.value("4"),
           ),
           new CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("5.67")
+            CommonOptionConfigTraits.value("5.67"),
           ),
           new CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("8/9")
+            CommonOptionConfigTraits.value("8/9"),
           ),
           new CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("10.11")
+            CommonOptionConfigTraits.value("10.11"),
           ),
           new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("12")
-          )
-        )
+            CommonOptionConfigTraits.value("12"),
+          ),
+        ),
       )
       val node = CompNode.fromDerivedConfig(config)
 
@@ -150,14 +150,14 @@ class MultiplySpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("2")
+              CommonOptionConfigTraits.value("2"),
             ),
             new CompNodeConfigElement(
               "Rational",
               Seq.empty,
-              CommonOptionConfigTraits.value("3/4")
-            )
-          )
+              CommonOptionConfigTraits.value("3/4"),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
 
@@ -173,14 +173,14 @@ class MultiplySpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("1")
+              CommonOptionConfigTraits.value("1"),
             ),
             new CompNodeConfigElement(
               "Dollar",
               Seq.empty,
-              CommonOptionConfigTraits.value("2.34")
-            )
-          )
+              CommonOptionConfigTraits.value("2.34"),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config).asInstanceOf[DollarNode]
 
@@ -196,14 +196,14 @@ class MultiplySpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Rational",
               Seq.empty,
-              CommonOptionConfigTraits.value("3/4")
+              CommonOptionConfigTraits.value("3/4"),
             ),
             new CompNodeConfigElement(
               "Dollar",
               Seq.empty,
-              CommonOptionConfigTraits.value("2.00")
-            )
-          )
+              CommonOptionConfigTraits.value("2.00"),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config).asInstanceOf[DollarNode]
 
@@ -219,15 +219,15 @@ class MultiplySpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Dollar",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("100.00")
+                  CommonOptionConfigTraits.value("100.00"),
                 ),
                 new CompNodeConfigElement(
                   "Rational",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1/3")
-                )
-              )
-            )
+                  CommonOptionConfigTraits.value("1/3"),
+                ),
+              ),
+            ),
           )
           .asInstanceOf[DollarNode]
 
@@ -241,15 +241,15 @@ class MultiplySpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Rational",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1/3")
+                  CommonOptionConfigTraits.value("1/3"),
                 ),
                 new CompNodeConfigElement(
                   "Dollar",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("100.00")
-                )
-              )
-            )
+                  CommonOptionConfigTraits.value("100.00"),
+                ),
+              ),
+            ),
           )
           .asInstanceOf[DollarNode]
 
@@ -267,15 +267,15 @@ class MultiplySpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("Hello")
+                  CommonOptionConfigTraits.value("Hello"),
                 ),
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("World")
-                )
-              )
-            )
+                  CommonOptionConfigTraits.value("World"),
+                ),
+              ),
+            ),
           )
         }
       }
@@ -291,15 +291,15 @@ class MultiplySpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("3")
+                  CommonOptionConfigTraits.value("3"),
                 ),
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("Stooges")
-                )
-              )
-            )
+                  CommonOptionConfigTraits.value("Stooges"),
+                ),
+              ),
+            ),
           )
         }
       }

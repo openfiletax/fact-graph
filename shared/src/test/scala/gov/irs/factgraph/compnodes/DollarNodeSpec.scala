@@ -1,10 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.*
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.Dollar
+import org.scalatest.funspec.AnyFunSpec
 
 class DollarNodeSpec extends AnyFunSpec:
   describe("DollarNode") {
@@ -23,8 +23,8 @@ class DollarNodeSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Dollar",
                 Seq.empty,
-                CommonOptionConfigTraits.value("1.23")
-              )
+                CommonOptionConfigTraits.value("1.23"),
+              ),
             )
             .asInstanceOf[DollarNode]
         assert(node.get(0) == Result.Complete(Dollar("1.23")))
@@ -41,7 +41,7 @@ class DollarNodeSpec extends AnyFunSpec:
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("False"))
+                  Seq(new CompNodeConfigElement("False")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -49,18 +49,18 @@ class DollarNodeSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "Dollar",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("1.00")
-                    )
-                  )
-                )
-              )
+                      CommonOptionConfigTraits.value("1.00"),
+                    ),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Case",
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("True"))
+                  Seq(new CompNodeConfigElement("True")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -68,13 +68,13 @@ class DollarNodeSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "Dollar",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("2.00")
-                    )
-                  )
-                )
-              )
-            )
-          )
+                      CommonOptionConfigTraits.value("2.00"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
         assert(node.get(0) == Result.Complete(Dollar("2.00")))
@@ -91,11 +91,11 @@ class DollarNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Dollar",
               Seq.empty,
-              CommonOptionConfigTraits.value("1.23")
-            )
+              CommonOptionConfigTraits.value("1.23"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       FactDefinition.fromConfig(
@@ -106,11 +106,11 @@ class DollarNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Dependency",
               Seq.empty,
-              CommonOptionConfigTraits.path("../value")
-            )
+              CommonOptionConfigTraits.path("../value"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)
@@ -139,11 +139,11 @@ class DollarNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Dollar")
+              new WritableConfigElement("Dollar"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)

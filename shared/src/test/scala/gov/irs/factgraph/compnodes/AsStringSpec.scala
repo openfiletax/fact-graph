@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class AsStringSpec extends AnyFunSpec:
   describe("AsString") {
@@ -20,14 +20,14 @@ class AsStringSpec extends AnyFunSpec:
                   Seq(
                     (
                       CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                      "/options-path"
+                      "/options-path",
                     ),
-                    (CommonOptionConfigTraits.VALUE, "test")
-                  )
-                )
-              )
-            )
-          )
+                    (CommonOptionConfigTraits.VALUE, "test"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[StringNode]
 
@@ -43,10 +43,10 @@ class AsStringSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "EmailAddress",
                 Seq.empty,
-                CommonOptionConfigTraits.value("example@example.com")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("example@example.com"),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[StringNode]
 
@@ -62,10 +62,10 @@ class AsStringSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Dollar",
                 Seq.empty,
-                CommonOptionConfigTraits.value("50.20")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("50.20"),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[StringNode]
 
@@ -81,10 +81,10 @@ class AsStringSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("42"),
+              ),
+            ),
+          ),
         )
       }
     }

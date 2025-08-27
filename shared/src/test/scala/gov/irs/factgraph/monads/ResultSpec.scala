@@ -1,14 +1,13 @@
 package gov.irs.factgraph.monads
 
 import org.scalatest.funspec.AnyFunSpec
-
 import scala.annotation.unused
 
 class ResultSpec extends AnyFunSpec:
   describe("Result") {
     describe(".complete") {
       it(
-        "returns whether the result is complete (Placeholders are incomplete)"
+        "returns whether the result is complete (Placeholders are incomplete)",
       ) {
         assert(Result.Complete(true).complete)
         assert(!Result.Placeholder(true).complete)
@@ -41,31 +40,31 @@ class ResultSpec extends AnyFunSpec:
       it("returns the result if available, without calling default") {
         var canary = false
         assert(
-          Result.Complete(1).orElse({ canary = true; 2 }) ==
-            Result.Complete(1)
+          Result.Complete(1).orElse { canary = true; 2 } ==
+            Result.Complete(1),
         )
         assert(
-          Result.Placeholder(1).orElse({ canary = true; 2 }) ==
-            Result.Placeholder(1)
+          Result.Placeholder(1).orElse { canary = true; 2 } ==
+            Result.Placeholder(1),
         )
         assert(!canary)
       }
 
       it("returns the default if the result is incomplete") {
-        assert(Result.Incomplete.orElse({ 2 }) == Result.Placeholder(2))
+        assert(Result.Incomplete.orElse(2) == Result.Placeholder(2))
       }
     }
 
     describe(".getOrElse") {
       it("returns the result if available, without calling default") {
         var canary = false
-        assert(Result.Complete(1).getOrElse({ canary = true; 2 }) == 1)
-        assert(Result.Placeholder(1).getOrElse({ canary = true; 2 }) == 1)
+        assert(Result.Complete(1).getOrElse { canary = true; 2 } == 1)
+        assert(Result.Placeholder(1).getOrElse { canary = true; 2 } == 1)
         assert(!canary)
       }
 
       it("returns the default if the result is incomplete") {
-        assert(Result.Incomplete.getOrElse({ 2 }) == 2)
+        assert(Result.Incomplete.getOrElse(2) == 2)
       }
     }
 
@@ -77,7 +76,7 @@ class ResultSpec extends AnyFunSpec:
       it("leaves Placeholders and Incompletes alone") {
         assert(
           Result.Placeholder(true).asPlaceholder ==
-            Result.Placeholder(true)
+            Result.Placeholder(true),
         )
         assert(Result.Incomplete.asPlaceholder == Result.Incomplete)
       }

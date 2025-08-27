@@ -1,11 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.types.{*, given}
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
-import gov.irs.factgraph.operators.{BinaryOperator, ReduceOperator}
+import gov.irs.factgraph.operators.{ BinaryOperator, ReduceOperator }
+import gov.irs.factgraph.types.{ *, given }
 import gov.irs.factgraph.util.Seq.itemsHaveSameRuntimeClass
-
 import scala.annotation.unused
 
 object Subtract extends CompNodeFactory:
@@ -17,7 +16,9 @@ object Subtract extends CompNodeFactory:
     else
       nodes.reduceLeft(binarySubtract)
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val minuend = CompNode.getConfigChildNode(e, "Minuend")
@@ -139,7 +140,7 @@ object Subtract extends CompNodeFactory:
           s"cannot Subtract a ${lhs.getClass.getName} and a ${rhs.getClass.getName}",
         )
 
-private final class SubtractReduceOperator[A: Numeric] extends ReduceOperator[A]:
+final private class SubtractReduceOperator[A: Numeric] extends ReduceOperator[A]:
   override protected def reduce(x: A, y: A): A = Numeric[A].minus(x, y)
 
 @unused

@@ -17,8 +17,8 @@ class PathSpec extends AnyFunSpec:
               PathItem.Wildcard,
               PathItem.Unknown,
               PathItem.Parent,
-              PathItem("#00000000-0000-0000-0000-000000000000")
-            )
+              PathItem("#00000000-0000-0000-0000-000000000000"),
+            ),
         )
 
         assert(!Path("test").absolute)
@@ -43,33 +43,33 @@ class PathSpec extends AnyFunSpec:
       it("appends a relative path to an absolute path") {
         assert(
           Path("/item0/item1") ++ Path("item2/item3") == Path(
-            "/item0/item1/item2/item3"
-          )
+            "/item0/item1/item2/item3",
+          ),
         )
       }
 
       it("appends a relative path to a relative path") {
         assert(
           Path("item0/item1") ++ Path("item2/item3") == Path(
-            "item0/item1/item2/item3"
-          )
+            "item0/item1/item2/item3",
+          ),
         )
       }
 
       it("appends a list of items in the depthwise order") {
         val items = List(PathItem("item2"), PathItem("item3"))
         assert(
-          Path("/item0/item1") ++ items == Path("/item0/item1/item2/item3")
+          Path("/item0/item1") ++ items == Path("/item0/item1/item2/item3"),
         )
         assert(
-          Path("item0/item1") ++ items == Path("item0/item1/item2/item3")
+          Path("item0/item1") ++ items == Path("item0/item1/item2/item3"),
         )
       }
 
       describe("when appending an absolute path to another path") {
         it("just uses the absolute path") {
           assert(
-            Path("/item0/item1") ++ Path("/item2/item3") == Path("/item2/item3")
+            Path("/item0/item1") ++ Path("/item2/item3") == Path("/item2/item3"),
           )
         }
       }
@@ -79,14 +79,14 @@ class PathSpec extends AnyFunSpec:
       it("appends a path item to an absolute path") {
         assert(
           Path("/item0/item1") :+ PathItem("item2") == Path(
-            "/item0/item1/item2"
-          )
+            "/item0/item1/item2",
+          ),
         )
       }
 
       it("appends a path item to a relative path") {
         assert(
-          Path("item0/item1") :+ PathItem("item2") == Path("item0/item1/item2")
+          Path("item0/item1") :+ PathItem("item2") == Path("item0/item1/item2"),
         )
       }
     }
@@ -122,8 +122,8 @@ class PathSpec extends AnyFunSpec:
       it("cannot reference a specific collection item") {
         assert(
           !Path(
-            "/test/#00000000-0000-0000-0000-000000000000"
-          ).isAbstract
+            "/test/#00000000-0000-0000-0000-000000000000",
+          ).isAbstract,
         )
       }
     }
@@ -157,7 +157,7 @@ class PathSpec extends AnyFunSpec:
           Path("/test/sub"),
           Path("/test/sub/two"),
           Path("../test"),
-          Path("/test/?")
+          Path("/test/?"),
         )
         for path <- paths
         do assert(path.asAbstract == path)
@@ -165,23 +165,23 @@ class PathSpec extends AnyFunSpec:
       it("replaces collection member items with wildcards") {
         assert(
           Path(
-            "/test/#68eca947-ca44-4464-b2cd-e361928d6c3d"
-          ).asAbstract == Path("/test/*")
+            "/test/#68eca947-ca44-4464-b2cd-e361928d6c3d",
+          ).asAbstract == Path("/test/*"),
         )
         assert(
           Path(
-            "/test/#68eca947-ca44-4464-b2cd-e361928d6c3d/sub"
-          ).asAbstract == Path("/test/*/sub")
+            "/test/#68eca947-ca44-4464-b2cd-e361928d6c3d/sub",
+          ).asAbstract == Path("/test/*/sub"),
         )
         assert(
           Path(
-            "/test/#68eca947-ca44-4464-b2cd-e361928d6c3d/sub/#68eca947-ca44-4464-b2cd-e361928d6c3d"
-          ).asAbstract == Path("/test/*/sub/*")
+            "/test/#68eca947-ca44-4464-b2cd-e361928d6c3d/sub/#68eca947-ca44-4464-b2cd-e361928d6c3d",
+          ).asAbstract == Path("/test/*/sub/*"),
         )
         assert(
           Path(
-            "/test/#68eca947-ca44-4464-b2cd-e361928d6c3d/sub/#68eca947-ca44-4464-b2cd-e361928d6c3d/two"
-          ).asAbstract == Path("/test/*/sub/*/two")
+            "/test/#68eca947-ca44-4464-b2cd-e361928d6c3d/sub/#68eca947-ca44-4464-b2cd-e361928d6c3d/two",
+          ).asAbstract == Path("/test/*/sub/*/two"),
         )
       }
     }

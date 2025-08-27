@@ -1,8 +1,8 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.CompNodeConfigElement
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.FactDictionary
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.funsuite.AnyFunSuite
 

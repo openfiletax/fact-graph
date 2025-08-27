@@ -1,13 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
-import gov.irs.factgraph.definitions.fact.{
-  CompNodeConfigElement,
-  CompNodeConfigTrait,
-  WritableConfigElement
-}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigElement, CompNodeConfigTrait, WritableConfigElement }
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class CompNodeSpec extends AnyFunSpec:
   describe("CompNode") {
@@ -17,7 +13,7 @@ class CompNodeSpec extends AnyFunSpec:
           assert(
             IntNode
               .fromWritableConfig(new WritableConfigElement("Int"))
-              .isWritable
+              .isWritable,
           )
         }
       }
@@ -36,12 +32,12 @@ class CompNodeSpec extends AnyFunSpec:
           new StringNode(Expression.Constant(Some("Hello world")))
 
         override def fromDerivedConfig(e: CompNodeConfigTrait)(using
-            Factual
+            Factual,
         )(using FactDictionary): CompNode = node
 
       assertThrows[UnsupportedOperationException] {
         CompNode.fromDerivedConfig(
-          new CompNodeConfigElement("Dummy")
+          new CompNodeConfigElement("Dummy"),
         )
       }
 
@@ -60,8 +56,8 @@ class CompNodeSpec extends AnyFunSpec:
         val config = new CompNodeConfigElement(
           "Parent",
           Seq(
-            new CompNodeConfigElement("True")
-          )
+            new CompNodeConfigElement("True"),
+          ),
         )
         val node = CompNode.getConfigChildNode(config)
 
@@ -75,10 +71,10 @@ class CompNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Children",
               Seq(
-                new CompNodeConfigElement("True")
-              )
-            )
-          )
+                new CompNodeConfigElement("True"),
+              ),
+            ),
+          ),
         )
         val node = CompNode.getConfigChildNode(config, "Children")
 
@@ -95,8 +91,8 @@ class CompNodeSpec extends AnyFunSpec:
             "Parent",
             Seq(
               new CompNodeConfigElement("True"),
-              new CompNodeConfigElement("False")
-            )
+              new CompNodeConfigElement("False"),
+            ),
           )
           CompNode.getConfigChildNode(config)
         }
@@ -105,8 +101,8 @@ class CompNodeSpec extends AnyFunSpec:
           val config = new CompNodeConfigElement(
             "Parent",
             Seq(
-              new CompNodeConfigElement("Kinder")
-            )
+              new CompNodeConfigElement("Kinder"),
+            ),
           )
           CompNode.getConfigChildNode(config, "Children")
         }
@@ -115,8 +111,8 @@ class CompNodeSpec extends AnyFunSpec:
           val config = new CompNodeConfigElement(
             "Parent",
             Seq(
-              new CompNodeConfigElement("Children")
-            )
+              new CompNodeConfigElement("Children"),
+            ),
           )
           CompNode.getConfigChildNode(config, "Children")
         }
@@ -129,10 +125,10 @@ class CompNodeSpec extends AnyFunSpec:
                 "Children",
                 Seq(
                   new CompNodeConfigElement("True"),
-                  new CompNodeConfigElement("False")
-                )
-              )
-            )
+                  new CompNodeConfigElement("False"),
+                ),
+              ),
+            ),
           )
           CompNode.getConfigChildNode(config, "Children")
         }
@@ -145,8 +141,8 @@ class CompNodeSpec extends AnyFunSpec:
           "Parent",
           Seq(
             new CompNodeConfigElement("True"),
-            new CompNodeConfigElement("False")
-          )
+            new CompNodeConfigElement("False"),
+          ),
         )
         val nodes1 = CompNode.getConfigChildNodes(config)
         assert(nodes1.head.get(0) == Result.Complete(true))
@@ -161,10 +157,10 @@ class CompNodeSpec extends AnyFunSpec:
               "Children",
               Seq(
                 new CompNodeConfigElement("True"),
-                new CompNodeConfigElement("False")
-              )
-            )
-          )
+                new CompNodeConfigElement("False"),
+              ),
+            ),
+          ),
         )
         val nodes2 = CompNode.getConfigChildNodes(config, "Children")
 
@@ -182,8 +178,8 @@ class CompNodeSpec extends AnyFunSpec:
           val config = new CompNodeConfigElement(
             "Parent",
             Seq(
-              new CompNodeConfigElement("Kinder")
-            )
+              new CompNodeConfigElement("Kinder"),
+            ),
           )
           CompNode.getConfigChildNodes(config, "Children")
         }
@@ -192,8 +188,8 @@ class CompNodeSpec extends AnyFunSpec:
           val config = new CompNodeConfigElement(
             "Parent",
             Seq(
-              new CompNodeConfigElement("Children")
-            )
+              new CompNodeConfigElement("Children"),
+            ),
           )
           CompNode.getConfigChildNodes(config, "Children")
         }

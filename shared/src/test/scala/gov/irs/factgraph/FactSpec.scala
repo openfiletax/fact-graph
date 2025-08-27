@@ -1,21 +1,17 @@
 package gov.irs.factgraph
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.compnodes.CollectionNode
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
   FactConfigElement,
-  WritableConfigElement
+  WritableConfigElement,
 }
-import gov.irs.factgraph.definitions.meta.{
-  EnumDeclarationTrait,
-  MetaConfigTrait
-}
-import gov.irs.factgraph.monads.{MaybeVector, Result}
+import gov.irs.factgraph.definitions.meta.{ EnumDeclarationTrait, MetaConfigTrait }
+import gov.irs.factgraph.monads.{ MaybeVector, Result }
 import gov.irs.factgraph.types.Collection
-
 import java.util.UUID
+import org.scalatest.funspec.AnyFunSpec
 
 class FactSpec extends AnyFunSpec:
   describe("Fact") {
@@ -29,11 +25,11 @@ class FactSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("42")
-            )
+              CommonOptionConfigTraits.value("42"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       FactDefinition.fromConfig(
         FactConfigElement(
@@ -43,11 +39,11 @@ class FactSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("43")
-            )
+              CommonOptionConfigTraits.value("43"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       FactDefinition.fromConfig(
         FactConfigElement(
@@ -57,31 +53,31 @@ class FactSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("44")
-            )
+              CommonOptionConfigTraits.value("44"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       FactDefinition.fromConfig(
         FactConfigElement(
           "/collection",
           Some(
-            new WritableConfigElement("Collection")
+            new WritableConfigElement("Collection"),
           ),
           None,
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       FactDefinition.fromConfig(
         FactConfigElement(
           "/collection/*/bool",
           None,
           Some(
-            new CompNodeConfigElement("True")
+            new CompNodeConfigElement("True"),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       FactDefinition.fromConfig(
         FactConfigElement(
@@ -91,23 +87,23 @@ class FactSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Filter",
               Seq(
-                new CompNodeConfigElement("Dependency", Seq.empty, "bool")
+                new CompNodeConfigElement("Dependency", Seq.empty, "bool"),
               ),
-              "/collection"
-            )
+              "/collection",
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       FactDefinition.fromConfig(
         FactConfigElement(
           "/collection/*/anotherCollection",
           Some(
-            new WritableConfigElement("Collection")
+            new WritableConfigElement("Collection"),
           ),
           None,
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       FactDefinition.fromConfig(
         FactConfigElement(
@@ -117,11 +113,11 @@ class FactSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("42")
-            )
+              CommonOptionConfigTraits.value("42"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       dictionary.addMeta(new MetaConfigTrait {
@@ -150,8 +146,8 @@ class FactSpec extends AnyFunSpec:
         assert(fact(Path("child/grandchild")) == MaybeVector(Result.Incomplete))
         assert(
           fact(Path("child/grandchild/greatgrandchild")) == MaybeVector(
-            Result.Incomplete
-          )
+            Result.Incomplete,
+          ),
         )
       }
 
@@ -164,24 +160,24 @@ class FactSpec extends AnyFunSpec:
         assert(graph(Path("/filteredCollection/*")) == empty)
         assert(graph(Path("/filteredCollection/*/anotherCollection")) == empty)
         assert(
-          graph(Path("/filteredCollection/*/anotherCollection/*")) == empty
+          graph(Path("/filteredCollection/*/anotherCollection/*")) == empty,
         )
         assert(
-          graph(Path("/filteredCollection/*/anotherCollection/*/test")) == empty
+          graph(Path("/filteredCollection/*/anotherCollection/*/test")) == empty,
         )
       }
 
       it(
-        "returns an incomplete result if a wildcard is used on a non-collection fact"
+        "returns an incomplete result if a wildcard is used on a non-collection fact",
       ) {
         assert(fact(Path("*")) == MaybeVector(Result.Incomplete))
       }
 
       it(
-        "returns an incomplete result if a member is used on a non-collection fact"
+        "returns an incomplete result if a member is used on a non-collection fact",
       ) {
         val pathItem = PathItem.Member(
-          UUID.fromString("c38fe164-1502-4f10-8786-414824bddf21")
+          UUID.fromString("c38fe164-1502-4f10-8786-414824bddf21"),
         )
         assert(fact(pathItem) == MaybeVector(Result.Incomplete))
       }
@@ -234,7 +230,7 @@ class FactSpec extends AnyFunSpec:
         }
 
         it(
-          "retrieves a single fact for specified member of derived collection"
+          "retrieves a single fact for specified member of derived collection",
         ) {
           val path =
             s"/filteredCollection/#$uuid1/anotherCollection/#$uuid2/test"
@@ -339,11 +335,11 @@ class FactSpec extends AnyFunSpec:
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
+                CommonOptionConfigTraits.value("42"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -364,11 +360,11 @@ class FactSpec extends AnyFunSpec:
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
+                CommonOptionConfigTraits.value("42"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)

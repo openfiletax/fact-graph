@@ -1,19 +1,16 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.definitions.fact.{
-  CommonOptionConfigTraits,
-  CompNodeConfigElement
-}
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.{
-  Explanation,
-  FactDictionary,
   canaryExpr,
   incompleteExpr,
   placeholderExpr,
-  placeholderFalseExpr
+  placeholderFalseExpr,
+  Explanation,
+  FactDictionary,
 }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigElement }
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class AllSpec extends AnyFunSpec:
   describe("All") {
@@ -23,8 +20,8 @@ class AllSpec extends AnyFunSpec:
         Seq(
           new CompNodeConfigElement("True"),
           new CompNodeConfigElement("True"),
-          new CompNodeConfigElement("True")
-        )
+          new CompNodeConfigElement("True"),
+        ),
       )
       val node = CompNode.fromDerivedConfig(config)
       assert(node.get(0) == Result.Complete(true))
@@ -36,8 +33,8 @@ class AllSpec extends AnyFunSpec:
         Seq(
           new CompNodeConfigElement("True"),
           new CompNodeConfigElement("True"),
-          new CompNodeConfigElement("False")
-        )
+          new CompNodeConfigElement("False"),
+        ),
       )
       val node = CompNode.fromDerivedConfig(config)
       assert(node.get(0) == Result.Complete(false))
@@ -51,8 +48,8 @@ class AllSpec extends AnyFunSpec:
           BooleanNode(false),
           BooleanNode(canaryExpr {
             canary = true
-          })
-        )
+          }),
+        ),
       ).get(0)
 
       assert(!canary)
@@ -63,8 +60,8 @@ class AllSpec extends AnyFunSpec:
           BooleanNode(false),
           BooleanNode(canaryExpr {
             canary = true
-          })
-        )
+          }),
+        ),
       ).get(0)
     }
 
@@ -75,14 +72,14 @@ class AllSpec extends AnyFunSpec:
           CompNodeConfigElement(
             "String",
             Seq.empty,
-            CommonOptionConfigTraits.value("Hello")
+            CommonOptionConfigTraits.value("Hello"),
           ),
           CompNodeConfigElement(
             "String",
             Seq.empty,
-            CommonOptionConfigTraits.value("World")
-          )
-        )
+            CommonOptionConfigTraits.value("World"),
+          ),
+        ),
       )
       assertThrows[UnsupportedOperationException] {
         CompNode.fromDerivedConfig(config)
@@ -98,17 +95,17 @@ class AllSpec extends AnyFunSpec:
             BooleanNode(false),
             BooleanNode(placeholderExpr),
             BooleanNode(placeholderFalseExpr),
-            BooleanNode(incompleteExpr)
-          )
+            BooleanNode(incompleteExpr),
+          ),
         )
         assert(
           node.explain(0) == Explanation.Operation(
             List(
               List(
-                Explanation.Constant
-              )
-            )
-          )
+                Explanation.Constant,
+              ),
+            ),
+          ),
         )
       }
 
@@ -118,8 +115,8 @@ class AllSpec extends AnyFunSpec:
             BooleanNode(true),
             BooleanNode(placeholderExpr),
             BooleanNode(placeholderFalseExpr),
-            BooleanNode(incompleteExpr)
-          )
+            BooleanNode(incompleteExpr),
+          ),
         )
         assert(node.explain(0).children.length == 4)
       }

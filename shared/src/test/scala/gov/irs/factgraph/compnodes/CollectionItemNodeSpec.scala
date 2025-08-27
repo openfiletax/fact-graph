@@ -1,17 +1,16 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
   FactConfigElement,
-  WritableConfigElement
+  WritableConfigElement,
 }
 import gov.irs.factgraph.monads.Result
-import gov.irs.factgraph.types.{Collection, CollectionItem}
-
+import gov.irs.factgraph.types.{ Collection, CollectionItem }
 import java.util.UUID
+import org.scalatest.funspec.AnyFunSpec
 
 class CollectionItemNodeSpec extends AnyFunSpec:
   describe("CollectionNode") {
@@ -30,8 +29,8 @@ class CollectionItemNodeSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "When",
                     Seq(
-                      new CompNodeConfigElement("False")
-                    )
+                      new CompNodeConfigElement("False"),
+                    ),
                   ),
                   new CompNodeConfigElement(
                     "Then",
@@ -39,11 +38,11 @@ class CollectionItemNodeSpec extends AnyFunSpec:
                       new CompNodeConfigElement(
                         "Dependency",
                         Seq.empty,
-                        CommonOptionConfigTraits.path("/unknownItem")
-                      )
-                    )
-                  )
-                )
+                        CommonOptionConfigTraits.path("/unknownItem"),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Case",
@@ -51,8 +50,8 @@ class CollectionItemNodeSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "When",
                     Seq(
-                      new CompNodeConfigElement("True")
-                    )
+                      new CompNodeConfigElement("True"),
+                    ),
                   ),
                   new CompNodeConfigElement(
                     "Then",
@@ -60,16 +59,16 @@ class CollectionItemNodeSpec extends AnyFunSpec:
                       new CompNodeConfigElement(
                         "Dependency",
                         Seq.empty,
-                        CommonOptionConfigTraits.path("/knownItem")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
+                        CommonOptionConfigTraits.path("/knownItem"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
-        None
+        None,
       )
       FactDefinition.fromConfig(config)(using dictionary)
 
@@ -77,7 +76,7 @@ class CollectionItemNodeSpec extends AnyFunSpec:
         "/collection",
         Some(new WritableConfigElement("Collection")),
         None,
-        None
+        None,
       )
       FactDefinition.fromConfig(writableConfig)(using dictionary)
 
@@ -88,12 +87,12 @@ class CollectionItemNodeSpec extends AnyFunSpec:
           new CompNodeConfigElement(
             "Find",
             Seq(
-              new CompNodeConfigElement("False")
+              new CompNodeConfigElement("False"),
             ),
-            CommonOptionConfigTraits.path("/collection")
-          )
+            CommonOptionConfigTraits.path("/collection"),
+          ),
         ),
-        None
+        None,
       )
       FactDefinition.fromConfig(unknownConfig)(using dictionary)
 
@@ -104,12 +103,12 @@ class CollectionItemNodeSpec extends AnyFunSpec:
           new CompNodeConfigElement(
             "Find",
             Seq(
-              new CompNodeConfigElement("True")
+              new CompNodeConfigElement("True"),
             ),
-            CommonOptionConfigTraits.path("/collection")
-          )
+            CommonOptionConfigTraits.path("/collection"),
+          ),
         ),
-        None
+        None,
       )
       FactDefinition.fromConfig(knownConfig)(using dictionary)
 
@@ -117,7 +116,7 @@ class CollectionItemNodeSpec extends AnyFunSpec:
         "/anotherCollection",
         Some(new WritableConfigElement("Collection")),
         None,
-        None
+        None,
       )
       FactDefinition.fromConfig(anotherConfig)(using dictionary)
 
@@ -128,12 +127,12 @@ class CollectionItemNodeSpec extends AnyFunSpec:
           new CompNodeConfigElement(
             "Find",
             Seq(
-              new CompNodeConfigElement("False")
+              new CompNodeConfigElement("False"),
             ),
-            CommonOptionConfigTraits.path("/anotherCollection")
-          )
+            CommonOptionConfigTraits.path("/anotherCollection"),
+          ),
         ),
-        None
+        None,
       )
       FactDefinition.fromConfig(anotherUnknownConfig)(using dictionary)
 
@@ -169,8 +168,8 @@ class CollectionItemNodeSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "When",
                       Seq(
-                        new CompNodeConfigElement("False")
-                      )
+                        new CompNodeConfigElement("False"),
+                      ),
                     ),
                     new CompNodeConfigElement(
                       "Then",
@@ -178,11 +177,11 @@ class CollectionItemNodeSpec extends AnyFunSpec:
                         new CompNodeConfigElement(
                           "Dependency",
                           Seq.empty,
-                          CommonOptionConfigTraits.path("/anotherUnknownItem")
-                        )
-                      )
-                    )
-                  )
+                          CommonOptionConfigTraits.path("/anotherUnknownItem"),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "Case",
@@ -190,8 +189,8 @@ class CollectionItemNodeSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "When",
                       Seq(
-                        new CompNodeConfigElement("True")
-                      )
+                        new CompNodeConfigElement("True"),
+                      ),
                     ),
                     new CompNodeConfigElement(
                       "Then",
@@ -199,16 +198,16 @@ class CollectionItemNodeSpec extends AnyFunSpec:
                         new CompNodeConfigElement(
                           "Dependency",
                           Seq.empty,
-                          CommonOptionConfigTraits.path("/knownItem")
-                        )
-                      )
-                    )
-                  )
-                )
-              )
-            )
+                          CommonOptionConfigTraits.path("/knownItem"),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
-          None
+          None,
         )
         assertThrows[UnsupportedOperationException] {
           val definition = FactDefinition.fromConfig(config)(using dictionary)
@@ -224,17 +223,17 @@ class CollectionItemNodeSpec extends AnyFunSpec:
           Expression.Constant(
             Some(
               CollectionItem(
-                UUID.fromString("ff381062-ab7a-42e7-ab8a-351b3c8fed39")
-              )
-            )
-          )
+                UUID.fromString("ff381062-ab7a-42e7-ab8a-351b3c8fed39"),
+              ),
+            ),
+          ),
         )
         assert(
           newNode.get(0) === Result.Complete(
             CollectionItem(
-              UUID.fromString("ff381062-ab7a-42e7-ab8a-351b3c8fed39")
-            )
-          )
+              UUID.fromString("ff381062-ab7a-42e7-ab8a-351b3c8fed39"),
+            ),
+          ),
         )
       }
     }
@@ -245,7 +244,7 @@ class CollectionItemNodeSpec extends AnyFunSpec:
         "/collection",
         Some(new WritableConfigElement("Collection")),
         None,
-        None
+        None,
       )
       FactDefinition.fromConfig(config)(using dictionary)
 
@@ -253,7 +252,7 @@ class CollectionItemNodeSpec extends AnyFunSpec:
         "/collection/*/int",
         Some(new WritableConfigElement("Int")),
         None,
-        None
+        None,
       )
       FactDefinition.fromConfig(config2)(using dictionary)
 
@@ -261,7 +260,7 @@ class CollectionItemNodeSpec extends AnyFunSpec:
         "/test",
         Some(new WritableConfigElement("CollectionItem", "/collection")),
         None,
-        None
+        None,
       )
       FactDefinition.fromConfig(config3)(using dictionary)
 

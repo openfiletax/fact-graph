@@ -1,17 +1,16 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
-import gov.irs.factgraph.monads.Result
-import gov.irs.factgraph.types.Collection
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.{
+  CommonOptionConfigTraits,
   CompNodeConfigElement,
   FactConfigElement,
   WritableConfigElement,
-  CommonOptionConfigTraits
 }
-
+import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.types.Collection
 import java.util.UUID
+import org.scalatest.funspec.AnyFunSpec
 
 class FirstNCollectionItemsSpec extends AnyFunSpec:
   describe("FirstNCollectionItems") {
@@ -30,9 +29,9 @@ class FirstNCollectionItemsSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Dependency",
                     Seq.empty,
-                    "/collection"
-                  )
-                )
+                    "/collection",
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Count",
@@ -40,15 +39,15 @@ class FirstNCollectionItemsSpec extends AnyFunSpec:
                   CompNodeConfigElement(
                     "Int",
                     Seq(),
-                    CommonOptionConfigTraits.value("2")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("2"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -65,9 +64,9 @@ class FirstNCollectionItemsSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Dependency",
                     Seq.empty,
-                    "/collection"
-                  )
-                )
+                    "/collection",
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Count",
@@ -75,37 +74,37 @@ class FirstNCollectionItemsSpec extends AnyFunSpec:
                   CompNodeConfigElement(
                     "Int",
                     Seq(),
-                    CommonOptionConfigTraits.value("4")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("4"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection",
         Some(
-          new WritableConfigElement("Collection")
+          new WritableConfigElement("Collection"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/bool",
         Some(
-          new WritableConfigElement("Boolean")
+          new WritableConfigElement("Boolean"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     val graph = Graph(dictionary)
@@ -128,12 +127,12 @@ class FirstNCollectionItemsSpec extends AnyFunSpec:
     }
 
     it(
-      "Overflowing (e.g. getting the first 4 elements of a 3 element collection) will return the full collection"
+      "Overflowing (e.g. getting the first 4 elements of a 3 element collection) will return the full collection",
     ) {
       val fact = graph(Path("/first4"))(0).get
 
       assert(
-        fact.get(0) == Result.Complete(Collection(Vector(uuid1, uuid2, uuid3)))
+        fact.get(0) == Result.Complete(Collection(Vector(uuid1, uuid2, uuid3))),
       )
     }
   }

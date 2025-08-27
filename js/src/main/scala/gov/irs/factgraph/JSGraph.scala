@@ -1,23 +1,22 @@
 package gov.irs.factgraph
-import gov.irs.factgraph.Expression.Writable
-import gov.irs.factgraph.persisters.*
-
-import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
-import scala.scalajs.js
+import gov.irs.factgraph.compnodes.{ BooleanNode, DayNode, DollarNode, EnumNode }
+import gov.irs.factgraph.compnodes.IntNode
 import gov.irs.factgraph.limits.LimitViolation
 import gov.irs.factgraph.monads.MaybeVector
 import gov.irs.factgraph.monads.Result
-import gov.irs.factgraph.types.{Enum, Day, Dollar, WritableType}
+import gov.irs.factgraph.persisters.*
+import gov.irs.factgraph.types.{ Day, Dollar, Enum, WritableType }
+import gov.irs.factgraph.Expression.Writable
 import js.JSConverters._
-import gov.irs.factgraph.compnodes.{BooleanNode, DayNode, DollarNode, EnumNode}
 import scala.annotation.switch
-import gov.irs.factgraph.compnodes.IntNode
+import scala.scalajs.js
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
 
 @JSExportTopLevel("Graph")
 @JSExportAll
 class JSGraph(
     override val dictionary: FactDictionary,
-    override val persister: Persister
+    override val persister: Persister,
 ) extends Graph(dictionary, persister):
 
   def toStringDictionary(): js.Dictionary[String] =
@@ -37,7 +36,7 @@ class JSGraph(
 
       case MaybeVector.Multiple(vect, c) =>
         throw new UnsupportedOperationException(
-          s"getFact returned multiple results for path $path, which is unsupported"
+          s"getFact returned multiple results for path $path, which is unsupported",
         )
 
   // In HTML, form value are always strings
@@ -67,20 +66,20 @@ class JSGraph(
     import js.JSConverters._
     return SaveReturnValue(
       rawSave._1,
-      rawSave._2.map(f => LimitViolationWrapper.fromLimitViolation(f)).toJSArray
+      rawSave._2.map(f => LimitViolationWrapper.fromLimitViolation(f)).toJSArray,
     )
   }
 
-  def paths(): js.Array[String] = {
+  def paths(): js.Array[String] =
     this.dictionary
       .getPaths()
       .map(path => path.toString)
       .toJSArray
-  }
 
   def getCollectionIds(collectionPath: String): js.Array[String] = {
     val pathWithWildcard = collectionPath + "/*"
-    this.getCollectionPaths(pathWithWildcard)
+    this
+      .getCollectionPaths(pathWithWildcard)
       .map(path => path.replace(collectionPath + "/#", ""))
       .toJSArray
   }
@@ -115,7 +114,7 @@ object JSGraph:
 
 final class SaveReturnValue(
     val valid: Boolean,
-    val limitViolations: js.Array[LimitViolationWrapper]
+    val limitViolations: js.Array[LimitViolationWrapper],
 ) extends js.Object
 
 final class LimitViolationWrapper(
@@ -123,7 +122,7 @@ final class LimitViolationWrapper(
     var factPath: String,
     val level: String,
     val limit: String,
-    val actual: String
+    val actual: String,
 ) extends js.Object
 
 object LimitViolationWrapper {
@@ -133,19 +132,19 @@ object LimitViolationWrapper {
       lv.factPath,
       lv.LimitLevel.toString(),
       lv.limit,
-      lv.actual
+      lv.actual,
     )
 }
 
 final class PersisterSyncIssueWrapper(
     val path: String,
-    val message: String
+    val message: String,
 ) extends js.Object
 
 object PersisterSyncIssueWrapper {
   def fromPersisterSyncIssue(issue: PersisterSyncIssue) =
     new PersisterSyncIssueWrapper(
       issue.path,
-      issue.message
+      issue.message,
     )
 }

@@ -1,17 +1,17 @@
 package gov.irs.factgraph.compnodes
 
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait }
+import gov.irs.factgraph.definitions.fact.CommonOptionConfigTraits.allowAllZeros
+import gov.irs.factgraph.definitions.fact.OptionConfigTrait
+import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.types.Tin
 import gov.irs.factgraph.Expression
+import gov.irs.factgraph.Fact
+import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.Factual
 import gov.irs.factgraph.Path
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait}
-import gov.irs.factgraph.types.Tin
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.PathItem
-import gov.irs.factgraph.monads.Result
-import gov.irs.factgraph.definitions.fact.CommonOptionConfigTraits.allowAllZeros
 import scala.scalajs.js.annotation.JSExportAll
-import gov.irs.factgraph.Fact
-import gov.irs.factgraph.definitions.fact.OptionConfigTrait
 
 @JSExportAll
 final case class TinNode(expr: Expression[Tin], allowAllZeros: Boolean) extends CompNode:
@@ -54,8 +54,7 @@ object TinNode extends CompNodeFactory with WritableNodeFactory:
       .find(x => x.name == CommonOptionConfigTraits.ALLOW_ALL_ZEROS)
       .getOrElse(new OptionConfigTrait:
         override def value: String = "false"
-        override def name: String = CommonOptionConfigTraits.ALLOW_ALL_ZEROS,
-      )
+        override def name: String = CommonOptionConfigTraits.ALLOW_ALL_ZEROS)
       .value == "true"
 
     new TinNode(
@@ -68,7 +67,9 @@ object TinNode extends CompNodeFactory with WritableNodeFactory:
     value.allowAllZeros,
   )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val allowAllZeros = e

@@ -1,10 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.*
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.EmailAddress
+import org.scalatest.funspec.AnyFunSpec
 
 class EmailAddressNodeSpec extends AnyFunSpec:
   describe("EmailAddressNode") {
@@ -12,7 +12,7 @@ class EmailAddressNodeSpec extends AnyFunSpec:
       it("creates nodes from values") {
         val node = EmailAddressNode(EmailAddress("example@example.com"))
         assert(
-          node.get(0) == Result.Complete(EmailAddress("example@example.com"))
+          node.get(0) == Result.Complete(EmailAddress("example@example.com")),
         )
       }
     }
@@ -22,12 +22,12 @@ class EmailAddressNodeSpec extends AnyFunSpec:
         val config = new CompNodeConfigElement(
           "EmailAddress",
           Seq.empty,
-          CommonOptionConfigTraits.value("example@example.com")
+          CommonOptionConfigTraits.value("example@example.com"),
         )
         val node =
           CompNode.fromDerivedConfig(config).asInstanceOf[EmailAddressNode]
         assert(
-          node.get(0) == Result.Complete(EmailAddress("example@example.com"))
+          node.get(0) == Result.Complete(EmailAddress("example@example.com")),
         )
       }
     }
@@ -42,7 +42,7 @@ class EmailAddressNodeSpec extends AnyFunSpec:
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("False"))
+                  Seq(new CompNodeConfigElement("False")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -50,18 +50,18 @@ class EmailAddressNodeSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "EmailAddress",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("false@example.com")
-                    )
-                  )
-                )
-              )
+                      CommonOptionConfigTraits.value("false@example.com"),
+                    ),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Case",
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("True"))
+                  Seq(new CompNodeConfigElement("True")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -69,13 +69,13 @@ class EmailAddressNodeSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "EmailAddress",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("true@example.com")
-                    )
-                  )
-                )
-              )
-            )
-          )
+                      CommonOptionConfigTraits.value("true@example.com"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
 
@@ -94,11 +94,11 @@ class EmailAddressNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "EmailAddress",
               Seq.empty,
-              CommonOptionConfigTraits.value("example@example.com")
-            )
+              CommonOptionConfigTraits.value("example@example.com"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       FactDefinition.fromConfig(
@@ -109,11 +109,11 @@ class EmailAddressNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Dependency",
               Seq.empty,
-              CommonOptionConfigTraits.path("../value")
-            )
+              CommonOptionConfigTraits.path("../value"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)
@@ -123,8 +123,8 @@ class EmailAddressNodeSpec extends AnyFunSpec:
         assert(dependent.value.isInstanceOf[EmailAddressNode])
         assert(
           dependent.get(0) == Result.Complete(
-            EmailAddress("example@example.com")
-          )
+            EmailAddress("example@example.com"),
+          ),
         )
       }
     }
@@ -134,11 +134,11 @@ class EmailAddressNodeSpec extends AnyFunSpec:
         val node = EmailAddressNode(Expression.Constant(None))
         val newNode =
           node.fromExpression(
-            Expression.Constant(Some(EmailAddress("example@example.com")))
+            Expression.Constant(Some(EmailAddress("example@example.com"))),
           )
 
         assert(
-          newNode.get(0) == Result.Complete(EmailAddress("example@example.com"))
+          newNode.get(0) == Result.Complete(EmailAddress("example@example.com")),
         )
       }
     }
@@ -150,11 +150,11 @@ class EmailAddressNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("EmailAddress")
+              new WritableConfigElement("EmailAddress"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -166,7 +166,7 @@ class EmailAddressNodeSpec extends AnyFunSpec:
         graph.save()
 
         assert(
-          fact.get(0) == Result.Complete(EmailAddress("example@example.com"))
+          fact.get(0) == Result.Complete(EmailAddress("example@example.com")),
         )
       }
     }

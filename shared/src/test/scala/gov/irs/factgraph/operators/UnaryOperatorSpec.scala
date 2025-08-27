@@ -1,9 +1,8 @@
 package gov.irs.factgraph.operators
 
-import org.scalatest.funspec.AnyFunSpec
-
 import gov.irs.factgraph.*
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class UnaryOperatorSpec extends AnyFunSpec:
   describe("UnaryOperator") {
@@ -15,7 +14,7 @@ class UnaryOperatorSpec extends AnyFunSpec:
         it("returns incomplete") {
           assert(
             Expression.Unary(incompleteExpr, operator).get(0) ==
-              Result.Incomplete
+              Result.Incomplete,
           )
         }
       }
@@ -24,7 +23,7 @@ class UnaryOperatorSpec extends AnyFunSpec:
         it("returns a placeholder") {
           assert(
             Expression.Unary(placeholderExpr, operator).get(0) ==
-              Result.Placeholder(false)
+              Result.Placeholder(false),
           )
         }
       }
@@ -33,7 +32,7 @@ class UnaryOperatorSpec extends AnyFunSpec:
         it("returns complete") {
           assert(
             Expression.Unary(completeExpr, operator).get(0) ==
-              Result.Complete(false)
+              Result.Complete(false),
           )
         }
       }
@@ -58,7 +57,7 @@ class UnaryOperatorSpec extends AnyFunSpec:
       it("provides an explanation with its input as a child") {
         assert(
           Expression.Unary(completeExpr, operator).explain(0) ==
-            Explanation.Operation(List(List(Explanation.Constant)))
+            Explanation.Operation(List(List(Explanation.Constant))),
         )
       }
     }

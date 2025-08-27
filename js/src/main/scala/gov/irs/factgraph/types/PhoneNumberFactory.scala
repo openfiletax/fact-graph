@@ -1,8 +1,8 @@
 package gov.irs.factgraph.types
-import scala.scalajs.js.annotation.JSExportTopLevel
-import scala.util.matching.Regex
 import gov.irs.factgraph.monads.JSEither
-import scala.util.{Try, Success, Failure}
+import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.util.{ Failure, Success, Try }
+import scala.util.matching.Regex
 
 object PhoneNumberFactory:
   private val UsPhonePattern: Regex = """^\+1(\d{3})(\d{3})(\d{4})$""".r
@@ -16,7 +16,7 @@ object PhoneNumberFactory:
       Try(new UsPhoneNumber(area, office, line)) match
         case Success(v)                              => JSEither.Right(v)
         case Failure(e: E164NumberValidationFailure) => JSEither.Left(e)
-        case Failure(exception) =>
+        case Failure(exception)                      =>
           JSEither.Left(
             E164NumberValidationFailure(
               "Malformed US Phone Number",
@@ -41,7 +41,7 @@ object PhoneNumberFactory:
       Try(new InternationalPhoneNumber(country, subscriber)) match
         case Success(v)                              => JSEither.Right(v)
         case Failure(e: E164NumberValidationFailure) => JSEither.Left(e)
-        case Failure(exception) =>
+        case Failure(exception)                      =>
           JSEither.Left(
             E164NumberValidationFailure(
               "Malformed International Phone Number",

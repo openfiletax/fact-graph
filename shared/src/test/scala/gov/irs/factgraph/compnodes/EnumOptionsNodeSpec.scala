@@ -1,14 +1,14 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
   FactConfigElement,
-  WritableConfigElement
+  WritableConfigElement,
 }
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class EnumOptionsNodeSpec extends AnyFunSpec:
   describe("EnumOptionsNodeSpec") {
@@ -31,7 +31,7 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
           List(
             (trueNode, enumValA),
             (falseNode, enumValB),
-            (trueNode, enumValC)
+            (trueNode, enumValC),
           )
         val optionsNode = EnumOptionsNode(enumConditions)
 
@@ -55,23 +55,23 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("A")
+                  CommonOptionConfigTraits.value("A"),
                 ),
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("B")
+                  CommonOptionConfigTraits.value("B"),
                 ),
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("C")
-                )
+                  CommonOptionConfigTraits.value("C"),
+                ),
               ),
-              Seq.empty
-            )
+              Seq.empty,
+            ),
           ),
-          None
+          None,
         )
 
         FactDefinition.fromConfig(config)(using dictionary)
@@ -98,9 +98,9 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                     CompNodeConfigElement(
                       "Condition",
                       Seq(
-                        new CompNodeConfigElement("True")
+                        new CompNodeConfigElement("True"),
                       ),
-                      Seq.empty
+                      Seq.empty,
                     ),
                     CompNodeConfigElement(
                       "Value",
@@ -108,12 +108,12 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                         CompNodeConfigElement(
                           "String",
                           Seq.empty,
-                          CommonOptionConfigTraits.value("A")
-                        )
+                          CommonOptionConfigTraits.value("A"),
+                        ),
                       ),
-                      Seq.empty
-                    )
-                  )
+                      Seq.empty,
+                    ),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "EnumOption",
@@ -121,9 +121,9 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                     CompNodeConfigElement(
                       "Condition",
                       Seq(
-                        new CompNodeConfigElement("True")
+                        new CompNodeConfigElement("True"),
                       ),
-                      Seq.empty
+                      Seq.empty,
                     ),
                     CompNodeConfigElement(
                       "Value",
@@ -131,12 +131,12 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                         CompNodeConfigElement(
                           "String",
                           Seq.empty,
-                          CommonOptionConfigTraits.value("B")
-                        )
+                          CommonOptionConfigTraits.value("B"),
+                        ),
                       ),
-                      Seq.empty
-                    )
-                  )
+                      Seq.empty,
+                    ),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "EnumOption",
@@ -144,9 +144,9 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                     CompNodeConfigElement(
                       "Condition",
                       Seq(
-                        new CompNodeConfigElement("False")
+                        new CompNodeConfigElement("False"),
                       ),
-                      Seq.empty
+                      Seq.empty,
                     ),
                     CompNodeConfigElement(
                       "Value",
@@ -154,18 +154,18 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                         CompNodeConfigElement(
                           "String",
                           Seq.empty,
-                          CommonOptionConfigTraits.value("C")
-                        )
+                          CommonOptionConfigTraits.value("C"),
+                        ),
                       ),
-                      Seq.empty
-                    )
-                  )
-                )
+                      Seq.empty,
+                    ),
+                  ),
+                ),
               ),
-              Seq.empty
-            )
+              Seq.empty,
+            ),
           ),
-          None
+          None,
         )
 
         FactDefinition.fromConfig(config)(using dictionary)
@@ -189,7 +189,7 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("As qualified as Alex")
+                  CommonOptionConfigTraits.value("As qualified as Alex"),
                 ),
                 new CompNodeConfigElement(
                   "EnumOption",
@@ -197,9 +197,9 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                     CompNodeConfigElement(
                       "Condition",
                       Seq(
-                        new CompNodeConfigElement("True")
+                        new CompNodeConfigElement("True"),
                       ),
-                      Seq.empty
+                      Seq.empty,
                     ),
                     CompNodeConfigElement(
                       "Value",
@@ -207,12 +207,12 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                         CompNodeConfigElement(
                           "String",
                           Seq.empty,
-                          CommonOptionConfigTraits.value("A")
-                        )
+                          CommonOptionConfigTraits.value("A"),
+                        ),
                       ),
-                      Seq.empty
-                    )
-                  )
+                      Seq.empty,
+                    ),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "EnumOption",
@@ -220,9 +220,9 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                     CompNodeConfigElement(
                       "Condition",
                       Seq(
-                        new CompNodeConfigElement("True")
+                        new CompNodeConfigElement("True"),
                       ),
-                      Seq.empty
+                      Seq.empty,
                     ),
                     CompNodeConfigElement(
                       "Value",
@@ -230,12 +230,12 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                         CompNodeConfigElement(
                           "String",
                           Seq.empty,
-                          CommonOptionConfigTraits.value("B")
-                        )
+                          CommonOptionConfigTraits.value("B"),
+                        ),
                       ),
-                      Seq.empty
-                    )
-                  )
+                      Seq.empty,
+                    ),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "EnumOption",
@@ -243,9 +243,9 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                     CompNodeConfigElement(
                       "Condition",
                       Seq(
-                        new CompNodeConfigElement("False")
+                        new CompNodeConfigElement("False"),
                       ),
-                      Seq.empty
+                      Seq.empty,
                     ),
                     CompNodeConfigElement(
                       "Value",
@@ -253,18 +253,18 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                         CompNodeConfigElement(
                           "String",
                           Seq.empty,
-                          CommonOptionConfigTraits.value("C")
-                        )
+                          CommonOptionConfigTraits.value("C"),
+                        ),
                       ),
-                      Seq.empty
-                    )
-                  )
-                )
+                      Seq.empty,
+                    ),
+                  ),
+                ),
               ),
-              Seq.empty
-            )
+              Seq.empty,
+            ),
           ),
-          None
+          None,
         )
 
         FactDefinition.fromConfig(config)(using dictionary)
@@ -274,8 +274,8 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
 
         assert(
           options.value.get(0) == Result.Complete(
-            List("As qualified as Alex", "A", "B")
-          )
+            List("As qualified as Alex", "A", "B"),
+          ),
         )
       }
     }
@@ -287,7 +287,7 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
           "/predicate",
           None,
           Some(new CompNodeConfigElement("True")),
-          None
+          None,
         )
         FactDefinition.fromConfig(predicateConfig)(using dictionary)
 
@@ -307,10 +307,10 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                         new CompNodeConfigElement(
                           "Dependency",
                           Seq.empty,
-                          CommonOptionConfigTraits.path("/predicate")
-                        )
+                          CommonOptionConfigTraits.path("/predicate"),
+                        ),
                       ),
-                      Seq.empty
+                      Seq.empty,
                     ),
                     CompNodeConfigElement(
                       "Value",
@@ -318,12 +318,12 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                         CompNodeConfigElement(
                           "String",
                           Seq.empty,
-                          CommonOptionConfigTraits.value("A")
-                        )
+                          CommonOptionConfigTraits.value("A"),
+                        ),
                       ),
-                      Seq.empty
-                    )
-                  )
+                      Seq.empty,
+                    ),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "EnumOption",
@@ -331,9 +331,9 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                     CompNodeConfigElement(
                       "Condition",
                       Seq(
-                        new CompNodeConfigElement("True")
+                        new CompNodeConfigElement("True"),
                       ),
-                      Seq.empty
+                      Seq.empty,
                     ),
                     CompNodeConfigElement(
                       "Value",
@@ -341,12 +341,12 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                         CompNodeConfigElement(
                           "String",
                           Seq.empty,
-                          CommonOptionConfigTraits.value("B")
-                        )
+                          CommonOptionConfigTraits.value("B"),
+                        ),
                       ),
-                      Seq.empty
-                    )
-                  )
+                      Seq.empty,
+                    ),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "EnumOption",
@@ -354,9 +354,9 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                     CompNodeConfigElement(
                       "Condition",
                       Seq(
-                        new CompNodeConfigElement("False")
+                        new CompNodeConfigElement("False"),
                       ),
-                      Seq.empty
+                      Seq.empty,
                     ),
                     CompNodeConfigElement(
                       "Value",
@@ -364,18 +364,18 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                         CompNodeConfigElement(
                           "String",
                           Seq.empty,
-                          CommonOptionConfigTraits.value("C")
-                        )
+                          CommonOptionConfigTraits.value("C"),
+                        ),
                       ),
-                      Seq.empty
-                    )
-                  )
-                )
+                      Seq.empty,
+                    ),
+                  ),
+                ),
               ),
-              Seq.empty
-            )
+              Seq.empty,
+            ),
           ),
-          None
+          None,
         )
 
         FactDefinition.fromConfig(config)(using dictionary)
@@ -391,11 +391,11 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
         FactConfigElement(
           "/predicate",
           Some(
-            new WritableConfigElement("Int")
+            new WritableConfigElement("Int"),
           ),
           None,
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       val config = FactConfigElement(
         "/options",
@@ -419,9 +419,9 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                               new CompNodeConfigElement(
                                 "Int",
                                 Seq.empty,
-                                CommonOptionConfigTraits.value("1")
-                              )
-                            )
+                                CommonOptionConfigTraits.value("1"),
+                              ),
+                            ),
                           ),
                           new CompNodeConfigElement(
                             "Right",
@@ -429,14 +429,14 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                               new CompNodeConfigElement(
                                 "Dependency",
                                 Seq.empty,
-                                CommonOptionConfigTraits.path("/predicate")
-                              )
-                            )
-                          )
-                        )
-                      )
+                                CommonOptionConfigTraits.path("/predicate"),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    Seq.empty
+                    Seq.empty,
                   ),
                   CompNodeConfigElement(
                     "Value",
@@ -444,12 +444,12 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                       CompNodeConfigElement(
                         "String",
                         Seq.empty,
-                        CommonOptionConfigTraits.value("A")
-                      )
+                        CommonOptionConfigTraits.value("A"),
+                      ),
                     ),
-                    Seq.empty
-                  )
-                )
+                    Seq.empty,
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "EnumOption",
@@ -457,9 +457,9 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                   CompNodeConfigElement(
                     "Condition",
                     Seq(
-                      new CompNodeConfigElement("False")
+                      new CompNodeConfigElement("False"),
                     ),
-                    Seq.empty
+                    Seq.empty,
                   ),
                   CompNodeConfigElement(
                     "Value",
@@ -467,18 +467,18 @@ class EnumOptionsNodeSpec extends AnyFunSpec:
                       CompNodeConfigElement(
                         "String",
                         Seq.empty,
-                        CommonOptionConfigTraits.value("C")
-                      )
+                        CommonOptionConfigTraits.value("C"),
+                      ),
                     ),
-                    Seq.empty
-                  )
-                )
-              )
+                    Seq.empty,
+                  ),
+                ),
+              ),
             ),
-            Seq.empty
-          )
+            Seq.empty,
+          ),
         ),
-        None
+        None,
       )
 
       FactDefinition.fromConfig(config)(using dictionary)

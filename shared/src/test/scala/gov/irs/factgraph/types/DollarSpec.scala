@@ -3,8 +3,7 @@ package gov.irs.factgraph.types
 import org.scalatest.funspec.AnyFunSpec
 
 class DollarSpec extends AnyFunSpec:
-  /** Helper method to simplify checking that a DollarFailureReason is thrown
-    * with the correct reason.
+  /** Helper method to simplify checking that a DollarFailureReason is thrown with the correct reason.
     *
     * @param reason
     * @param op
@@ -64,73 +63,73 @@ class DollarSpec extends AnyFunSpec:
 
       it("rejects disallowed characters") {
         assertThrowsWithReason(
-          { Dollar("1.0a") },
-          DollarFailureReason.InvalidCharacters
+          Dollar("1.0a"),
+          DollarFailureReason.InvalidCharacters,
         )
         assertThrowsWithReason(
-          { Dollar("abc") },
-          DollarFailureReason.InvalidCharacters
+          Dollar("abc"),
+          DollarFailureReason.InvalidCharacters,
         )
       }
 
       it("rejects commas in the fractional portion") {
         assertThrowsWithReason(
-          { Dollar("1.2,3") },
-          DollarFailureReason.InvalidCharacters
+          Dollar("1.2,3"),
+          DollarFailureReason.InvalidCharacters,
         )
         assertThrowsWithReason(
-          { Dollar("1.23,") },
-          DollarFailureReason.InvalidCharacters
+          Dollar("1.23,"),
+          DollarFailureReason.InvalidCharacters,
         )
       }
 
       it("rejects values with more than one decimal") {
         assertThrowsWithReason(
-          { Dollar("1.2.3") },
-          DollarFailureReason.TooManyDecimals
+          Dollar("1.2.3"),
+          DollarFailureReason.TooManyDecimals,
         )
       }
 
       it("rejects values with a hyphen anywhere except the beginning") {
         assertThrowsWithReason(
-          { Dollar("1.-3") },
-          DollarFailureReason.InvalidHyphens
+          Dollar("1.-3"),
+          DollarFailureReason.InvalidHyphens,
         )
         assertThrowsWithReason(
-          { Dollar("1-.3") },
-          DollarFailureReason.InvalidHyphens
+          Dollar("1-.3"),
+          DollarFailureReason.InvalidHyphens,
         )
         assertThrowsWithReason(
-          { Dollar("1.3-") },
-          DollarFailureReason.InvalidHyphens
+          Dollar("1.3-"),
+          DollarFailureReason.InvalidHyphens,
         )
       }
 
       it(
-        "rejects values composed of just a pair of parentheses with InvalidParentheses"
+        "rejects values composed of just a pair of parentheses with InvalidParentheses",
       ) {
         assertThrowsWithReason(
-          { Dollar("()") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("()"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("((") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("(("),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("))") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("))"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar(")(") },
-          DollarFailureReason.InvalidParentheses
+          Dollar(")("),
+          DollarFailureReason.InvalidParentheses,
         )
       }
 
       it("rejects values composed of a single hyphen with InvalidHyphens") {
         assertThrowsWithReason(
-          { Dollar("-") },
-          DollarFailureReason.InvalidHyphens
+          Dollar("-"),
+          DollarFailureReason.InvalidHyphens,
         )
       }
 
@@ -143,97 +142,97 @@ class DollarSpec extends AnyFunSpec:
       describe("when rounding is disabled") {
         it("rejects values with more than two fractional digits") {
           assertThrowsWithReason(
-            { Dollar("1.234", allowRounding = false) },
-            DollarFailureReason.TooManyFractionalDigits
+            Dollar("1.234", allowRounding = false),
+            DollarFailureReason.TooManyFractionalDigits,
           )
         }
       }
 
       it("rejects values that contain both hyphens and parentheses") {
         assertThrowsWithReason(
-          { Dollar("(-1)") },
-          DollarFailureReason.CombinedHyphensAndParentheses
+          Dollar("(-1)"),
+          DollarFailureReason.CombinedHyphensAndParentheses,
         )
 
         assertThrowsWithReason(
-          { Dollar("(-1.23)") },
-          DollarFailureReason.CombinedHyphensAndParentheses
+          Dollar("(-1.23)"),
+          DollarFailureReason.CombinedHyphensAndParentheses,
         )
       }
 
       it("rejects values with unmatched parentheses") {
         // Correct position, but alone
         assertThrowsWithReason(
-          { Dollar("(1.0") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("(1.0"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("1.0(") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("1.0("),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar(")1.0") },
-          DollarFailureReason.InvalidParentheses
+          Dollar(")1.0"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("1.0)") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("1.0)"),
+          DollarFailureReason.InvalidParentheses,
         )
       }
 
       it("rejects values with parentheses anywhere except the ends") {
         // Single parentheses
         assertThrowsWithReason(
-          { Dollar("1).0") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("1).0"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("1(.0") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("1(.0"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("1.)0") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("1.)0"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("1.(0") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("1.(0"),
+          DollarFailureReason.InvalidParentheses,
         )
 
         // Matching pair, but one is in the wrong position
         assertThrowsWithReason(
-          { Dollar("(1).0") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("(1).0"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("(1.)0") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("(1.)0"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("1.(0)") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("1.(0)"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("1(.0)") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("1(.0)"),
+          DollarFailureReason.InvalidParentheses,
         )
 
         // Matching pair, neither in the correct position
         assertThrowsWithReason(
-          { Dollar("1(2).3") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("1(2).3"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("1(2.)3") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("1(2.)3"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("1.(2)3") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("1.(2)3"),
+          DollarFailureReason.InvalidParentheses,
         )
         assertThrowsWithReason(
-          { Dollar("1(.2)3") },
-          DollarFailureReason.InvalidParentheses
+          Dollar("1(.2)3"),
+          DollarFailureReason.InvalidParentheses,
         )
       }
     }
@@ -288,7 +287,7 @@ class DollarSpec extends AnyFunSpec:
 
     describe(".<=") {
       it(
-        "returns true if the left hand side is less than or equal to the right"
+        "returns true if the left hand side is less than or equal to the right",
       ) {
         assert(Dollar("1.23") <= Dollar("2.34"))
         assert(Dollar("1.23") <= Dollar("1.23"))
@@ -298,7 +297,7 @@ class DollarSpec extends AnyFunSpec:
 
     describe(".>=") {
       it(
-        "returns true if the left hand side is greater than or equal to the right"
+        "returns true if the left hand side is greater than or equal to the right",
       ) {
         assert(!(Dollar("1.23") >= Dollar("2.34")))
         assert(Dollar("1.23") >= Dollar("1.23"))

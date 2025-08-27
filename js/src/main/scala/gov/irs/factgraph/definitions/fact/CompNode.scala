@@ -3,13 +3,12 @@ package gov.irs.factgraph.definitions.fact
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
-  OptionConfigTrait,
   OptionConfig,
+  OptionConfigTrait,
 }
-
-import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
+import scala.scalajs.js
+import scala.scalajs.js.annotation.{ JSExport, JSExportTopLevel }
 
 class CompNodeConfigDigestWrapper(
     val typeName: String,

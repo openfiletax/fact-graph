@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class PasteSpec extends AnyFunSpec:
   describe("Paste") {
@@ -15,15 +15,15 @@ class PasteSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("Hello")
+              CommonOptionConfigTraits.value("Hello"),
             ),
             new CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("World")
-            )
-          )
-        )
+              CommonOptionConfigTraits.value("World"),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete("Hello World"))
@@ -38,11 +38,11 @@ class PasteSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("Yo")
+              CommonOptionConfigTraits.value("Yo"),
             ),
-            new CompNodeConfigElement("String")
-          )
-        )
+            new CompNodeConfigElement("String"),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete("Yo"))
@@ -56,16 +56,16 @@ class PasteSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("Hello")
+              CommonOptionConfigTraits.value("Hello"),
             ),
             new CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("World")
-            )
+              CommonOptionConfigTraits.value("World"),
+            ),
           ),
-          CommonOptionConfigTraits.sep("!")
-        )
+          CommonOptionConfigTraits.sep("!"),
+        ),
       )
 
       assert(node.get(0) == Result.Complete("Hello!World"))
@@ -79,16 +79,16 @@ class PasteSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("Com")
+              CommonOptionConfigTraits.value("Com"),
             ),
             new CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("pound")
-            )
+              CommonOptionConfigTraits.value("pound"),
+            ),
           ),
-          CommonOptionConfigTraits.sep("")
-        )
+          CommonOptionConfigTraits.sep(""),
+        ),
       )
 
       assert(node.get(0) == Result.Complete("Compound"))
@@ -103,15 +103,15 @@ class PasteSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("101")
+                CommonOptionConfigTraits.value("101"),
               ),
               new CompNodeConfigElement(
                 "String",
                 Seq.empty,
-                CommonOptionConfigTraits.value("Dalmations")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("Dalmations"),
+              ),
+            ),
+          ),
         )
       }
     }

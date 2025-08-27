@@ -1,7 +1,7 @@
 package gov.irs.factgraph.operators
 
+import gov.irs.factgraph.{ Explanation, Expression, Factual }
 import gov.irs.factgraph.monads.*
-import gov.irs.factgraph.{Explanation, Expression, Factual}
 
 trait Arity4Operator[+A, -W, -X, -Y, -Z] extends Operator:
   protected def operation(arg1: W, arg2: X, arg3: Y, arg4: Z): A

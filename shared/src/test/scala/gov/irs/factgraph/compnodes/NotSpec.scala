@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class NotSpec extends AnyFunSpec:
   describe("Not") {
@@ -13,9 +13,9 @@ class NotSpec extends AnyFunSpec:
           new CompNodeConfigElement(
             "Not",
             Seq(
-              new CompNodeConfigElement("True")
-            )
-          )
+              new CompNodeConfigElement("True"),
+            ),
+          ),
         )
         .asInstanceOf[BooleanNode]
 
@@ -31,10 +31,10 @@ class NotSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("42"),
+              ),
+            ),
+          ),
         )
       }
     }

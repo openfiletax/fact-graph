@@ -1,9 +1,6 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.definitions.fact.{
-  CommonOptionConfigTraits,
-  CompNodeConfigElement
-}
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigElement }
 import gov.irs.factgraph.monads.Result
 import org.scalatest.funspec.AnyFunSpec
 
@@ -20,9 +17,9 @@ class RegexSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("aaaaaa")
-                )
-              )
+                  CommonOptionConfigTraits.value("aaaaaa"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Pattern",
@@ -30,12 +27,12 @@ class RegexSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("a*")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("a*"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(true))
@@ -52,9 +49,9 @@ class RegexSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("ababa")
-                )
-              )
+                  CommonOptionConfigTraits.value("ababa"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Pattern",
@@ -62,12 +59,12 @@ class RegexSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("a*")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("a*"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(false))
@@ -84,9 +81,9 @@ class RegexSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("45ffg")
-                )
-              )
+                  CommonOptionConfigTraits.value("45ffg"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Pattern",
@@ -94,12 +91,12 @@ class RegexSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("[a-z0-9]{5}")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("[a-z0-9]{5}"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(true))
@@ -116,9 +113,9 @@ class RegexSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("45ffg123")
-                )
-              )
+                  CommonOptionConfigTraits.value("45ffg123"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Pattern",
@@ -126,12 +123,12 @@ class RegexSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("[a-z0-9]{5}")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("[a-z0-9]{5}"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(false))
@@ -149,9 +146,9 @@ class RegexSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Int",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("999")
-                  )
-                )
+                    CommonOptionConfigTraits.value("999"),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Pattern",
@@ -159,12 +156,12 @@ class RegexSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "String",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("[a-z0-9]")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("[a-z0-9]"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
       }
     }

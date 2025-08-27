@@ -28,7 +28,7 @@ class TinSpec extends AnyFunSpec:
         List("-", ".", ",", " ", "/", "\\", "").foreach(punc =>
           val tinStr = s"${area}${punc}${group}${punc}${serial}"
           val tin = Tin(tinStr)
-          assert((tin.area, tin.group, tin.serial) == (area, group, serial))
+          assert((tin.area, tin.group, tin.serial) == (area, group, serial)),
         )
       }
       it("Never strips leading 0's") {
@@ -44,7 +44,7 @@ class TinSpec extends AnyFunSpec:
     describe("equals") {
       it("Considers two TINs that have the same digits to be equal") {
         assert(
-          Tin("999", "00", "0000", false) == Tin("999", "00", "0000", false)
+          Tin("999", "00", "0000", false) == Tin("999", "00", "0000", false),
         )
       }
     }
@@ -64,7 +64,7 @@ class TinSpec extends AnyFunSpec:
     }
     describe("ATIN") {
       it(
-        "can tell an ATIN by whether it starts with a 9 and has a group of 93"
+        "can tell an ATIN by whether it starts with a 9 and has a group of 93",
       ) {
         assert(Tin("999-93-0001").isATIN)
         assert(!Tin("899-93-0001").isATIN)
@@ -72,7 +72,7 @@ class TinSpec extends AnyFunSpec:
       }
     }
     it(
-      "can tell if an SSN starts with an invalid area number or ends with an invalid serial"
+      "can tell if an SSN starts with an invalid area number or ends with an invalid serial",
     ) {
       assert(!Tin("999-50-0001").isSSN)
       assert(Tin("100-50-0001").isSSN)
@@ -85,35 +85,34 @@ class TinSpec extends AnyFunSpec:
 
   describe("TinFailureReason") {
     describe(".toUserFriendlyReason") {
-      for (detailedFailureReason <- TinFailureReason.values) {
+      for (detailedFailureReason <- TinFailureReason.values)
         it(
-          s"converts $detailedFailureReason into a valid UserFriendlyTinFailureReason"
+          s"converts $detailedFailureReason into a valid UserFriendlyTinFailureReason",
         ) {
           val userFriendlyReason = detailedFailureReason.toUserFriendlyReason()
           assert(userFriendlyReason.isInstanceOf[UserFriendlyTinFailureReason])
         }
-      }
     }
   }
 
   describe("Check for invalid TINs") {
     it("throws an error when if TIN starts with 000") {
       assertThrowsWithReason(
-        { Tin("000-55-0001") },
-        TinFailureReason.InvalidTin
+        Tin("000-55-0001"),
+        TinFailureReason.InvalidTin,
       )
     }
 
     it("throws an error when if TIN starts with 666") {
       assertThrowsWithReason(
-        { Tin("666-55-0001") },
-        TinFailureReason.InvalidTin
+        Tin("666-55-0001"),
+        TinFailureReason.InvalidTin,
       )
     }
     it("throws an error when if TIN is 000-00-0000 by default") {
       assertThrowsWithReason(
-        { Tin("000-00-0000") },
-        TinFailureReason.InvalidTin
+        Tin("000-00-0000"),
+        TinFailureReason.InvalidTin,
       )
     }
     it("allows a TIN is 000-00-0000 with a setting") {

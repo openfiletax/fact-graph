@@ -1,16 +1,13 @@
 package gov.irs.factgraph.types
 
-import java.lang.Enum
-import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
-import scala.util.matching.Regex
-import scala.util.{Try, Success, Failure}
-
 import gov.irs.factgraph.monads.JSEither
-import gov.irs.factgraph.validation.{ValidationFailure, ValidationFailureReason}
-
-import scala.scalajs.js.annotation.JSExportTopLevel
-import scala.util.{Try, Success, Failure}
+import gov.irs.factgraph.validation.{ ValidationFailure, ValidationFailureReason }
+import java.lang.Enum
 import scala.scalajs.js
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
+import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.util.{ Failure, Success, Try }
+import scala.util.matching.Regex
 
 object DollarFactory:
   @JSExportTopLevel("DollarFactory")
@@ -44,7 +41,7 @@ object DollarFactory:
           JSEither.Right(v)
         }
       case Failure(e: DollarValidationFailure) => JSEither.Left(e)
-      case Failure(exception) =>
+      case Failure(exception)                  =>
         JSEither.Left(
           DollarValidationFailure(
             "Failed to parse Dollar",

@@ -1,7 +1,7 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait }
 import gov.irs.factgraph.operators.ReduceOperator
 
 object Paste extends CompNodeFactory:
@@ -17,7 +17,9 @@ object Paste extends CompNodeFactory:
 
     StringNode(Expression.Reduce(nodes.map(_.expr).toList, operator))
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val conditions = CompNode.getConfigChildNodes(e)
@@ -33,7 +35,7 @@ object Paste extends CompNodeFactory:
         "all children of Paste must be StringNodes",
       )
 
-private final class PasteOperator(val sep: String) extends ReduceOperator[String]:
+final private class PasteOperator(val sep: String) extends ReduceOperator[String]:
   override protected def reduce(x: String, y: String): String =
     if x.isEmpty then y
     else if y.isEmpty then x

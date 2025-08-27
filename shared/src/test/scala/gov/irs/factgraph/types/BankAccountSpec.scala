@@ -6,7 +6,7 @@ class BankAccountSpec extends AnyFunSpec:
   def buildBankAccount(
       accountType: String = "Checking",
       routingNumber: String = "323075880", // DC Credit Union
-      accountNumber: String = "12345ABCDEF"
+      accountNumber: String = "12345ABCDEF",
   ) =
     new BankAccount(accountType, routingNumber, accountNumber)
 
@@ -26,8 +26,7 @@ class BankAccountSpec extends AnyFunSpec:
         }
 
         assert(
-          e.fieldErrors("accountType")
-            .validationMessage == BankAccountFailureReason.InvalidAccountType
+          e.fieldErrors("accountType").validationMessage == BankAccountFailureReason.InvalidAccountType,
         )
       }
 
@@ -37,8 +36,7 @@ class BankAccountSpec extends AnyFunSpec:
         }
 
         assert(
-          e.fieldErrors("accountType")
-            .validationMessage == BankAccountFailureReason.InvalidAccountType
+          e.fieldErrors("accountType").validationMessage == BankAccountFailureReason.InvalidAccountType,
         )
       }
     }
@@ -50,8 +48,7 @@ class BankAccountSpec extends AnyFunSpec:
         }
 
         assert(
-          e.fieldErrors("routingNumber")
-            .validationMessage == BankAccountFailureReason.InvalidRoutingNumber
+          e.fieldErrors("routingNumber").validationMessage == BankAccountFailureReason.InvalidRoutingNumber,
         )
       }
 
@@ -59,7 +56,7 @@ class BankAccountSpec extends AnyFunSpec:
         val ValidUsRoutingNumbers = List(
           "011000015", // Federal reserve bank
           "323075880", // OnPoint Commmunity Credit Union
-          "254074455" // DC Credit Union
+          "254074455", // DC Credit Union
         )
 
         ValidUsRoutingNumbers.foreach { routingNumber =>
@@ -78,7 +75,7 @@ class BankAccountSpec extends AnyFunSpec:
           // Invalid characters
           "ABCEFGHIJ",
           "011 00 15",
-          "><1|5|9#$"
+          "><1|5|9#$",
         )
 
         MalformedUsRoutingNumbers.foreach { routingNumber =>
@@ -88,8 +85,7 @@ class BankAccountSpec extends AnyFunSpec:
             }
 
             assert(
-              e.fieldErrors("routingNumber")
-                .validationMessage == BankAccountFailureReason.InvalidRoutingNumber
+              e.fieldErrors("routingNumber").validationMessage == BankAccountFailureReason.InvalidRoutingNumber,
             )
           }
         }
@@ -100,7 +96,7 @@ class BankAccountSpec extends AnyFunSpec:
           // doesn't match regex: (01|02|03|04|05|06|07|08|09|10|11|12|21|22|23|24|25|26|27|28|29|30|31|32)[0-9]{7}
           "331234567",
           "131111111",
-          "177777777"
+          "177777777",
         )
 
         MalformedUsRoutingNumbers.foreach { routingNumber =>
@@ -110,8 +106,7 @@ class BankAccountSpec extends AnyFunSpec:
             }
 
             assert(
-              e.fieldErrors("routingNumber")
-                .validationMessage == BankAccountFailureReason.MalformedRoutingNumber
+              e.fieldErrors("routingNumber").validationMessage == BankAccountFailureReason.MalformedRoutingNumber,
             )
           }
         }
@@ -122,7 +117,7 @@ class BankAccountSpec extends AnyFunSpec:
           // Failing checksums
           "110110111",
           "222222222",
-          "123456789"
+          "123456789",
         )
 
         InvalidUsRoutingNumbers.foreach { routingNumber =>
@@ -132,8 +127,7 @@ class BankAccountSpec extends AnyFunSpec:
             }
 
             assert(
-              e.fieldErrors("routingNumber")
-                .validationMessage == BankAccountFailureReason.InvalidRoutingNumberChecksum
+              e.fieldErrors("routingNumber").validationMessage == BankAccountFailureReason.InvalidRoutingNumberChecksum,
             )
           }
         }
@@ -148,8 +142,7 @@ class BankAccountSpec extends AnyFunSpec:
           }
 
           assert(
-            e.fieldErrors("accountNumber")
-              .validationMessage == BankAccountFailureReason.MalformedAccountNumber
+            e.fieldErrors("accountNumber").validationMessage == BankAccountFailureReason.MalformedAccountNumber,
           )
         }
       }
@@ -173,8 +166,7 @@ class BankAccountSpec extends AnyFunSpec:
           }
 
           assert(
-            e.fieldErrors("accountNumber")
-              .validationMessage == BankAccountFailureReason.MalformedAccountNumber
+            e.fieldErrors("accountNumber").validationMessage == BankAccountFailureReason.MalformedAccountNumber,
           )
         }
       }
@@ -186,8 +178,7 @@ class BankAccountSpec extends AnyFunSpec:
           }
 
           assert(
-            e.fieldErrors("accountNumber")
-              .validationMessage == BankAccountFailureReason.MalformedAccountNumber
+            e.fieldErrors("accountNumber").validationMessage == BankAccountFailureReason.MalformedAccountNumber,
           )
         }
       }
@@ -199,8 +190,7 @@ class BankAccountSpec extends AnyFunSpec:
           }
 
           assert(
-            e.fieldErrors("accountNumber")
-              .validationMessage == BankAccountFailureReason.InvalidAllZerosAccountNumber
+            e.fieldErrors("accountNumber").validationMessage == BankAccountFailureReason.InvalidAllZerosAccountNumber,
           )
         }
         it("throws an InvalidAllZerosAccountNumber error upper limit") {
@@ -209,8 +199,7 @@ class BankAccountSpec extends AnyFunSpec:
           }
 
           assert(
-            e.fieldErrors("accountNumber")
-              .validationMessage == BankAccountFailureReason.InvalidAllZerosAccountNumber
+            e.fieldErrors("accountNumber").validationMessage == BankAccountFailureReason.InvalidAllZerosAccountNumber,
           )
         }
       }

@@ -6,10 +6,10 @@ import gov.irs.factgraph.types.{
   CollectionItem,
   Day,
   Dollar,
-  Ein,
-  Enum,
-  EmailAddress,
   E164Number,
+  Ein,
+  EmailAddress,
+  Enum,
   IpPin,
   MultiEnum,
   Pin,
@@ -17,8 +17,7 @@ import gov.irs.factgraph.types.{
   Tin,
   WritableType,
 }
-
-import upickle.default.{write, ReadWriter, readwriter}
+import upickle.default.{ readwriter, write, ReadWriter }
 
 sealed abstract class TypeContainer(val item: WritableType) derives ReadWriter
 

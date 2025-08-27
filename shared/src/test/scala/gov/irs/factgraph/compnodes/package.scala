@@ -14,9 +14,9 @@ package object compnodes:
         new CompNodeConfigElement(
           "Int",
           Seq.empty,
-          CommonOptionConfigTraits.value("42")
-        )
+          CommonOptionConfigTraits.value("42"),
+        ),
       ),
-      None
-    )
+      None,
+    ),
   )

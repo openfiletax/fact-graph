@@ -1,10 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.types.*
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
 import gov.irs.factgraph.operators.BinaryOperator
-
+import gov.irs.factgraph.types.*
 import scala.annotation.unused
 
 object LessThanOrEqual extends CompNodeFactory:
@@ -43,14 +42,16 @@ object LessThanOrEqual extends CompNodeFactory:
           ),
     )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val lhs = CompNode.getConfigChildNode(e, "Left")
     val rhs = CompNode.getConfigChildNode(e, "Right")
     this(lhs, rhs)
 
-private final class LessThanOrEqualBinaryOperator[A: Ordering] extends BinaryOperator[Boolean, A, A]:
+final private class LessThanOrEqualBinaryOperator[A: Ordering] extends BinaryOperator[Boolean, A, A]:
   override protected def operation(x: A, y: A): Boolean = Ordering[A].lteq(x, y)
 
 @unused

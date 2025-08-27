@@ -1,7 +1,7 @@
 package gov.irs.factgraph.operators
 
+import gov.irs.factgraph.{ Explanation, Expression, Factual }
 import gov.irs.factgraph.monads.*
-import gov.irs.factgraph.{Explanation, Expression, Factual}
 
 trait UnaryOperator[+A, -X] extends Operator:
   protected def operation(x: X): A

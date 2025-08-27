@@ -1,6 +1,6 @@
 package gov.irs.factgraph.limits
 
-import gov.irs.factgraph.{FactDefinition, FactDictionary, Graph, Path}
+import gov.irs.factgraph.{ FactDefinition, FactDictionary, Graph, Path }
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
@@ -8,7 +8,7 @@ import gov.irs.factgraph.definitions.fact.{
   FactConfigElement,
   LimitConfigTrait,
   LimitLevel,
-  WritableConfigElement
+  WritableConfigElement,
 }
 import gov.irs.factgraph.monads.Result
 import org.scalatest.funspec.AnyFunSpec
@@ -23,18 +23,18 @@ class MinLengthSpec extends AnyFunSpec {
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("3")
+            CommonOptionConfigTraits.value("3"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("String", Seq.empty, Seq(limit))
+              new WritableConfigElement("String", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -50,7 +50,7 @@ class MinLengthSpec extends AnyFunSpec {
       }
 
       it(
-        "and allow an it to save if it is doesn't violate the limit set from another node"
+        "and allow an it to save if it is doesn't violate the limit set from another node",
       ) {
         val limit = new LimitConfigTrait:
           override def operation: String = "MinLength"
@@ -60,7 +60,7 @@ class MinLengthSpec extends AnyFunSpec {
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("/constraint")
+            CommonOptionConfigTraits.path("/constraint"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
@@ -71,22 +71,22 @@ class MinLengthSpec extends AnyFunSpec {
               new CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("3")
-              )
+                CommonOptionConfigTraits.value("3"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("String", Seq.empty, Seq(limit))
+              new WritableConfigElement("String", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -108,18 +108,18 @@ class MinLengthSpec extends AnyFunSpec {
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("3")
+            CommonOptionConfigTraits.value("3"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("String", Seq.empty, Seq(limit))
+              new WritableConfigElement("String", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -148,18 +148,18 @@ class MinLengthSpec extends AnyFunSpec {
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("3")
+            CommonOptionConfigTraits.value("3"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("String", Seq.empty, Seq(limit))
+              new WritableConfigElement("String", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -186,7 +186,7 @@ class MinLengthSpec extends AnyFunSpec {
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("/constraint")
+            CommonOptionConfigTraits.path("/constraint"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
@@ -197,22 +197,22 @@ class MinLengthSpec extends AnyFunSpec {
               new CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("3")
-              )
+                CommonOptionConfigTraits.value("3"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("String", Seq.empty, Seq(limit))
+              new WritableConfigElement("String", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -242,18 +242,18 @@ class MinLengthSpec extends AnyFunSpec {
             override def node: CompNodeConfigTrait = new CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("1")
+              CommonOptionConfigTraits.value("1"),
             )
           val dictionary = FactDictionary()
           FactDefinition.fromConfig(
             FactConfigElement(
               "/int",
               Some(
-                new WritableConfigElement("Int", Seq.empty, Seq(limit))
+                new WritableConfigElement("Int", Seq.empty, Seq(limit)),
               ),
               None,
-              None
-            )
+              None,
+            ),
           )(using dictionary)
           val graph = Graph(dictionary)
           graph.set("/int", 10)

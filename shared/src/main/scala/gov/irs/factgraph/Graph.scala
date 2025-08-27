@@ -1,24 +1,24 @@
 package gov.irs.factgraph
 
-import Console.{GREEN, RED, RESET, YELLOW}
-import fs2.{Fallible, Stream}
+import fs2.{ Fallible, Stream }
 import fs2.data.xml.*
 import fs2.data.xml.dom.*
 import fs2.data.xml.scalaXml.*
 import gov.irs.factgraph.limits.LimitViolation
 import gov.irs.factgraph.monads.*
 import gov.irs.factgraph.persisters.*
-import gov.irs.factgraph.types.{Collection, CollectionItem, WritableType, Enum}
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
-import scala.collection.mutable
-import scala.scalajs.js.annotation.JSExportAll
+import gov.irs.factgraph.types.{ Collection, CollectionItem, Enum, WritableType }
 import java.util.UUID
+import scala.collection.mutable
+import scala.scalajs.js.annotation.{ JSExport, JSExportTopLevel }
+import scala.scalajs.js.annotation.JSExportAll
+import scala.xml.Elem
 import scala.xml.Node
 import scala.xml.NodeSeq
-import scala.xml.XML
 import scala.xml.PrettyPrinter
 import scala.xml.Text
-import scala.xml.Elem
+import scala.xml.XML
+import Console.{ GREEN, RED, RESET, YELLOW }
 
 class Graph(val dictionary: FactDictionary, val persister: Persister):
   val root: Fact = Fact(this)
@@ -79,15 +79,14 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
 
     explanations match
       case MaybeVector.Single(explanation) => explanation
-      case MaybeVector.Multiple(_, _) =>
+      case MaybeVector.Multiple(_, _)      =>
         throw new UnsupportedOperationException(
           s"path '$path' resolves to a vector",
         )
 
   @JSExport
-  def set(path: String, value: WritableType): (Boolean, Seq[LimitViolation]) = {
+  def set(path: String, value: WritableType): (Boolean, Seq[LimitViolation]) =
     set(Path(path), value)
-  }
 
   def set(path: Path, value: WritableType): (Boolean, Seq[LimitViolation]) = {
     for {
@@ -102,8 +101,9 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
     val uuid = UUID.fromString(collectionId)
 
     val collection = this.get(path) match
-      case Result.Complete(v) => v.asInstanceOf[Collection]
-      case Result.Placeholder(_) => throw new UnsupportedOperationException(s"path $path is a collection with a placeholder")
+      case Result.Complete(v)    => v.asInstanceOf[Collection]
+      case Result.Placeholder(_) =>
+        throw new UnsupportedOperationException(s"path $path is a collection with a placeholder")
       case Result.Incomplete => Collection(Vector.empty[UUID])
 
     val newItems = collection.items :+ uuid
@@ -115,8 +115,9 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
     val uuid = UUID.fromString(collectionId)
 
     val collection = this.get(path) match
-      case Result.Complete(v) => v.asInstanceOf[Collection]
-      case Result.Placeholder(_) => throw new UnsupportedOperationException(s"path $path is a collection with a placeholder")
+      case Result.Complete(v)    => v.asInstanceOf[Collection]
+      case Result.Placeholder(_) =>
+        throw new UnsupportedOperationException(s"path $path is a collection with a placeholder")
       case Result.Incomplete => Collection(Vector.empty[UUID])
 
     val newItems = collection.items.filter(item => item != uuid)
@@ -124,9 +125,8 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
   }
 
   @JSExport
-  def delete(path: String): (Boolean, Seq[LimitViolation]) = {
+  def delete(path: String): (Boolean, Seq[LimitViolation]) =
     delete(Path(path))
-  }
 
   @JSExport("deleteWithPath")
   def delete(path: Path): (Boolean, Seq[LimitViolation]) =
@@ -210,7 +210,7 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
   @JSExport
   def debugFact(originalPath: String): Unit =
     dictionary.getDefinitionsAsNodes().get(Path(originalPath).asAbstract) match
-      case Some(value) => {
+      case Some(value) =>
         var debugString = value.toString
         debugString = prettifyFactWithValue(value.head, originalPath, debugString)
         val dependencyNodes = value \\ "Dependency"
@@ -219,7 +219,6 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
           debugString = prettifyDependencyWithValue(node, originalPath, debugString)
         }
         println(debugString)
-      }
       case None => throw new Exception(s"Invalid path: $originalPath")
 
   @JSExport
@@ -227,22 +226,22 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
     def parseDependencies(node: NodeSeq, queue: mutable.Queue[(NodeSeq, String)]): Unit =
       val dependencyNodes = node \\ "Dependency"
       val dependencyNodesAndPaths = dependencyNodes.map(depNode => (depNode, depNode \\ "@path"))
-      for ((dep, path) <- dependencyNodesAndPaths) {
+      for ((dep, path) <- dependencyNodesAndPaths)
         queue.enqueue((dep, path.toString))
-      }
-    
+
     def isFakeDayFact(factPath: String): Boolean =
       if (dictionary.getDefinition(factPath) != null) return false
-      
+
       val index = factPath.lastIndexOf("/")
       val updatedFactPath = factPath.dropRight(factPath.length - index)
-      dictionary.getDefinition(updatedFactPath).typeNode == "DayNode" 
+      dictionary.getDefinition(updatedFactPath).typeNode == "DayNode"
 
-
-    var node = dictionary.getDefinitionsAsNodes().getOrElse(
-      Path(originalPath).asAbstract,
-      throw new Exception(s"Invalid path: $originalPath")
-    )
+    var node = dictionary
+      .getDefinitionsAsNodes()
+      .getOrElse(
+        Path(originalPath).asAbstract,
+        throw new Exception(s"Invalid path: $originalPath"),
+      )
     var debugString = node.toString
 
     val remainingPaths = mutable.Queue[(NodeSeq, String)]()
@@ -253,10 +252,12 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
       val currentPath = remainingPaths.dequeue()
       val factPath = transformFactPath(currentPath(1), originalPath)
       if (!isFakeDayFact(factPath) && !dictionary.getDefinition(factPath).isWritable && !Path(factPath).isWildcard) {
-        val dependencyFactNode = dictionary.getDefinitionsAsNodes().getOrElse(
-          Path(factPath).asAbstract,
-          throw new Exception(s"Invalid path: ${factPath}")
-        )
+        val dependencyFactNode = dictionary
+          .getDefinitionsAsNodes()
+          .getOrElse(
+            Path(factPath).asAbstract,
+            throw new Exception(s"Invalid path: ${factPath}"),
+          )
         parseDependencies(dependencyFactNode, remainingPaths)
         debugString = debugString.replace(currentPath(0).toString, dependencyFactNode.toString)
       }
@@ -268,7 +269,8 @@ class Graph(val dictionary: FactDictionary, val persister: Persister):
     sections.foreach(section => debugStringWithoutSpacing.addAll(section.stripLeading()))
     val xmlString = debugStringWithoutSpacing.toString()
 
-    val evts = Stream.emits(xmlString)
+    val evts = Stream
+      .emits(xmlString)
       .through(events[Fallible, Char]())
       .through(documents)
     val reconstructedXml = evts.compile.toList match {

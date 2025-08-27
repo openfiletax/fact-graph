@@ -1,13 +1,7 @@
 package gov.irs.factgraph.compnodes
 
+import gov.irs.factgraph.{ Expression, FactDefinition, FactDictionary, Graph, Path }
 import gov.irs.factgraph.definitions.fact.*
-import gov.irs.factgraph.{
-  Expression,
-  FactDefinition,
-  FactDictionary,
-  Graph,
-  Path
-}
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.Day
 import org.scalatest.funspec.AnyFunSpec
@@ -29,8 +23,8 @@ class DayNodeSpec extends AnyFunSpec {
               new CompNodeConfigElement(
                 "Day",
                 Seq.empty,
-                CommonOptionConfigTraits.value("2022-01-01")
-              )
+                CommonOptionConfigTraits.value("2022-01-01"),
+              ),
             )
             .asInstanceOf[DayNode]
         assert(node.get(0) == Result.Complete(Day("2022-01-01")))
@@ -47,7 +41,7 @@ class DayNodeSpec extends AnyFunSpec {
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("False"))
+                  Seq(new CompNodeConfigElement("False")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -55,18 +49,18 @@ class DayNodeSpec extends AnyFunSpec {
                     new CompNodeConfigElement(
                       "Day",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("2022-01-01")
-                    )
-                  )
-                )
-              )
+                      CommonOptionConfigTraits.value("2022-01-01"),
+                    ),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Case",
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("True"))
+                  Seq(new CompNodeConfigElement("True")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -74,13 +68,13 @@ class DayNodeSpec extends AnyFunSpec {
                     new CompNodeConfigElement(
                       "Day",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("2020-02-02")
-                    )
-                  )
-                )
-              )
-            )
-          )
+                      CommonOptionConfigTraits.value("2020-02-02"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
         assert(node.get(0) == Result.Complete(Day("2020-02-02")))
@@ -97,11 +91,11 @@ class DayNodeSpec extends AnyFunSpec {
             CompNodeConfigElement(
               "Day",
               Seq.empty,
-              CommonOptionConfigTraits.value("2022-01-01")
-            )
+              CommonOptionConfigTraits.value("2022-01-01"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       FactDefinition.fromConfig(
@@ -112,11 +106,11 @@ class DayNodeSpec extends AnyFunSpec {
             new CompNodeConfigElement(
               "Dependency",
               Seq.empty,
-              CommonOptionConfigTraits.path("../value")
-            )
+              CommonOptionConfigTraits.path("../value"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)
@@ -145,11 +139,11 @@ class DayNodeSpec extends AnyFunSpec {
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Day")
+              new WritableConfigElement("Day"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -171,11 +165,11 @@ class DayNodeSpec extends AnyFunSpec {
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Day")
+              new WritableConfigElement("Day"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -195,11 +189,11 @@ class DayNodeSpec extends AnyFunSpec {
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Day")
+              new WritableConfigElement("Day"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -222,11 +216,11 @@ class DayNodeSpec extends AnyFunSpec {
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Day")
+              new WritableConfigElement("Day"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -246,11 +240,11 @@ class DayNodeSpec extends AnyFunSpec {
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Day")
+              new WritableConfigElement("Day"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -273,11 +267,11 @@ class DayNodeSpec extends AnyFunSpec {
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Day")
+              new WritableConfigElement("Day"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -297,11 +291,11 @@ class DayNodeSpec extends AnyFunSpec {
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Day")
+              new WritableConfigElement("Day"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -318,7 +312,7 @@ class DayNodeSpec extends AnyFunSpec {
       }
     }
 
-    describe("ordinal"){
+    describe("ordinal") {
       it("can be gathered as an int") {
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(

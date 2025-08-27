@@ -1,8 +1,8 @@
 package gov.irs.factgraph.types
-import scala.scalajs.js.annotation.JSExportTopLevel
-import scala.util.matching.Regex
 import gov.irs.factgraph.monads.JSEither
-import scala.util.{Try, Success, Failure}
+import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.util.{ Failure, Success, Try }
+import scala.util.matching.Regex
 
 object EinFactory:
   private val EinPattern: Regex = """^([0-9]{2})([0-9]{7})$""".r
@@ -15,7 +15,7 @@ object EinFactory:
       Try(new Ein(prefix, serial)) match
         case Success(v)                       => JSEither.Right(v)
         case Failure(e: EinValidationFailure) => JSEither.Left(e)
-        case Failure(exception) =>
+        case Failure(exception)               =>
           JSEither.Left(
             EinValidationFailure(
               "Invalid EIN case 1",

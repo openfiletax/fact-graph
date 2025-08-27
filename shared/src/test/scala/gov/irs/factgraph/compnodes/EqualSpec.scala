@@ -1,11 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{FactDefinition, FactDictionary, Factual, Graph, Path}
+import gov.irs.factgraph.{ FactDefinition, FactDictionary, Factual, Graph, Path }
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.*
-
+import org.scalatest.funspec.AnyFunSpec
 import scala.collection.immutable.Seq
 
 class EqualSpec extends AnyFunSpec:
@@ -22,9 +21,9 @@ class EqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1")
-                )
-              )
+                  CommonOptionConfigTraits.value("1"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Right",
@@ -32,12 +31,12 @@ class EqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("2")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("2"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
       assert(node.get(0) == Result.Complete(false))
     }
@@ -53,9 +52,9 @@ class EqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("Test")
-                )
-              )
+                  CommonOptionConfigTraits.value("Test"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Right",
@@ -63,12 +62,12 @@ class EqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("Test")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("Test"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
       assert(node.get(0) == Result.Complete(true))
     }
@@ -89,13 +88,13 @@ class EqualSpec extends AnyFunSpec:
                     Seq(
                       (
                         CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                        "/options-path"
+                        "/options-path",
                       ),
-                      (CommonOptionConfigTraits.VALUE, "A")
-                    )
-                  )
-                )
-              )
+                      (CommonOptionConfigTraits.VALUE, "A"),
+                    ),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Right",
@@ -107,16 +106,16 @@ class EqualSpec extends AnyFunSpec:
                     Seq(
                       (
                         CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                        "/options-path"
+                        "/options-path",
                       ),
-                      (CommonOptionConfigTraits.VALUE, "A")
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                      (CommonOptionConfigTraits.VALUE, "A"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       )(using given_Factual)(using dictionary)
 
       assert(node.get(0) == Result.Complete(true))
@@ -130,12 +129,12 @@ class EqualSpec extends AnyFunSpec:
           Some(
             new WritableConfigElement(
               "Enum",
-              CommonOptionConfigTraits.optionsPath("/options-path")
-            )
+              CommonOptionConfigTraits.optionsPath("/options-path"),
+            ),
           ),
           None,
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val node = CompNode.fromDerivedConfig(
@@ -148,10 +147,10 @@ class EqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Dependency",
                   Seq.empty,
-                  CommonOptionConfigTraits.path("../test2")
-                )
+                  CommonOptionConfigTraits.path("../test2"),
+                ),
               ),
-              Seq.empty
+              Seq.empty,
             ),
             new CompNodeConfigElement(
               "Right",
@@ -163,16 +162,16 @@ class EqualSpec extends AnyFunSpec:
                     Seq(
                       (
                         CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                        "/options-path"
+                        "/options-path",
                       ),
-                      (CommonOptionConfigTraits.VALUE, "A")
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                      (CommonOptionConfigTraits.VALUE, "A"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       )(using factual)(using dictionary)
 
       assert(node.get(0) == Result.Incomplete)
@@ -191,29 +190,29 @@ class EqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("A")
+                  CommonOptionConfigTraits.value("A"),
                 ),
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("B")
+                  CommonOptionConfigTraits.value("B"),
                 ),
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("C")
+                  CommonOptionConfigTraits.value("C"),
                 ),
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("D")
-                )
+                  CommonOptionConfigTraits.value("D"),
+                ),
               ),
-              Seq.empty
-            )
+              Seq.empty,
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using testDictionary)
       val factual = FactDefinition.fromConfig(
         FactConfigElement(
@@ -221,12 +220,12 @@ class EqualSpec extends AnyFunSpec:
           Some(
             new WritableConfigElement(
               "Enum",
-              CommonOptionConfigTraits.optionsPath("/options-path")
-            )
+              CommonOptionConfigTraits.optionsPath("/options-path"),
+            ),
           ),
           None,
-          None
-        )
+          None,
+        ),
       )(using testDictionary)
 
       val graph = Graph(testDictionary)
@@ -246,10 +245,10 @@ class EqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Dependency",
                   Seq.empty,
-                  CommonOptionConfigTraits.path("../anotherName")
-                )
+                  CommonOptionConfigTraits.path("../anotherName"),
+                ),
               ),
-              Seq.empty
+              Seq.empty,
             ),
             new CompNodeConfigElement(
               "Right",
@@ -261,16 +260,16 @@ class EqualSpec extends AnyFunSpec:
                     Seq(
                       (
                         CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                        "/options-path"
+                        "/options-path",
                       ),
-                      (CommonOptionConfigTraits.VALUE, "D")
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                      (CommonOptionConfigTraits.VALUE, "D"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       )(using factual)(using testDictionary)
       assert(node.get(using fact)(0) == Result.Complete(true))
     }
@@ -290,11 +289,11 @@ class EqualSpec extends AnyFunSpec:
                   CommonOptionConfigTraits.create(
                     Seq(
                       (CommonOptionConfigTraits.ENUM_OPTIONS_PATH, "test"),
-                      (CommonOptionConfigTraits.VALUE, "A")
-                    )
-                  )
-                )
-              )
+                      (CommonOptionConfigTraits.VALUE, "A"),
+                    ),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Right",
@@ -305,14 +304,14 @@ class EqualSpec extends AnyFunSpec:
                   CommonOptionConfigTraits.create(
                     Seq(
                       (CommonOptionConfigTraits.ENUM_OPTIONS_PATH, "test"),
-                      (CommonOptionConfigTraits.VALUE, "B")
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                      (CommonOptionConfigTraits.VALUE, "B"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       )(using given_Factual)(using dictionary)
 
       assert(node.get(0) == Result.Complete(false))
@@ -330,9 +329,9 @@ class EqualSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Int",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("1")
-                  )
-                )
+                    CommonOptionConfigTraits.value("1"),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Right",
@@ -340,12 +339,12 @@ class EqualSpec extends AnyFunSpec:
                   CompNodeConfigElement(
                     "Dollar",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("1.00")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("1.00"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
       }
     }

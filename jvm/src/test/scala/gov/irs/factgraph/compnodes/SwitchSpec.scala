@@ -1,17 +1,14 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
-import gov.irs.factgraph.definitions.fact.{
-  CommonOptionConfigTraits,
-  CompNodeConfigElement
-}
-import gov.irs.factgraph.monads.Result
-import org.scalatest.funspec.AnyFunSpec
-import org.scalatest.funsuite.AnyFunSuite
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigElement }
 import gov.irs.factgraph.definitions.fact.FactConfigElement
+import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.FactDefinition
+import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.Graph
 import gov.irs.factgraph.Path
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.funsuite.AnyFunSuite
 
 class SwitchSpec extends AnyFunSpec:
   describe("Switch") {
@@ -36,9 +33,9 @@ class SwitchSpec extends AnyFunSpec:
                       CompNodeConfigElement(
                         "String",
                         Seq.empty,
-                        CommonOptionConfigTraits.value("Hello")
-                      )
-                    )
+                        CommonOptionConfigTraits.value("Hello"),
+                      ),
+                    ),
                   ),
                   new CompNodeConfigElement(
                     "Then",
@@ -46,14 +43,14 @@ class SwitchSpec extends AnyFunSpec:
                       CompNodeConfigElement(
                         "String",
                         Seq.empty,
-                        CommonOptionConfigTraits.value("World")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
+                        CommonOptionConfigTraits.value("World"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
       }
     }
@@ -64,7 +61,7 @@ class SwitchSpec extends AnyFunSpec:
         "/predicate",
         None,
         Some(new CompNodeConfigElement("True")),
-        None
+        None,
       )
       FactDefinition.fromConfig(predicateConfig)(using dictionary)
 
@@ -84,9 +81,9 @@ class SwitchSpec extends AnyFunSpec:
                       new CompNodeConfigElement(
                         "Dependency",
                         Seq.empty,
-                        CommonOptionConfigTraits.path("/predicate")
-                      )
-                    )
+                        CommonOptionConfigTraits.path("/predicate"),
+                      ),
+                    ),
                   ),
                   new CompNodeConfigElement(
                     "Then",
@@ -94,16 +91,16 @@ class SwitchSpec extends AnyFunSpec:
                       CompNodeConfigElement(
                         "String",
                         Seq.empty,
-                        CommonOptionConfigTraits.value("World")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
+                        CommonOptionConfigTraits.value("World"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
-        None
+        None,
       )
 
       FactDefinition.fromConfig(switchConfig)(using dictionary)
@@ -125,7 +122,7 @@ class SwitchSpec extends AnyFunSpec:
                 Seq(
                   new CompNodeConfigElement(
                     "When",
-                    Seq(new CompNodeConfigElement("False"))
+                    Seq(new CompNodeConfigElement("False")),
                   ),
                   new CompNodeConfigElement(
                     "Then",
@@ -133,18 +130,18 @@ class SwitchSpec extends AnyFunSpec:
                       CompNodeConfigElement(
                         "Int",
                         Seq.empty,
-                        CommonOptionConfigTraits.value("1")
-                      )
-                    )
-                  )
-                )
+                        CommonOptionConfigTraits.value("1"),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Case",
                 Seq(
                   new CompNodeConfigElement(
                     "When",
-                    Seq(new CompNodeConfigElement("True"))
+                    Seq(new CompNodeConfigElement("True")),
                   ),
                   new CompNodeConfigElement(
                     "Then",
@@ -152,14 +149,14 @@ class SwitchSpec extends AnyFunSpec:
                       CompNodeConfigElement(
                         "Dollar",
                         Seq.empty,
-                        CommonOptionConfigTraits.value("2.00")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
+                        CommonOptionConfigTraits.value("2.00"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
       }
     }

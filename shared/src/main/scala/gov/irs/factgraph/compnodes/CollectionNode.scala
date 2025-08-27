@@ -2,7 +2,7 @@ package gov.irs.factgraph.compnodes
 
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.WritableConfigTrait
-import gov.irs.factgraph.types.{Collection, CollectionItem}
+import gov.irs.factgraph.types.{ Collection, CollectionItem }
 
 final case class CollectionNode(
     expr: Expression[Collection],

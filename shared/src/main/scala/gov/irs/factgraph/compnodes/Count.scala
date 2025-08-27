@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
-import gov.irs.factgraph.operators.AggregateOperator
 import gov.irs.factgraph.monads.*
+import gov.irs.factgraph.operators.AggregateOperator
 
 object Count extends CompNodeFactory:
   override val Key: String = "Count"
@@ -13,17 +13,19 @@ object Count extends CompNodeFactory:
   def apply(bool: BooleanNode): CompNode =
     IntNode(Expression.Aggregate(bool.expr, operator))
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     CompNode.getConfigChildNode(e) match
       case x: BooleanNode => this(x)
-      case _ =>
+      case _              =>
         throw new UnsupportedOperationException(
           s"invalid child type: $e",
         )
 
-private final class CountOperator extends AggregateOperator[Int, Boolean]:
+final private class CountOperator extends AggregateOperator[Int, Boolean]:
   override def apply(vect: MaybeVector[Thunk[Result[Boolean]]]): Result[Int] =
     accumulator(vect.toList, Result(0, vect.complete))
 

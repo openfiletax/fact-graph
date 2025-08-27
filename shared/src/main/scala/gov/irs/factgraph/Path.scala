@@ -1,6 +1,6 @@
 package gov.irs.factgraph
 
-import gov.irs.factgraph.monads.{MaybeVector, Result}
+import gov.irs.factgraph.monads.{ MaybeVector, Result }
 import gov.irs.factgraph.types.CollectionItem
 import java.util.UUID
 
@@ -47,8 +47,7 @@ final case class Path(private val _items: List[PathItem], absolute: Boolean):
   def asAbstract: Path =
     items.foldLeft(items.head match
       case PathItem.Parent => Path("")
-      case _               => Path("/"),
-    )((pathSoFar: Path, nextPathItem: PathItem) =>
+      case _               => Path("/"))((pathSoFar: Path, nextPathItem: PathItem) =>
       pathSoFar :+ (
         nextPathItem match
           case PathItem.Member(_) => PathItem(PathItem.WildcardKey)
@@ -62,7 +61,7 @@ final case class Path(private val _items: List[PathItem], absolute: Boolean):
   ): Seq[Path] =
     isWildcard match
       case false => this :: pathsWithoutWildcards.toList
-      case true =>
+      case true  =>
         this
           .populateFirstWildcard(graph)
           .flatMap((pathPerhapsWithWildcards: Path) =>
@@ -106,7 +105,7 @@ object Path:
   def apply(str: String): Path = str match
     case Delimiter => Root
     case ""        => Relative
-    case _ =>
+    case _         =>
       val item_strs = str.split(Delimiter, 0)
       val absolute = item_strs(0).isEmpty
 

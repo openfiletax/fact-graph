@@ -18,7 +18,7 @@ class DollarFactorySpec extends AnyFunSpec:
         .left
         .validationMessage
         .toUserFriendlyReason()
-        .toString() === "ExceedsMaxLimit"
+        .toString() === "ExceedsMaxLimit",
     )
   }
 
@@ -29,7 +29,7 @@ class DollarFactorySpec extends AnyFunSpec:
         .left
         .validationMessage
         .toUserFriendlyReason()
-        .toString() === "ExceedsMinLimit"
+        .toString() === "ExceedsMinLimit",
     )
   }
 
@@ -40,7 +40,7 @@ class DollarFactorySpec extends AnyFunSpec:
         .left
         .validationMessage
         .toUserFriendlyReason()
-        .toString() === "ExceedsMinLimit"
+        .toString() === "ExceedsMinLimit",
     )
   }
 
@@ -51,7 +51,7 @@ class DollarFactorySpec extends AnyFunSpec:
         .left
         .validationMessage
         .toUserFriendlyReason()
-        .toString() === "InvalidCharacters"
+        .toString() === "InvalidCharacters",
     )
   }
 
@@ -62,7 +62,7 @@ class DollarFactorySpec extends AnyFunSpec:
         .left
         .validationMessage
         .toUserFriendlyReason()
-        .toString() === "ExceedsMinLimit"
+        .toString() === "ExceedsMinLimit",
     )
   }
 
@@ -73,6 +73,6 @@ class DollarFactorySpec extends AnyFunSpec:
         .left
         .validationMessage
         .toUserFriendlyReason()
-        .toString() === "ExceedsMaxLimit"
+        .toString() === "ExceedsMaxLimit",
     )
   }

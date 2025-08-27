@@ -1,16 +1,11 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
+import gov.irs.factgraph.*
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigElement, FactConfigElement, WritableConfigElement }
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.Collection
-import gov.irs.factgraph.*
-import gov.irs.factgraph.definitions.fact.{
-  CompNodeConfigElement,
-  FactConfigElement,
-  WritableConfigElement
-}
-
 import java.util.UUID
+import org.scalatest.funspec.AnyFunSpec
 
 class FilterSpec extends AnyFunSpec:
   describe("Filter") {
@@ -23,46 +18,46 @@ class FilterSpec extends AnyFunSpec:
           new CompNodeConfigElement(
             "Filter",
             Seq(
-              new CompNodeConfigElement("Dependency", Seq.empty, "bool")
+              new CompNodeConfigElement("Dependency", Seq.empty, "bool"),
             ),
-            "/collection"
-          )
+            "/collection",
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection",
         Some(
-          new WritableConfigElement("Collection")
+          new WritableConfigElement("Collection"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/bool",
         Some(
-          new WritableConfigElement("Boolean")
+          new WritableConfigElement("Boolean"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/string",
         Some(
-          new WritableConfigElement("String")
+          new WritableConfigElement("String"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     val graph = Graph(dictionary)
@@ -107,13 +102,13 @@ class FilterSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Filter",
                 Seq(
-                  new CompNodeConfigElement("True")
+                  new CompNodeConfigElement("True"),
                 ),
-                "/fakeCollection"
-              )
+                "/fakeCollection",
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )
         definition.meta
       }
@@ -129,13 +124,13 @@ class FilterSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Filter",
                 Seq(
-                  new CompNodeConfigElement("Dependency", Seq.empty, "string")
+                  new CompNodeConfigElement("Dependency", Seq.empty, "string"),
                 ),
-                "/collection"
-              )
+                "/collection",
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         definition.meta

@@ -83,14 +83,14 @@ class MaybeVectorSpec extends AnyFunSpec:
 
     describe(".flatMap") {
       it(
-        "combines the vectors created by mapping the function to all members"
+        "combines the vectors created by mapping the function to all members",
       ) {
         def f(i: Int) = MaybeVector(Vector(i - 1, i, i + 1), true)
 
         assert(single.flatMap(f).toVector == Vector(0, 1, 2))
         assert(
           multiple.flatMap(f).toVector ==
-            Vector(0, 1, 2, 1, 2, 3, 2, 3, 4)
+            Vector(0, 1, 2, 1, 2, 3, 2, 3, 4),
         )
       }
     }
@@ -102,7 +102,7 @@ class MaybeVectorSpec extends AnyFunSpec:
         it("produces a Single result") {
           assert(
             MaybeVector.vectorizeList(f, single, List(single, single)) ==
-              MaybeVector(3)
+              MaybeVector(3),
           )
         }
       }
@@ -111,7 +111,7 @@ class MaybeVectorSpec extends AnyFunSpec:
         it("produces a Multiple result by vectorizing the function") {
           assert(
             MaybeVector.vectorizeList(f, single, List(single, multiple)) ==
-              MaybeVector(Vector(3, 4, 5), true)
+              MaybeVector(Vector(3, 4, 5), true),
           )
         }
 
@@ -131,7 +131,7 @@ class MaybeVectorSpec extends AnyFunSpec:
         it("produces a Single result") {
           assert(
             MaybeVector.vectorize2(f, single, single) ==
-              MaybeVector(true)
+              MaybeVector(true),
           )
         }
       }
@@ -140,7 +140,7 @@ class MaybeVectorSpec extends AnyFunSpec:
         it("produces a Multiple result by vectorizing the function") {
           assert(
             MaybeVector.vectorize2(f, single, multiple) ==
-              MaybeVector(Vector(true, false, false), true)
+              MaybeVector(Vector(true, false, false), true),
           )
         }
 
@@ -159,13 +159,13 @@ class MaybeVectorSpec extends AnyFunSpec:
       describe("when all of the tuples are Single") {
         val singleCases = List(
           (MaybeVector(false), single),
-          (MaybeVector(true), MaybeVector(2))
+          (MaybeVector(true), MaybeVector(2)),
         )
 
         it("produces a Single result") {
           assert(
             MaybeVector.vectorizeListTuple2(f, singleCases) ==
-              MaybeVector(2)
+              MaybeVector(2),
           )
         }
       }
@@ -173,20 +173,20 @@ class MaybeVectorSpec extends AnyFunSpec:
       describe("when the tuples have different lengths") {
         val multipleCases = List(
           (MaybeVector(Vector(true, true, false), true), single),
-          (MaybeVector(Vector(false, true, true), true), multiple)
+          (MaybeVector(Vector(false, true, true), true), multiple),
         )
 
         it("produces a result for each permutation") {
           assert(
             MaybeVector.vectorizeListTuple2(f, multipleCases) ==
-              MaybeVector(Vector(1, 1, 3), true)
+              MaybeVector(Vector(1, 1, 3), true),
           )
         }
       }
 
       describe("when the lengths of the arguments in a tuple do not match") {
         val invalidCases = List(
-          (MaybeVector(Vector(true, false), true), multiple)
+          (MaybeVector(Vector(true, false), true), multiple),
         )
 
         it("throws an exception") {
@@ -205,13 +205,13 @@ class MaybeVectorSpec extends AnyFunSpec:
       describe("when all of the tuples are Single") {
         val singleCases = List(
           (MaybeVector(false), single, MaybeVector(2)),
-          (MaybeVector(true), MaybeVector(3), MaybeVector(4))
+          (MaybeVector(true), MaybeVector(3), MaybeVector(4)),
         )
 
         it("produces a Single result") {
           assert(
             MaybeVector.vectorizeListTuple3(f, singleCases) ==
-              MaybeVector(7)
+              MaybeVector(7),
           )
         }
       }
@@ -219,20 +219,20 @@ class MaybeVectorSpec extends AnyFunSpec:
       describe("when the tuples have different lengths") {
         val multipleCases = List(
           (MaybeVector(Vector(true, true, false), true), single, single),
-          (MaybeVector(Vector(false, true, true), true), single, multiple)
+          (MaybeVector(Vector(false, true, true), true), single, multiple),
         )
 
         it("produces a result for each permutation") {
           assert(
             MaybeVector.vectorizeListTuple3(f, multipleCases) ==
-              MaybeVector(Vector(2, 2, 4), true)
+              MaybeVector(Vector(2, 2, 4), true),
           )
         }
       }
 
       describe("when the lengths of the arguments in a tuple do not match") {
         val invalidCases = List(
-          (MaybeVector(Vector(true, false), true), multiple, multiple)
+          (MaybeVector(Vector(true, false), true), multiple, multiple),
         )
 
         it("throws an exception") {

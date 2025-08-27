@@ -1,10 +1,6 @@
 package gov.irs.factgraph.definitions.fact
 
-import gov.irs.factgraph.definitions.fact.{
-  CompNodeConfigTrait,
-  WritableConfigTrait
-}
-
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigTrait, WritableConfigTrait }
 import scala.scalajs.js.annotation.JSExportTopLevel
 import scala.xml.NodeSeq
 

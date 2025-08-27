@@ -10,8 +10,8 @@ class PathItemSpec extends AnyFunSpec:
         assert(PathItem("test") == PathItem.Child(Symbol("test")))
         assert(
           PathItem(s"#$uuidStr") == PathItem.Member(
-            java.util.UUID.fromString(uuidStr)
-          )
+            java.util.UUID.fromString(uuidStr),
+          ),
         )
         assert(PathItem("*") == PathItem.Wildcard)
         assert(PathItem("?") == PathItem.Unknown)
@@ -25,7 +25,7 @@ class PathItemSpec extends AnyFunSpec:
         assert(
           PathItem
             .Member(java.util.UUID.fromString(uuidStr))
-            .toString == s"#$uuidStr"
+            .toString == s"#$uuidStr",
         )
         assert(PathItem.Wildcard.toString == "*")
         assert(PathItem.Unknown.toString == "?")

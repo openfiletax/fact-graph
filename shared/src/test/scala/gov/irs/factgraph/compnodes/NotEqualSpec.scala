@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class NotEqualSpec extends AnyFunSpec:
   describe("NotEqual") {
@@ -18,9 +18,9 @@ class NotEqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1")
-                )
-              )
+                  CommonOptionConfigTraits.value("1"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Right",
@@ -28,12 +28,12 @@ class NotEqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("2")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("2"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(true))
@@ -50,9 +50,9 @@ class NotEqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("Test")
-                )
-              )
+                  CommonOptionConfigTraits.value("Test"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Right",
@@ -60,12 +60,12 @@ class NotEqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("Test")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("Test"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(false))
@@ -83,9 +83,9 @@ class NotEqualSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Int",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("1")
-                  )
-                )
+                    CommonOptionConfigTraits.value("1"),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Right",
@@ -93,12 +93,12 @@ class NotEqualSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Dollar",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("1.00")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("1.00"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
       }
     }

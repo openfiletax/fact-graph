@@ -1,12 +1,12 @@
 package gov.irs.factgraph.compnodes
 
+import gov.irs.factgraph.{ FactDefinition, FactDictionary, Graph, Path }
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
-import gov.irs.factgraph.{FactDictionary, FactDefinition, Graph, Path}
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.Day
 import java.time.LocalDate
 import java.time.ZoneId
+import org.scalatest.funspec.AnyFunSpec
 
 class TodayNodeSpec extends AnyFunSpec {
   describe("TodayNode") {
@@ -23,13 +23,13 @@ class TodayNodeSpec extends AnyFunSpec {
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("-5")
-                )
-              )
-            )
+                  CommonOptionConfigTraits.value("-5"),
+                ),
+              ),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       val graph = Graph(dictionary)
       val today =

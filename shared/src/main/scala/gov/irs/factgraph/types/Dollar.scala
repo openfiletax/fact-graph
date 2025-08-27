@@ -1,8 +1,8 @@
 package gov.irs.factgraph.types
+import gov.irs.factgraph.validation.{ ValidationFailure, ValidationFailureReason }
 import java.lang.Enum
-import scala.scalajs.js.annotation.{JSExportTopLevel, JSExport, JSExportAll}
-import upickle.default.{ReadWriter => RW, readwriter}
-import gov.irs.factgraph.validation.{ValidationFailureReason, ValidationFailure}
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
+import upickle.default.{ readwriter, ReadWriter => RW }
 
 @JSExportTopLevel("Dollar")
 opaque type Dollar = BigDecimal
@@ -146,9 +146,9 @@ object Dollar:
     override def div(x: Dollar, y: Dollar): Dollar = Dollar(x / y)
 
     override def parseString(str: String): Option[Dollar] =
-      try {
+      try
         Some(Dollar(str))
-      } catch {
+      catch {
         case _: DollarValidationFailure => None
         case _: NumberFormatException   => None
       }

@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
+import gov.irs.factgraph.{ Explanation, Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
-import gov.irs.factgraph.{Explanation, Expression, FactDictionary, Factual}
+import gov.irs.factgraph.monads.{ MaybeVector, Result, Thunk }
 import gov.irs.factgraph.operators.ReduceOperator
-import gov.irs.factgraph.monads.{MaybeVector, Result, Thunk}
 
 object All extends CompNodeFactory:
   override val Key: String = "All"
@@ -13,7 +13,9 @@ object All extends CompNodeFactory:
   def apply(nodes: Seq[BooleanNode]): BooleanNode =
     BooleanNode(Expression.Reduce(nodes.map(_.expr).toList, operator))
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val conditions = CompNode.getConfigChildNodes(e)
@@ -25,7 +27,7 @@ object All extends CompNodeFactory:
         "all children of <All> must be BooleanNodes",
       )
 
-private final class AllOperator extends ReduceOperator[Boolean]:
+final private class AllOperator extends ReduceOperator[Boolean]:
   // $COVERAGE-OFF$
   override protected def reduce(x: Boolean, y: Boolean): Boolean = ???
   // $COVERAGE-ON$
@@ -44,7 +46,7 @@ private final class AllOperator extends ReduceOperator[Boolean]:
   ): Result[Boolean] = thunks match
     case thunk :: thunks =>
       thunk.get match
-        case Result.Complete(false) => Result.Complete(false)
+        case Result.Complete(false)  => Result.Complete(false)
         case Result(value, complete) =>
           accumulator(
             thunks,

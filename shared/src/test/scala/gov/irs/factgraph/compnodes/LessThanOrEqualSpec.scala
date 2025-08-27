@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class LessThanOrEqualSpec extends AnyFunSpec:
   describe("LessThanOrEqual") {
@@ -18,9 +18,9 @@ class LessThanOrEqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1")
-                )
-              )
+                  CommonOptionConfigTraits.value("1"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Right",
@@ -28,12 +28,12 @@ class LessThanOrEqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("2")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("2"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(true))
@@ -50,9 +50,9 @@ class LessThanOrEqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Rational",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("2/3")
-                )
-              )
+                  CommonOptionConfigTraits.value("2/3"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Right",
@@ -60,12 +60,12 @@ class LessThanOrEqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Rational",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1/3")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("1/3"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(false))
@@ -82,9 +82,9 @@ class LessThanOrEqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Dollar",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1.00")
-                )
-              )
+                  CommonOptionConfigTraits.value("1.00"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Right",
@@ -92,12 +92,12 @@ class LessThanOrEqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Dollar",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1.00")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("1.00"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(true))
@@ -114,9 +114,9 @@ class LessThanOrEqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Day",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("2022-01-01")
-                )
-              )
+                  CommonOptionConfigTraits.value("2022-01-01"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Right",
@@ -124,12 +124,12 @@ class LessThanOrEqualSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Day",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("2022-01-01")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("2022-01-01"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(true))
@@ -147,9 +147,9 @@ class LessThanOrEqualSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "String",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("Hello")
-                  )
-                )
+                    CommonOptionConfigTraits.value("Hello"),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Right",
@@ -157,12 +157,12 @@ class LessThanOrEqualSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "String",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("World")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("World"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
       }
     }

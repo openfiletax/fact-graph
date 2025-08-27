@@ -1,10 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
-import gov.irs.factgraph.definitions.FactDictionaryConfigElement
 import gov.irs.factgraph.definitions.fact.*
+import gov.irs.factgraph.definitions.FactDictionaryConfigElement
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class IntNodeSpec extends AnyFunSpec:
   describe("IntNode") {
@@ -20,7 +20,7 @@ class IntNodeSpec extends AnyFunSpec:
         val config = new CompNodeConfigElement(
           "Int",
           Seq.empty,
-          CommonOptionConfigTraits.value("123")
+          CommonOptionConfigTraits.value("123"),
         )
         val node = CompNode.fromDerivedConfig(config).asInstanceOf[IntNode]
         assert(node.get(0) == Result.Complete(123))
@@ -37,7 +37,7 @@ class IntNodeSpec extends AnyFunSpec:
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("False"))
+                  Seq(new CompNodeConfigElement("False")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -45,18 +45,18 @@ class IntNodeSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "Int",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("1")
-                    )
-                  )
-                )
-              )
+                      CommonOptionConfigTraits.value("1"),
+                    ),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Case",
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("True"))
+                  Seq(new CompNodeConfigElement("True")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -64,13 +64,13 @@ class IntNodeSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "Int",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("2")
-                    )
-                  )
-                )
-              )
-            )
-          )
+                      CommonOptionConfigTraits.value("2"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
 
@@ -88,11 +88,11 @@ class IntNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("42")
-            )
+              CommonOptionConfigTraits.value("42"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       FactDefinition.fromConfig(
@@ -103,11 +103,11 @@ class IntNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Dependency",
               Seq.empty,
-              CommonOptionConfigTraits.path("../value")
-            )
+              CommonOptionConfigTraits.path("../value"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)
@@ -135,11 +135,11 @@ class IntNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Int")
+              new WritableConfigElement("Int"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -159,11 +159,11 @@ class IntNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Int")
+              new WritableConfigElement("Int"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -184,11 +184,11 @@ class IntNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Int")
+              new WritableConfigElement("Int"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)

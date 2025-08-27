@@ -1,8 +1,8 @@
 package gov.irs
 
+import gov.irs.factgraph.compnodes.CompNode
 import gov.irs.factgraph.monads.*
 import gov.irs.factgraph.operators.*
-import gov.irs.factgraph.compnodes.CompNode
 
 package object factgraph:
   given FactDictionary = FactDictionary()
@@ -18,7 +18,7 @@ package object factgraph:
     new UnaryOperator[Boolean, Boolean]:
       override def apply(x: Result[Boolean]): Result[Boolean] =
         Result.Placeholder(x.value.get)
-      protected def operation(x: Boolean): Boolean = ???
+      protected def operation(x: Boolean): Boolean = ???,
   )
 
   val placeholderFalseExpr: Expression.Unary[Boolean, Boolean] =
@@ -27,7 +27,7 @@ package object factgraph:
       new UnaryOperator[Boolean, Boolean]:
         override def apply(x: Result[Boolean]): Result[Boolean] =
           Result.Placeholder(x.value.get)
-        protected def operation(x: Boolean): Boolean = ???
+        protected def operation(x: Boolean): Boolean = ???,
     )
 
   def canaryExpr(cb: => Unit): Expression.Unary[Boolean, Boolean] =
@@ -37,5 +37,5 @@ package object factgraph:
         override def apply(x: Result[Boolean]): Result[Boolean] =
           cb
           x
-        protected def operation(x: Boolean): Boolean = ???
+        protected def operation(x: Boolean): Boolean = ???,
     )

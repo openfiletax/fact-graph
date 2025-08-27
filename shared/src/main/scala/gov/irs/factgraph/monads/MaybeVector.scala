@@ -29,7 +29,7 @@ enum MaybeVector[+A]:
     case Multiple(vect, c) => MaybeVector(vect.map(f), c)
 
   def flatMap[B](f: A => MaybeVector[B]): MaybeVector[B] = this match
-    case Single(x) => f(x)
+    case Single(x)         => f(x)
     case Multiple(vect, c) =>
       val mvs = vect.map(f)
       val complete = c && mvs.forall(_.complete)
@@ -58,7 +58,7 @@ object MaybeVector:
     val uniqueSizes = all.flatMap(_.length).distinct
 
     uniqueSizes match
-      case Nil => MaybeVector(f(head(0), tail.map(_(0))))
+      case Nil         => MaybeVector(f(head(0), tail.map(_(0))))
       case size :: Nil =>
         val results =
           for i <- 0 until size
@@ -80,7 +80,7 @@ object MaybeVector:
     val uniqueSizes = List(lhs, rhs).flatMap(_.length).distinct
 
     uniqueSizes match
-      case Nil => MaybeVector(f(lhs(0), rhs(0)))
+      case Nil         => MaybeVector(f(lhs(0), rhs(0)))
       case size :: Nil =>
         val results =
           for i <- 0 until size
@@ -104,7 +104,7 @@ object MaybeVector:
     val uniqueSizes = List(arg1, arg2, arg3, arg4).flatMap(_.length).distinct
 
     uniqueSizes match
-      case Nil => MaybeVector(f(arg1(0), arg2(0), arg3(0), arg4(0)))
+      case Nil         => MaybeVector(f(arg1(0), arg2(0), arg3(0), arg4(0)))
       case size :: Nil =>
         val results =
           for i <- 0 until size
@@ -129,7 +129,7 @@ object MaybeVector:
       .distinct
 
     uniqueSizes match
-      case Nil => MaybeVector(f(cases.map((a, b) => (a(0), b(0)))))
+      case Nil         => MaybeVector(f(cases.map((a, b) => (a(0), b(0)))))
       case size :: Nil =>
         val results =
           for i <- 0 until size
@@ -153,7 +153,7 @@ object MaybeVector:
       .distinct
 
     uniqueSizes match
-      case Nil => MaybeVector(f(cases.map((a, b, c) => (a(0), b(0), c(0)))))
+      case Nil         => MaybeVector(f(cases.map((a, b, c) => (a(0), b(0), c(0)))))
       case size :: Nil =>
         val results =
           for i <- 0 until size

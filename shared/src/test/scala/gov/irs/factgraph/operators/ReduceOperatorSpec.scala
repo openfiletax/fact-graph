@@ -1,9 +1,8 @@
 package gov.irs.factgraph.operators
 
-import org.scalatest.funspec.AnyFunSpec
-
 import gov.irs.factgraph.*
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class ReduceOperatorSpec extends AnyFunSpec:
   describe("ReduceOperator") {
@@ -17,10 +16,10 @@ class ReduceOperatorSpec extends AnyFunSpec:
             Expression
               .Reduce(
                 List(completeExpr, placeholderExpr, incompleteExpr),
-                operator
+                operator,
               )
               .get(0) ==
-              Result.Incomplete
+              Result.Incomplete,
           )
         }
       }
@@ -31,10 +30,10 @@ class ReduceOperatorSpec extends AnyFunSpec:
             Expression
               .Reduce(
                 List(completeExpr, placeholderExpr, completeExpr),
-                operator
+                operator,
               )
               .get(0) ==
-              Result.Placeholder(true)
+              Result.Placeholder(true),
           )
         }
       }
@@ -45,7 +44,7 @@ class ReduceOperatorSpec extends AnyFunSpec:
             Expression
               .Reduce(List(completeExpr, completeExpr, completeExpr), operator)
               .get(0) ==
-              Result.Complete(true)
+              Result.Complete(true),
           )
         }
       }
@@ -56,7 +55,7 @@ class ReduceOperatorSpec extends AnyFunSpec:
         Expression
           .Reduce(
             List(incompleteExpr, canaryExpr { canary = true }),
-            operator
+            operator,
           )
           .get(0)
 
@@ -65,7 +64,7 @@ class ReduceOperatorSpec extends AnyFunSpec:
         Expression
           .Reduce(
             List(completeExpr, incompleteExpr, canaryExpr { canary = true }),
-            operator
+            operator,
           )
           .get(0)
 
@@ -74,7 +73,7 @@ class ReduceOperatorSpec extends AnyFunSpec:
         Expression
           .Reduce(
             List(completeExpr, completeExpr, canaryExpr { canary = true }),
-            operator
+            operator,
           )
           .get(0)
 
@@ -108,10 +107,10 @@ class ReduceOperatorSpec extends AnyFunSpec:
                 List(
                   Explanation.Constant,
                   Explanation.Constant,
-                  Explanation.Constant
-                )
-              )
-            )
+                  Explanation.Constant,
+                ),
+              ),
+            ),
         )
       }
     }

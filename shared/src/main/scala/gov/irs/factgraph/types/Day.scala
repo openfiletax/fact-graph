@@ -1,8 +1,8 @@
 package gov.irs.factgraph.types
-import upickle.default._
 import scala.annotation.targetName
 import scala.beans.BeanProperty
-import scala.scalajs.js.annotation.{JSExportTopLevel, JSExport, JSExportAll}
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
+import upickle.default._
 
 implicit val localDateReadWrite: ReadWriter[java.time.LocalDate] =
   readwriter[String]

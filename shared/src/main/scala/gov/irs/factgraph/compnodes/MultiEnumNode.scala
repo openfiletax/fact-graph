@@ -1,7 +1,7 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path}
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait }
 
 final case class MultiEnumNode(
     expr: Expression[gov.irs.factgraph.types.MultiEnum],
@@ -18,7 +18,9 @@ final case class MultiEnumNode(
 object MultiEnumNode extends CompNodeFactory with WritableNodeFactory:
   override val Key: String = "MultiEnum"
 
-  override def fromWritableConfig(e: WritableConfigTrait)(using Factual)(using
+  override def fromWritableConfig(e: WritableConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val enumOptionsPath = e.options.find(x => x.name == "optionsPath")
@@ -38,7 +40,9 @@ object MultiEnumNode extends CompNodeFactory with WritableNodeFactory:
       Path(value.enumOptionsPath),
     )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val dictionary = summon[FactDictionary]

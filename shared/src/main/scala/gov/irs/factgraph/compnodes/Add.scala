@@ -1,11 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.types.{*, given}
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
-import gov.irs.factgraph.operators.{BinaryOperator, ReduceOperator}
+import gov.irs.factgraph.operators.{ BinaryOperator, ReduceOperator }
+import gov.irs.factgraph.types.{ *, given }
 import gov.irs.factgraph.util.Seq.itemsHaveSameRuntimeClass
-
 import scala.annotation.unused
 
 // Sum is used across multiple child nodes. If you're trying to add
@@ -19,7 +18,9 @@ object Add extends CompNodeFactory:
     else
       nodes.reduceLeft(binaryAdd)
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val addends = CompNode.getConfigChildNodes(e)
@@ -132,7 +133,7 @@ object Add extends CompNodeFactory:
           s"cannot add a ${lhs.getClass.getName} and a ${rhs.getClass.getName}",
         )
 
-private final class AddReduceOperator[A: Numeric] extends ReduceOperator[A]:
+final private class AddReduceOperator[A: Numeric] extends ReduceOperator[A]:
   override protected def reduce(x: A, y: A): A = Numeric[A].plus(x, y)
 
 @unused

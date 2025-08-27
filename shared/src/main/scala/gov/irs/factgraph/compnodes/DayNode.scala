@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path, PathItem}
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait}
-import gov.irs.factgraph.monads.{Result}
-import gov.irs.factgraph.types.{CollectionItem, Day}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path, PathItem }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait }
+import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.types.{ CollectionItem, Day }
 
 final case class DayNode(expr: Expression[Day]) extends CompNode:
   type Value = Day
@@ -31,13 +31,15 @@ final case class DayNode(expr: Expression[Day]) extends CompNode:
       case PathItem.Child(Symbol("ordinal")) =>
         Some(
           IntNode(Expression.Extract((x: Result[Day]) => x.map(y => y.ordinal))),
-        )	
+        )
       case _ => None
 
 object DayNode extends CompNodeFactory with WritableNodeFactory:
   override val Key: String = "Day"
 
-  override def fromWritableConfig(e: WritableConfigTrait)(using Factual)(using
+  override def fromWritableConfig(e: WritableConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     new DayNode(
@@ -48,7 +50,9 @@ object DayNode extends CompNodeFactory with WritableNodeFactory:
     Expression.Constant(Some(value)),
   )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     this(Day(e.getOptionValue(CommonOptionConfigTraits.VALUE).get))

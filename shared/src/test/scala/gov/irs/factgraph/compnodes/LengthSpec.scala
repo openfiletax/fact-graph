@@ -1,9 +1,6 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.definitions.fact.{
-  CommonOptionConfigTraits,
-  CompNodeConfigElement
-}
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigElement }
 import gov.irs.factgraph.monads.Result
 import org.scalatest.funspec.AnyFunSpec
 
@@ -17,10 +14,10 @@ class LengthSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("Test")
-            )
-          )
-        )
+              CommonOptionConfigTraits.value("Test"),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(4))
@@ -35,10 +32,10 @@ class LengthSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("42"),
+              ),
+            ),
+          ),
         )
       }
     }

@@ -1,11 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
-import gov.irs.factgraph.operators.{BinaryOperator}
-
-import scala.util.matching.Regex
+import gov.irs.factgraph.operators.BinaryOperator
 import scala.quoted.runtime.Patterns.patternType
+import scala.util.matching.Regex
 
 object StripChars extends CompNodeFactory:
   override val Key: String = "StripChars"
@@ -28,7 +27,9 @@ object StripChars extends CompNodeFactory:
       ),
     )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val lhs = CompNode.getConfigChildNode(e, "Input")
@@ -39,6 +40,6 @@ object StripChars extends CompNodeFactory:
       )
     this(lhs.asInstanceOf[StringNode], rhs.asInstanceOf[StringNode])
 
-private final class ReplaceOperator() extends BinaryOperator[String, String, String]:
+final private class ReplaceOperator() extends BinaryOperator[String, String, String]:
   override protected def operation(input: String, allow: String): String =
     StripChars.strip(input, allow)

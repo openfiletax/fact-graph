@@ -1,6 +1,6 @@
 package gov.irs.factgraph.limits
 
-import gov.irs.factgraph.{FactDefinition, FactDictionary, Graph, Path}
+import gov.irs.factgraph.{ FactDefinition, FactDictionary, Graph, Path }
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
@@ -8,10 +8,10 @@ import gov.irs.factgraph.definitions.fact.{
   FactConfigElement,
   LimitConfigTrait,
   LimitLevel,
-  WritableConfigElement
+  WritableConfigElement,
 }
 import gov.irs.factgraph.monads.Result
-import gov.irs.factgraph.types.{Day, Dollar, Rational}
+import gov.irs.factgraph.types.{ Day, Dollar, Rational }
 import org.scalatest.funspec.AnyFunSpec
 
 class MaxSpec extends AnyFunSpec:
@@ -24,18 +24,18 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("43")
+            CommonOptionConfigTraits.value("43"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Int", Seq.empty, Seq(limit))
+              new WritableConfigElement("Int", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -51,7 +51,7 @@ class MaxSpec extends AnyFunSpec:
       }
 
       it(
-        "and allow an it to save if it is doesn't violate the limit set from another node"
+        "and allow an it to save if it is doesn't violate the limit set from another node",
       ) {
         val limit = new LimitConfigTrait:
           override def operation: String = "Max"
@@ -59,7 +59,7 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("/constraint")
+            CommonOptionConfigTraits.path("/constraint"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
@@ -70,22 +70,22 @@ class MaxSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("43")
-              )
+                CommonOptionConfigTraits.value("43"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Int", Seq.empty, Seq(limit))
+              new WritableConfigElement("Int", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -107,18 +107,18 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("41")
+            CommonOptionConfigTraits.value("41"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Int", Seq.empty, Seq(limit))
+              new WritableConfigElement("Int", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -145,18 +145,18 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("41")
+            CommonOptionConfigTraits.value("41"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Int", Seq.empty, Seq(limit))
+              new WritableConfigElement("Int", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -183,7 +183,7 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("/constraint")
+            CommonOptionConfigTraits.path("/constraint"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
@@ -194,22 +194,22 @@ class MaxSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("41")
-              )
+                CommonOptionConfigTraits.value("41"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Int", Seq.empty, Seq(limit))
+              new WritableConfigElement("Int", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -237,18 +237,18 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("43.25")
+            CommonOptionConfigTraits.value("43.25"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Dollar", Seq.empty, Seq(limit))
+              new WritableConfigElement("Dollar", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -264,7 +264,7 @@ class MaxSpec extends AnyFunSpec:
       }
 
       it(
-        "and allow an it to save if it is doesn't violate the limit set from another node"
+        "and allow an it to save if it is doesn't violate the limit set from another node",
       ) {
         val limit = new LimitConfigTrait:
           override def operation: String = "Max"
@@ -272,7 +272,7 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("/constraint")
+            CommonOptionConfigTraits.path("/constraint"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
@@ -283,22 +283,22 @@ class MaxSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Dollar",
                 Seq.empty,
-                CommonOptionConfigTraits.value("43.25")
-              )
+                CommonOptionConfigTraits.value("43.25"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Dollar", Seq.empty, Seq(limit))
+              new WritableConfigElement("Dollar", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -320,18 +320,18 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("41.25")
+            CommonOptionConfigTraits.value("41.25"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Dollar", Seq.empty, Seq(limit))
+              new WritableConfigElement("Dollar", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -358,18 +358,18 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("41.25")
+            CommonOptionConfigTraits.value("41.25"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Dollar", Seq.empty, Seq(limit))
+              new WritableConfigElement("Dollar", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -396,7 +396,7 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("/constraint")
+            CommonOptionConfigTraits.path("/constraint"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
@@ -407,22 +407,22 @@ class MaxSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Dollar",
                 Seq.empty,
-                CommonOptionConfigTraits.value("41.25")
-              )
+                CommonOptionConfigTraits.value("41.25"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Dollar", Seq.empty, Seq(limit))
+              new WritableConfigElement("Dollar", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -450,18 +450,18 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("2/3")
+            CommonOptionConfigTraits.value("2/3"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Rational", Seq.empty, Seq(limit))
+              new WritableConfigElement("Rational", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -477,7 +477,7 @@ class MaxSpec extends AnyFunSpec:
       }
 
       it(
-        "and allow an it to save if it is doesn't violate the limit set from another node"
+        "and allow an it to save if it is doesn't violate the limit set from another node",
       ) {
         val limit = new LimitConfigTrait:
           override def operation: String = "Max"
@@ -487,7 +487,7 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("/constraint")
+            CommonOptionConfigTraits.path("/constraint"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
@@ -498,22 +498,22 @@ class MaxSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("2/3")
-              )
+                CommonOptionConfigTraits.value("2/3"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Rational", Seq.empty, Seq(limit))
+              new WritableConfigElement("Rational", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -537,18 +537,18 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("2/3")
+            CommonOptionConfigTraits.value("2/3"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Rational", Seq.empty, Seq(limit))
+              new WritableConfigElement("Rational", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -577,18 +577,18 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("2/3")
+            CommonOptionConfigTraits.value("2/3"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Rational", Seq.empty, Seq(limit))
+              new WritableConfigElement("Rational", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -617,7 +617,7 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("/constraint")
+            CommonOptionConfigTraits.path("/constraint"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
@@ -628,22 +628,22 @@ class MaxSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Rational",
                 Seq.empty,
-                CommonOptionConfigTraits.value("2/3")
-              )
+                CommonOptionConfigTraits.value("2/3"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Rational", Seq.empty, Seq(limit))
+              new WritableConfigElement("Rational", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -671,18 +671,18 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Day",
             Seq.empty,
-            CommonOptionConfigTraits.value("2022-01-01")
+            CommonOptionConfigTraits.value("2022-01-01"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Day", Seq.empty, Seq(limit))
+              new WritableConfigElement("Day", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -698,7 +698,7 @@ class MaxSpec extends AnyFunSpec:
       }
 
       it(
-        "and allow an it to save if it is doesn't violate the limit set from another node"
+        "and allow an it to save if it is doesn't violate the limit set from another node",
       ) {
         val limit = new LimitConfigTrait:
           override def operation: String = "Max"
@@ -708,7 +708,7 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("/constraint")
+            CommonOptionConfigTraits.path("/constraint"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
@@ -719,22 +719,22 @@ class MaxSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Day",
                 Seq.empty,
-                CommonOptionConfigTraits.value("2022-01-01")
-              )
+                CommonOptionConfigTraits.value("2022-01-01"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Day", Seq.empty, Seq(limit))
+              new WritableConfigElement("Day", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -758,18 +758,18 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Day",
             Seq.empty,
-            CommonOptionConfigTraits.value("2022-01-01")
+            CommonOptionConfigTraits.value("2022-01-01"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Day", Seq.empty, Seq(limit))
+              new WritableConfigElement("Day", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -798,18 +798,18 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Day",
             Seq.empty,
-            CommonOptionConfigTraits.value("2022-01-01")
+            CommonOptionConfigTraits.value("2022-01-01"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Day", Seq.empty, Seq(limit))
+              new WritableConfigElement("Day", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -838,7 +838,7 @@ class MaxSpec extends AnyFunSpec:
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("/constraint")
+            CommonOptionConfigTraits.path("/constraint"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
@@ -849,22 +849,22 @@ class MaxSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Day",
                 Seq.empty,
-                CommonOptionConfigTraits.value("2022-01-01")
-              )
+                CommonOptionConfigTraits.value("2022-01-01"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Day", Seq.empty, Seq(limit))
+              new WritableConfigElement("Day", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)

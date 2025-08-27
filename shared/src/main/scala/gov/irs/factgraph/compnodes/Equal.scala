@@ -1,6 +1,6 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
 import gov.irs.factgraph.operators.BinaryOperator
 
@@ -23,7 +23,9 @@ object Equal extends CompNodeFactory:
       ),
     )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val lhs = CompNode.getConfigChildNode(e, "Left")
@@ -31,5 +33,5 @@ object Equal extends CompNodeFactory:
 
     this(lhs, rhs)
 
-private final class EqualOperator extends BinaryOperator[Boolean, Any, Any]:
+final private class EqualOperator extends BinaryOperator[Boolean, Any, Any]:
   override protected def operation(x: Any, y: Any): Boolean = x == y

@@ -1,18 +1,17 @@
 package gov.irs.factgraph
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.compnodes.IntNode
 import gov.irs.factgraph.definitions.*
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
   FactConfigElement,
-  WritableConfigElement
+  WritableConfigElement,
 }
-import gov.irs.factgraph.monads.{Result, MaybeVector}
+import gov.irs.factgraph.monads.{ MaybeVector, Result }
 import gov.irs.factgraph.types.Collection
-
 import java.util.UUID
+import org.scalatest.funspec.AnyFunSpec
 
 class GraphSpec extends AnyFunSpec:
   describe("Graph") {
@@ -27,11 +26,11 @@ class GraphSpec extends AnyFunSpec:
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
+                CommonOptionConfigTraits.value("42"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -47,11 +46,11 @@ class GraphSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Int")
+              new WritableConfigElement("Int"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -79,11 +78,11 @@ class GraphSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Int")
+              new WritableConfigElement("Int"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -112,11 +111,11 @@ class GraphSpec extends AnyFunSpec:
           FactConfigElement(
             "/collection",
             Some(
-              new WritableConfigElement("Collection")
+              new WritableConfigElement("Collection"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
         FactDefinition.fromConfig(
           FactConfigElement(
@@ -126,11 +125,11 @@ class GraphSpec extends AnyFunSpec:
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
+                CommonOptionConfigTraits.value("42"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -160,11 +159,11 @@ class GraphSpec extends AnyFunSpec:
           FactConfigElement(
             "/collection",
             Some(
-              new WritableConfigElement("Collection")
+              new WritableConfigElement("Collection"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
         FactDefinition.fromConfig(
           FactConfigElement(
@@ -174,11 +173,11 @@ class GraphSpec extends AnyFunSpec:
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
+                CommonOptionConfigTraits.value("42"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -194,21 +193,21 @@ class GraphSpec extends AnyFunSpec:
           FactConfigElement(
             "/collection",
             Some(
-              new WritableConfigElement("Collection")
+              new WritableConfigElement("Collection"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
         FactDefinition.fromConfig(
           FactConfigElement(
             "/collection/*/anotherCollection",
             Some(
-              new WritableConfigElement("Collection")
+              new WritableConfigElement("Collection"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
         FactDefinition.fromConfig(
           FactConfigElement(
@@ -218,11 +217,11 @@ class GraphSpec extends AnyFunSpec:
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
+                CommonOptionConfigTraits.value("42"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -251,23 +250,23 @@ class GraphSpec extends AnyFunSpec:
 
         assert(
           facts.contains(
-            s"/collection/#${uuid1}/anotherCollection/#${uuid1}/test"
-          )
+            s"/collection/#${uuid1}/anotherCollection/#${uuid1}/test",
+          ),
         )
         assert(
           facts.contains(
-            s"/collection/#${uuid1}/anotherCollection/#${uuid2}/test"
-          )
+            s"/collection/#${uuid1}/anotherCollection/#${uuid2}/test",
+          ),
         )
         assert(
           facts.contains(
-            s"/collection/#${uuid2}/anotherCollection/#${uuid1}/test"
-          )
+            s"/collection/#${uuid2}/anotherCollection/#${uuid1}/test",
+          ),
         )
         assert(
           facts.contains(
-            s"/collection/#${uuid2}/anotherCollection/#${uuid2}/test"
-          )
+            s"/collection/#${uuid2}/anotherCollection/#${uuid2}/test",
+          ),
         )
         assert(facts.length == 4)
       }
@@ -280,21 +279,21 @@ class GraphSpec extends AnyFunSpec:
           FactConfigElement(
             "/collection",
             Some(
-              new WritableConfigElement("Collection")
+              new WritableConfigElement("Collection"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
         FactDefinition.fromConfig(
           FactConfigElement(
             "/collection/*/test",
             Some(
-              new WritableConfigElement("Int")
+              new WritableConfigElement("Int"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -313,9 +312,9 @@ class GraphSpec extends AnyFunSpec:
 
         var threw = false
 
-        try {
+        try
           graph.set("/collection", Collection(Vector(uuid1)))
-        } catch {
+        catch {
           case _ => threw = true
         }
 

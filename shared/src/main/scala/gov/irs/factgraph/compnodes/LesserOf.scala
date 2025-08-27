@@ -1,11 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.types.*
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
 import gov.irs.factgraph.operators.ReduceOperator
+import gov.irs.factgraph.types.*
 import gov.irs.factgraph.util.Seq.itemsHaveSameRuntimeClass
-
 import scala.annotation.unused
 
 object LesserOf extends CompNodeFactory:
@@ -51,12 +50,14 @@ object LesserOf extends CompNodeFactory:
           s"cannot compare a ${nodes.head.getClass.getName}",
         )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     this(CompNode.getConfigChildNodes(e))
 
-private final class LesserOfOperator[A: Ordering] extends ReduceOperator[A]:
+final private class LesserOfOperator[A: Ordering] extends ReduceOperator[A]:
   override protected def reduce(x: A, y: A): A =
     if (Ordering[A].lteq(x, y)) x else y
 

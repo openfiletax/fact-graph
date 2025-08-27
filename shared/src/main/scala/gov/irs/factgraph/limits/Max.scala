@@ -1,8 +1,8 @@
 package gov.irs.factgraph.limits
 
-import gov.irs.factgraph.{FactDictionary, Factual, Path}
-import gov.irs.factgraph.compnodes.{BooleanNode, CompNode, Dependency, GreaterThan, LessThanOrEqual}
-import gov.irs.factgraph.definitions.fact.{CompNodeConfigTrait, LimitConfigTrait}
+import gov.irs.factgraph.{ FactDictionary, Factual, Path }
+import gov.irs.factgraph.compnodes.{ BooleanNode, CompNode, Dependency, GreaterThan, LessThanOrEqual }
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigTrait, LimitConfigTrait }
 import gov.irs.factgraph.limits.LimitFactory
 
 case class Max(limiter: BooleanNode, context: LimitContext) extends Limit
@@ -14,7 +14,9 @@ object Max extends LimitFactory {
     val lhs = Dependency(summon[Factual].path)
     Max(LessThanOrEqual(lhs, rhs), new LimitContext(Key, e.level, lhs, rhs))
 
-  override def fromConfig(e: LimitConfigTrait)(using Factual)(using
+  override def fromConfig(e: LimitConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): Limit =
     this(e)

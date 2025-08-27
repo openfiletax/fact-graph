@@ -1,13 +1,13 @@
 package gov.irs.factgraph.types
-import scala.scalajs.js.annotation.JSExportTopLevel
-import scala.util.matching.Regex
 import gov.irs.factgraph.monads.JSEither
-import scala.util.{Try, Success, Failure}
-import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
+import gov.irs.factgraph.validation.{ ValidationFailure, ValidationFailureReason }
+import java.lang.{ Enum => JavaEnum }
 import java.time.format.DateTimeParseException
-import java.lang.{Enum => JavaEnum}
-import gov.irs.factgraph.validation.{ValidationFailure, ValidationFailureReason}
 import scala.scalajs.js
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
+import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.util.{ Failure, Success, Try }
+import scala.util.matching.Regex
 
 @JSExportAll
 enum DayFailureReason extends JavaEnum[DayFailureReason], ValidationFailureReason:

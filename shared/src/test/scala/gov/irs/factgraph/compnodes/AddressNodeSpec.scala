@@ -1,13 +1,12 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
+import gov.irs.factgraph.compnodes.AddressNode
 import gov.irs.factgraph.definitions.fact.*
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.Address
-
-import gov.irs.factgraph.compnodes.AddressNode
 import gov.irs.factgraph.types.AddressValidationFailure
+import org.scalatest.funspec.AnyFunSpec
 class AddressNodeSpec extends AnyFunSpec:
   describe("AddressNode") {
     describe("$apply") {
@@ -17,15 +16,15 @@ class AddressNodeSpec extends AnyFunSpec:
             "736 Jackson Place NW",
             "Washington",
             "20503",
-            "DC"
+            "DC",
           )
         val node = AddressNode(
-          address
+          address,
         )
         assert(
           node.get(0) == Result.Complete(
-            address
-          )
+            address,
+          ),
         )
       }
     }
@@ -36,14 +35,14 @@ class AddressNodeSpec extends AnyFunSpec:
           "Address",
           Seq.empty,
           CommonOptionConfigTraits.value(
-            "736 Jackson Place NW\nWashington, DC 20503"
-          )
+            "736 Jackson Place NW\nWashington, DC 20503",
+          ),
         )
         val node = CompNode.fromDerivedConfig(config).asInstanceOf[AddressNode]
         assert(
           node.get(0) == Result.Complete(
-            new Address("736 Jackson Place NW", "Washington", "20503", "DC")
-          )
+            new Address("736 Jackson Place NW", "Washington", "20503", "DC"),
+          ),
         )
       }
     }
@@ -58,7 +57,7 @@ class AddressNodeSpec extends AnyFunSpec:
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("False"))
+                  Seq(new CompNodeConfigElement("False")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -67,19 +66,19 @@ class AddressNodeSpec extends AnyFunSpec:
                       "Address",
                       Seq.empty,
                       CommonOptionConfigTraits.value(
-                        "736 Jackson Place NW\nWashington, DC 20503"
-                      )
-                    )
-                  )
-                )
-              )
+                        "736 Jackson Place NW\nWashington, DC 20503",
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Case",
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("True"))
+                  Seq(new CompNodeConfigElement("True")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -88,23 +87,23 @@ class AddressNodeSpec extends AnyFunSpec:
                       "Address",
                       Seq.empty,
                       CommonOptionConfigTraits.value(
-                        "718 Jackson Place NW\nWashington, DC 20503"
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
+                        "718 Jackson Place NW\nWashington, DC 20503",
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
 
         assert(
           node.get(0) == Result.Complete(
             Address(
-              "718 Jackson Place NW\nWashington, DC 20503"
-            )
-          )
+              "718 Jackson Place NW\nWashington, DC 20503",
+            ),
+          ),
         )
       }
     }
@@ -121,12 +120,12 @@ class AddressNodeSpec extends AnyFunSpec:
               "Address",
               Seq.empty,
               CommonOptionConfigTraits.value(
-                "736 Jackson Place NW\nWashington, DC 20503"
-              )
-            )
+                "736 Jackson Place NW\nWashington, DC 20503",
+              ),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       FactDefinition.fromConfig(
@@ -137,11 +136,11 @@ class AddressNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Dependency",
               Seq.empty,
-              CommonOptionConfigTraits.path("../value")
-            )
+              CommonOptionConfigTraits.path("../value"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)
@@ -155,9 +154,9 @@ class AddressNodeSpec extends AnyFunSpec:
               "736 Jackson Place NW",
               "Washington",
               "20503",
-              "DC"
-            )
-          )
+              "DC",
+            ),
+          ),
         )
       }
     }
@@ -168,9 +167,9 @@ class AddressNodeSpec extends AnyFunSpec:
         val newNode = node.fromExpression(
           Expression.Constant(
             Some(
-              new Address("736 Jackson Place NW", "Washington", "20503", "DC")
-            )
-          )
+              new Address("736 Jackson Place NW", "Washington", "20503", "DC"),
+            ),
+          ),
         )
 
         assert(
@@ -179,9 +178,9 @@ class AddressNodeSpec extends AnyFunSpec:
               "736 Jackson Place NW",
               "Washington",
               "20503",
-              "DC"
-            )
-          )
+              "DC",
+            ),
+          ),
         )
       }
     }
@@ -193,11 +192,11 @@ class AddressNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Address")
+              new WritableConfigElement("Address"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -206,7 +205,7 @@ class AddressNodeSpec extends AnyFunSpec:
         assert(fact.get(0) == Result.Incomplete)
 
         fact.set(
-          new Address("736 Jackson Place NW", "Washington", "20503", "DC")
+          new Address("736 Jackson Place NW", "Washington", "20503", "DC"),
         )
         graph.save()
 
@@ -216,9 +215,9 @@ class AddressNodeSpec extends AnyFunSpec:
               "736 Jackson Place NW",
               "Washington",
               "20503",
-              "DC"
-            )
-          )
+              "DC",
+            ),
+          ),
         )
       }
     }
@@ -230,11 +229,11 @@ class AddressNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Address")
+              new WritableConfigElement("Address"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -242,7 +241,7 @@ class AddressNodeSpec extends AnyFunSpec:
         assert(incomplete.get(0) == Result.Incomplete)
         val fact = graph(Path("/test"))(0).get
         fact.set(
-          new Address("736 Jackson Place NW", "Washington", "20503", "DC")
+          new Address("736 Jackson Place NW", "Washington", "20503", "DC"),
         )
         graph.save()
         var address = graph.get("/test/streetAddress")
@@ -255,11 +254,11 @@ class AddressNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Address")
+              new WritableConfigElement("Address"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -267,7 +266,7 @@ class AddressNodeSpec extends AnyFunSpec:
         assert(incomplete.get(0) == Result.Incomplete)
         val fact = graph(Path("/test"))(0).get
         fact.set(
-          new Address("736 Jackson Place NW", "Washington City", "20503", "DC")
+          new Address("736 Jackson Place NW", "Washington City", "20503", "DC"),
         )
         graph.save()
         var address = graph.get("/test/city")
@@ -280,11 +279,11 @@ class AddressNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Address")
+              new WritableConfigElement("Address"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -292,7 +291,7 @@ class AddressNodeSpec extends AnyFunSpec:
         assert(incomplete.get(0) == Result.Incomplete)
         val fact = graph(Path("/test"))(0).get
         fact.set(
-          new Address("736 Jackson Place NW", "Washington", "20503", "DC")
+          new Address("736 Jackson Place NW", "Washington", "20503", "DC"),
         )
         graph.save()
         var address = graph.get("/test/stateOrProvence")
@@ -305,11 +304,11 @@ class AddressNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Address")
+              new WritableConfigElement("Address"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -317,7 +316,7 @@ class AddressNodeSpec extends AnyFunSpec:
         assert(incomplete.get(0) == Result.Incomplete)
         val fact = graph(Path("/test"))(0).get
         fact.set(
-          new Address("736 Jackson Place NW", "Washington", "20503", "DC")
+          new Address("736 Jackson Place NW", "Washington", "20503", "DC"),
         )
         graph.save()
         var address = graph.get("/test/postalCode")
@@ -330,11 +329,11 @@ class AddressNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Address")
+              new WritableConfigElement("Address"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -348,8 +347,8 @@ class AddressNodeSpec extends AnyFunSpec:
             "20503",
             "DC",
             "",
-            "USA"
-          )
+            "USA",
+          ),
         )
         graph.save()
         var address = graph.get("/test/country")
@@ -362,11 +361,11 @@ class AddressNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Address")
+              new WritableConfigElement("Address"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -374,7 +373,7 @@ class AddressNodeSpec extends AnyFunSpec:
         assert(incomplete.get(0) == Result.Incomplete)
         val fact = graph(Path("/test"))(0).get
         fact.set(
-          new Address("736 Jackson Place NW", "Washington", "20503", "DC", "2")
+          new Address("736 Jackson Place NW", "Washington", "20503", "DC", "2"),
         )
         graph.save()
         var address = graph.get("/test/streetAddressLine2")
@@ -387,11 +386,11 @@ class AddressNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Address")
+              new WritableConfigElement("Address"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -405,8 +404,8 @@ class AddressNodeSpec extends AnyFunSpec:
             "20503",
             "DC",
             "",
-            "United States of America"
-          )
+            "United States of America",
+          ),
         )
         graph.save()
         var address = graph.get("/test/foreignAddress")

@@ -1,13 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
-import gov.irs.factgraph.definitions.fact.{
-  CommonOptionConfigTraits,
-  CompNodeConfigElement
-}
-import org.scalatest.funspec.AnyFunSpec
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigElement }
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.*
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class AddSpec extends AnyFunSpec:
   describe("Add config") {
@@ -18,19 +15,19 @@ class AddSpec extends AnyFunSpec:
           CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("1")
+            CommonOptionConfigTraits.value("1"),
           ),
           CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("2")
+            CommonOptionConfigTraits.value("2"),
           ),
           CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("3")
-          )
-        )
+            CommonOptionConfigTraits.value("3"),
+          ),
+        ),
       )
       val node = CompNode
         .fromDerivedConfig(config)
@@ -44,19 +41,19 @@ class AddSpec extends AnyFunSpec:
           CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("1/2")
+            CommonOptionConfigTraits.value("1/2"),
           ),
           CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("2/3")
+            CommonOptionConfigTraits.value("2/3"),
           ),
           CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("3/4")
-          )
-        )
+            CommonOptionConfigTraits.value("3/4"),
+          ),
+        ),
       )
       val node = CompNode.fromDerivedConfig(config)
       assert(node.get(0) == Result.Complete(Rational("23/12")))
@@ -69,19 +66,19 @@ class AddSpec extends AnyFunSpec:
           CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("1.23")
+            CommonOptionConfigTraits.value("1.23"),
           ),
           CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("4.56")
+            CommonOptionConfigTraits.value("4.56"),
           ),
           CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("7.89")
-          )
-        )
+            CommonOptionConfigTraits.value("7.89"),
+          ),
+        ),
       )
       val node = CompNode.fromDerivedConfig(config)
       assert(node.get(0) == Result.Complete(Dollar("13.68")))
@@ -94,49 +91,49 @@ class AddSpec extends AnyFunSpec:
           CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("0")
+            CommonOptionConfigTraits.value("0"),
           ),
           CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("1")
+            CommonOptionConfigTraits.value("1"),
           ),
           CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("0/1")
+            CommonOptionConfigTraits.value("0/1"),
           ),
           CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("2/3")
+            CommonOptionConfigTraits.value("2/3"),
           ),
           CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("4")
+            CommonOptionConfigTraits.value("4"),
           ),
           CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("5.67")
+            CommonOptionConfigTraits.value("5.67"),
           ),
           CompNodeConfigElement(
             "Rational",
             Seq.empty,
-            CommonOptionConfigTraits.value("8/9")
+            CommonOptionConfigTraits.value("8/9"),
           ),
           CompNodeConfigElement(
             "Dollar",
             Seq.empty,
-            CommonOptionConfigTraits.value("10.11")
+            CommonOptionConfigTraits.value("10.11"),
           ),
           CompNodeConfigElement(
             "Int",
             Seq.empty,
-            CommonOptionConfigTraits.value("12")
-          )
-        )
+            CommonOptionConfigTraits.value("12"),
+          ),
+        ),
       )
       val node = CompNode.fromDerivedConfig(config)
       assert(node.get(0) == Result.Complete(Dollar("34.34")))
@@ -150,14 +147,14 @@ class AddSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("1")
+              CommonOptionConfigTraits.value("1"),
             ),
             CompNodeConfigElement(
               "Rational",
               Seq.empty,
-              CommonOptionConfigTraits.value("2/3")
-            )
-          )
+              CommonOptionConfigTraits.value("2/3"),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
         assert(node.get(0) == Result.Complete(Rational("5/3")))
@@ -172,14 +169,14 @@ class AddSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("1")
+              CommonOptionConfigTraits.value("1"),
             ),
             CompNodeConfigElement(
               "Dollar",
               Seq.empty,
-              CommonOptionConfigTraits.value("2.34")
-            )
-          )
+              CommonOptionConfigTraits.value("2.34"),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
         assert(node.get(0) == Result.Complete(Dollar("3.34")))
@@ -194,14 +191,14 @@ class AddSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Rational",
               Seq.empty,
-              CommonOptionConfigTraits.value("1/2")
+              CommonOptionConfigTraits.value("1/2"),
             ),
             CompNodeConfigElement(
               "Dollar",
               Seq.empty,
-              CommonOptionConfigTraits.value("3.45")
-            )
-          )
+              CommonOptionConfigTraits.value("3.45"),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
         assert(node.get(0) == Result.Complete(Dollar("3.95")))
@@ -216,14 +213,14 @@ class AddSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("Hello")
+              CommonOptionConfigTraits.value("Hello"),
             ),
             CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("World")
-            )
-          )
+              CommonOptionConfigTraits.value("World"),
+            ),
+          ),
         )
         assertThrows[UnsupportedOperationException] {
           CompNode.fromDerivedConfig(config)
@@ -239,14 +236,14 @@ class AddSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("3")
+              CommonOptionConfigTraits.value("3"),
             ),
             CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("Stooges")
-            )
-          )
+              CommonOptionConfigTraits.value("Stooges"),
+            ),
+          ),
         )
         assertThrows[UnsupportedOperationException] {
           CompNode.fromDerivedConfig(config)

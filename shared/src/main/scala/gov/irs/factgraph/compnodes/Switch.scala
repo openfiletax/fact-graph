@@ -1,6 +1,6 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{FactDictionary, Factual}
+import gov.irs.factgraph.{ FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
 
 object Switch extends CompNodeFactory:
@@ -9,9 +9,9 @@ object Switch extends CompNodeFactory:
   def apply(cases: Seq[(BooleanNode, CompNode)]): CompNode =
     val (_, thens) = cases.unzip
 
-    try {
+    try
       thens.head.switch(cases.toList)
-    } catch {
+    catch {
       case e: ClassCastException =>
         throw new UnsupportedOperationException(
           s"cannot switch between nodes of different types",

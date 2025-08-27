@@ -1,12 +1,10 @@
 package gov.irs.factgraph.types
-import scala.scalajs.js.annotation.{JSExportTopLevel, JSExport, JSExportAll}
-import upickle.default.ReadWriter
-
-import scala.beans.BeanProperty
-import scala.util.matching.Regex
+import gov.irs.factgraph.validation.{ ValidationFailure, ValidationFailureReason }
 import java.lang.Enum
-
-import gov.irs.factgraph.validation.{ValidationFailure, ValidationFailureReason}
+import scala.beans.BeanProperty
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
+import scala.util.matching.Regex
+import upickle.default.ReadWriter
 
 sealed trait E164Number derives ReadWriter:
   val countryCode: String

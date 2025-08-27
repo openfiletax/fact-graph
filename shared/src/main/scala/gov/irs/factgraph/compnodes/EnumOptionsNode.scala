@@ -1,11 +1,11 @@
 package gov.irs.factgraph.compnodes
-import gov.irs.factgraph.FactDictionary
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path}
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait}
-import gov.irs.factgraph.operators.AggregateOperator
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait }
 import gov.irs.factgraph.monads.MaybeVector
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.monads.Thunk
+import gov.irs.factgraph.operators.AggregateOperator
+import gov.irs.factgraph.FactDictionary
 final case class EnumOptionsNode(expr: Expression[List[String]]) extends CompNode:
   type Value = List[String]
   // below is equivalent to `Nil.getClass().asInstanceOf[Class[List[String]]]` due to scala List implementation
@@ -30,7 +30,9 @@ object EnumOptionsNode extends CompNodeFactory:
   def apply(options: List[String]): CompNode =
     EnumOptionsNode(Expression.Constant(Some(options)))
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     try {

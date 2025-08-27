@@ -1,12 +1,11 @@
 package gov.irs.factgraph.limits
 
-import gov.irs.factgraph.{FactDictionary, Factual}
+import gov.irs.factgraph.{ FactDictionary, Factual }
+import gov.irs.factgraph.compnodes.{ BooleanNode, CompNode, CompNodeFactory }
 import gov.irs.factgraph.compnodes.CompNode.defaultFactories
-import gov.irs.factgraph.compnodes.{BooleanNode, CompNode, CompNodeFactory}
-import gov.irs.factgraph.definitions.fact.{CompNodeConfigTrait, LimitConfigTrait}
-
-import scala.collection.mutable
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigTrait, LimitConfigTrait }
 import gov.irs.factgraph.monads.Result
+import scala.collection.mutable
 
 trait Limit {
   val limiter: BooleanNode
@@ -35,7 +34,9 @@ object Limit {
     List(Match, Max, Min, MaxLength, MinLength, MaxCollectionSize)
   private val factories = mutable.Map(defaultFactories.map(_.asTuple)*)
   def register(f: LimitFactory): Unit = factories.addOne(f.asTuple)
-  def fromConfig(e: LimitConfigTrait)(using Factual)(using
+  def fromConfig(e: LimitConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): Limit =
     val factory = factories.getOrElse(

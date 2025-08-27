@@ -1,10 +1,6 @@
 package gov.irs.factgraph.definitions.fact
 
-import gov.irs.factgraph.definitions.fact.{
-  CompNodeConfigTrait,
-  FactConfigTrait,
-  WritableConfigTrait
-}
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigTrait, FactConfigTrait, WritableConfigTrait }
 import gov.irs.factgraph.exceptions.FactGraphValidationException
 import scala.xml.NodeSeq
 
@@ -15,7 +11,7 @@ case class FactConfigElement(
     placeholder: Option[CompNodeConfigTrait],
     overrideCondition: Option[CompNodeConfigTrait] = None,
     overrideDefault: Option[CompNodeConfigTrait] = None,
-    node: NodeSeq = NodeSeq.Empty
+    node: NodeSeq = NodeSeq.Empty,
 ) extends FactConfigTrait
 
 object FactConfigElement {
@@ -36,7 +32,7 @@ object FactConfigElement {
       case 1 => Option(WritableConfigElement.fromXml(writableConfigNodes.head))
       case _ =>
         throw FactGraphValidationException(
-          s"Fact $path has more than one writable node"
+          s"Fact $path has more than one writable node",
         )
     }
 
@@ -46,7 +42,7 @@ object FactConfigElement {
       case 1 => Option(readSingleCompNode(derivedConfigNodes.head))
       case _ =>
         throw FactGraphValidationException(
-          s"Fact $path has more than one derived node "
+          s"Fact $path has more than one derived node ",
         )
     }
 
@@ -57,7 +53,7 @@ object FactConfigElement {
       case 1 => Option(readSingleCompNode(placeholderNodes.head))
       case _ =>
         throw FactGraphValidationException(
-          s"Fact $path has more than one placeholder"
+          s"Fact $path has more than one placeholder",
         )
     }
 
@@ -74,7 +70,7 @@ object FactConfigElement {
         (condition, default)
       case _ =>
         throw FactGraphValidationException(
-          s"Fact $path has more than one override"
+          s"Fact $path has more than one override",
         )
     }
 
@@ -85,7 +81,7 @@ object FactConfigElement {
       placeholder,
       overrideCondition,
       overrideDefault,
-      factNode
+      factNode,
     )
   }
 }
@@ -97,7 +93,7 @@ def readSingleCompNode(derivedOrPlaceholder: scala.xml.Node) = {
     (derivedOrPlaceholder \ "_").filter(node => !node.isInstanceOf[xml.Comment])
   if (children.length != 1) {
     throw FactGraphValidationException(
-      s"Derived or Placeholder node has ${children.length} children"
+      s"Derived or Placeholder node has ${children.length} children",
     )
   }
   CompNodeConfig.fromXml(children.head)

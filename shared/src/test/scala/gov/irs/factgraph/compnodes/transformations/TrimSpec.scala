@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class TrimSpec extends AnyFunSpec:
   describe("Trim") {
@@ -16,10 +16,10 @@ class TrimSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "String",
                 Seq.empty,
-                CommonOptionConfigTraits.value("  No mud  ")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("  No mud  "),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[StringNode]
       assert(node.get(0) == Result.Complete(String("No mud")))
@@ -33,10 +33,10 @@ class TrimSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "String",
                 Seq.empty,
-                CommonOptionConfigTraits.value("  No     lotus  ")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("  No     lotus  "),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[StringNode]
       assert(node.get(0) == Result.Complete(String("No lotus")))

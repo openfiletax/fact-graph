@@ -1,20 +1,17 @@
 package gov.irs.factgraph
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.compnodes.*
 import gov.irs.factgraph.definitions.*
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
   FactConfigElement,
-  WritableConfigElement
+  WritableConfigElement,
 }
-import gov.irs.factgraph.definitions.meta.{
-  EnumDeclarationTrait,
-  MetaConfigTrait
-}
-import gov.irs.factgraph.monads.{MaybeVector, Result}
-import gov.irs.factgraph.types.{Collection, CollectionItem}
+import gov.irs.factgraph.definitions.meta.{ EnumDeclarationTrait, MetaConfigTrait }
+import gov.irs.factgraph.monads.{ MaybeVector, Result }
+import gov.irs.factgraph.types.{ Collection, CollectionItem }
+import org.scalatest.funspec.AnyFunSpec
 
 class FactDefinitionSpec extends AnyFunSpec:
   describe("FactDefinition") {
@@ -54,11 +51,11 @@ class FactDefinitionSpec extends AnyFunSpec:
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
+                CommonOptionConfigTraits.value("42"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )
 
         assert(definition.value == IntNode(42))
@@ -76,17 +73,17 @@ class FactDefinitionSpec extends AnyFunSpec:
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
+                CommonOptionConfigTraits.value("42"),
+              ),
             ),
             Some(
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("0")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("0"),
+              ),
+            ),
+          ),
         )
 
         assert(
@@ -94,7 +91,7 @@ class FactDefinitionSpec extends AnyFunSpec:
             case Expression.Binary(source, default, _) =>
               source == Expression.Constant(Some(42)) &&
               default == Expression.Constant(Some(0))
-            case _ => false
+            case _ => false,
         )
       }
 
@@ -103,24 +100,24 @@ class FactDefinitionSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("Int")
+              new WritableConfigElement("Int"),
             ),
             None,
             Some(
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("0")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("0"),
+              ),
+            ),
+          ),
         )
 
         assert(
           definition.value.expr match
             case Expression.Binary(Expression.Writable(_), default, _) =>
               default == Expression.Constant(Some(0))
-            case _ => false
+            case _ => false,
         )
       }
 
@@ -130,17 +127,17 @@ class FactDefinitionSpec extends AnyFunSpec:
             FactConfigElement(
               "/test",
               Some(
-                new WritableConfigElement("Int")
+                new WritableConfigElement("Int"),
               ),
               Some(
                 CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("42")
-                )
+                  CommonOptionConfigTraits.value("42"),
+                ),
               ),
-              None
-            )
+              None,
+            ),
           )
         }
       }
@@ -148,7 +145,7 @@ class FactDefinitionSpec extends AnyFunSpec:
       it("throws an exception if not given a <Writable> or a <Derived>") {
         assertThrows[IllegalArgumentException] {
           FactDefinition.fromConfig(
-            FactConfigElement("/test", None, None, None)
+            FactConfigElement("/test", None, None, None),
           )
         }
       }
@@ -165,18 +162,18 @@ class FactDefinitionSpec extends AnyFunSpec:
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
+                CommonOptionConfigTraits.value("42"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )
 
         it("returns an incomplete result") {
           assert(definition.get == MaybeVector(Result.Incomplete))
           assert(
             definition.getThunk.map(_.get) ==
-              MaybeVector(Result.Incomplete)
+              MaybeVector(Result.Incomplete),
           )
         }
       }
@@ -188,11 +185,11 @@ class FactDefinitionSpec extends AnyFunSpec:
         FactConfigElement(
           "/collection",
           Some(
-            new WritableConfigElement("Collection")
+            new WritableConfigElement("Collection"),
           ),
           None,
-          None
-        )
+          None,
+        ),
       )
 
       FactDefinition.fromConfig(
@@ -203,11 +200,11 @@ class FactDefinitionSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("42")
-            )
+              CommonOptionConfigTraits.value("42"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )
 
       val definition = FactDefinition.fromConfig(
@@ -218,11 +215,11 @@ class FactDefinitionSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Dependency",
               Seq.empty,
-              CommonOptionConfigTraits.path("/collection/*/value")
-            )
+              CommonOptionConfigTraits.path("/collection/*/value"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )
 
       it("returns an empty vector") {
@@ -242,11 +239,11 @@ class FactDefinitionSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("42")
-            )
+              CommonOptionConfigTraits.value("42"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       val sibling = FactDefinition.fromConfig(
         FactConfigElement(
@@ -256,11 +253,11 @@ class FactDefinitionSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("43")
-            )
+              CommonOptionConfigTraits.value("43"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       val child = FactDefinition.fromConfig(
         FactConfigElement(
@@ -270,21 +267,21 @@ class FactDefinitionSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("44")
-            )
+              CommonOptionConfigTraits.value("44"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       val collection = FactDefinition.fromConfig(
         FactConfigElement(
           "/collection",
           Some(
-            new WritableConfigElement("Collection")
+            new WritableConfigElement("Collection"),
           ),
           None,
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       FactDefinition.fromConfig(
@@ -292,10 +289,10 @@ class FactDefinitionSpec extends AnyFunSpec:
           "/collection/*/bool",
           None,
           Some(
-            new CompNodeConfigElement("True")
+            new CompNodeConfigElement("True"),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       FactDefinition.fromConfig(
         FactConfigElement(
@@ -305,12 +302,12 @@ class FactDefinitionSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Not",
               Seq(
-                new CompNodeConfigElement("Dependency", Seq.empty, "../bool")
-              )
-            )
+                new CompNodeConfigElement("Dependency", Seq.empty, "../bool"),
+              ),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )
 
       FactDefinition.fromConfig(
@@ -321,23 +318,23 @@ class FactDefinitionSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Filter",
               Seq(
-                new CompNodeConfigElement("Dependency", Seq.empty, "bool")
+                new CompNodeConfigElement("Dependency", Seq.empty, "bool"),
               ),
-              "/collection"
-            )
+              "/collection",
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       val nestedCollection = FactDefinition.fromConfig(
         FactConfigElement(
           "/collection/*/anotherCollection",
           Some(
-            new WritableConfigElement("Collection")
+            new WritableConfigElement("Collection"),
           ),
           None,
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       val nestedFact = FactDefinition.fromConfig(
         FactConfigElement(
@@ -347,11 +344,11 @@ class FactDefinitionSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("42")
-            )
+              CommonOptionConfigTraits.value("42"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       dictionary.addMeta(new MetaConfigTrait {
         override def version: String = "1"
@@ -407,17 +404,17 @@ class FactDefinitionSpec extends AnyFunSpec:
 
       it("returns an incomplete result if the fact is undefined") {
         assert(
-          definition(Path("child/grandchild")) == MaybeVector(Result.Incomplete)
+          definition(Path("child/grandchild")) == MaybeVector(Result.Incomplete),
         )
         assert(
           definition(
-            Path("child/grandchild/greatgrandchild")
-          ) == MaybeVector(Result.Incomplete)
+            Path("child/grandchild/greatgrandchild"),
+          ) == MaybeVector(Result.Incomplete),
         )
       }
 
       it(
-        "returns an incomplete result if a wildcard is used on a non-collection fact"
+        "returns an incomplete result if a wildcard is used on a non-collection fact",
       ) {
         assert(definition(Path("*")) == MaybeVector(Result.Incomplete))
       }
@@ -435,11 +432,11 @@ class FactDefinitionSpec extends AnyFunSpec:
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
+                CommonOptionConfigTraits.value("42"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val fact = definition.attachToGraph(graph.root, PathItem("test"))
@@ -460,11 +457,11 @@ class FactDefinitionSpec extends AnyFunSpec:
               CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("42")
-              )
+                CommonOptionConfigTraits.value("42"),
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )
 
         assert(definition.asTuple == (definition.path, definition))
@@ -478,11 +475,11 @@ class FactDefinitionSpec extends AnyFunSpec:
             FactConfigElement(
               "/test",
               Some(
-                new WritableConfigElement("Int")
+                new WritableConfigElement("Int"),
               ),
               None,
-              None
-            )
+              None,
+            ),
           )
 
           assert(definition.isWritable)
@@ -499,11 +496,11 @@ class FactDefinitionSpec extends AnyFunSpec:
                 CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("42")
-                )
+                  CommonOptionConfigTraits.value("42"),
+                ),
               ),
-              None
-            )
+              None,
+            ),
           )
 
           assert(!definition.isWritable)

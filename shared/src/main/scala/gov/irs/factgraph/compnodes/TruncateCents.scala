@@ -1,7 +1,7 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait }
 import gov.irs.factgraph.operators.UnaryOperator
 import gov.irs.factgraph.types.Rational
 
@@ -24,17 +24,19 @@ object TruncateCents extends CompNodeFactory:
           s"cannot execute AsDecimalString on a ${node.getClass.getName}",
         )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     CompNode.getConfigChildNode(e) match
       case x: RationalNode => this(x)
-      case _ =>
+      case _               =>
         throw new UnsupportedOperationException(
           s"invalid child type: ${e.typeName}",
         )
 
-private final class TruncateOperator extends UnaryOperator[Rational, Rational]:
+final private class TruncateOperator extends UnaryOperator[Rational, Rational]:
   override protected def operation(x: Rational): Rational =
     val value = (BigDecimal(x.numerator) / BigDecimal(x.denominator))
       .setScale(2, scala.math.BigDecimal.RoundingMode.DOWN)

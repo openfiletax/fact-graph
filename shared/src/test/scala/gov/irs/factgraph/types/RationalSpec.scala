@@ -62,7 +62,7 @@ class RationalSpec extends AnyFunSpec:
 
     describe(".<=") {
       it(
-        "returns true if the left hand side is less than or equal to the right"
+        "returns true if the left hand side is less than or equal to the right",
       ) {
         assert(Rational("2/3") <= Rational("3/4"))
         assert(Rational("2/3") <= Rational("2/3"))
@@ -72,7 +72,7 @@ class RationalSpec extends AnyFunSpec:
 
     describe(".>=") {
       it(
-        "returns true if the left hand side is greater than or equal to the right"
+        "returns true if the left hand side is greater than or equal to the right",
       ) {
         assert(!(Rational("2/3") >= Rational("3/4")))
         assert(Rational("2/3") >= Rational("2/3"))

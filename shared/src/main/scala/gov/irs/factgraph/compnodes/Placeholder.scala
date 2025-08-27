@@ -1,10 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Explanation, Expression, FactDictionary, Factual}
-import gov.irs.factgraph.monads.{MaybeVector, Result, Thunk}
+import gov.irs.factgraph.{ Explanation, Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
+import gov.irs.factgraph.monads.{ MaybeVector, Result, Thunk }
 import gov.irs.factgraph.operators.BinaryOperator
-
 import scala.annotation.unused
 
 object Placeholder extends CompNodeFactory:
@@ -29,7 +28,9 @@ object Placeholder extends CompNodeFactory:
       ),
     )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val source = CompNode.getConfigChildNode(e, "Source")
@@ -47,7 +48,7 @@ object Placeholder extends CompNodeFactory:
       case _ =>
         false
 
-private final class PlaceholderOperator[A] extends BinaryOperator[A, A, A]:
+final private class PlaceholderOperator[A] extends BinaryOperator[A, A, A]:
   protected def operation(lhs: A, rhs: A): A = ???
 
   override def apply(lhs: Result[A], rhs: Thunk[Result[A]]): Result[A] =

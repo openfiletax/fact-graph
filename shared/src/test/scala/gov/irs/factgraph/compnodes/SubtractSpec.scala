@@ -1,10 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.*
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class SubtractSpec extends AnyFunSpec:
   describe("Subtract") {
@@ -19,9 +19,9 @@ class SubtractSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("12")
-                )
-              )
+                  CommonOptionConfigTraits.value("12"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Subtrahends",
@@ -29,22 +29,22 @@ class SubtractSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1")
+                  CommonOptionConfigTraits.value("1"),
                 ),
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("2")
+                  CommonOptionConfigTraits.value("2"),
                 ),
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("3")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("3"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(6))
@@ -61,9 +61,9 @@ class SubtractSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Rational",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("2/1")
-                )
-              )
+                  CommonOptionConfigTraits.value("2/1"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Subtrahends",
@@ -71,22 +71,22 @@ class SubtractSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Rational",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1/2")
+                  CommonOptionConfigTraits.value("1/2"),
                 ),
                 new CompNodeConfigElement(
                   "Rational",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("2/3")
+                  CommonOptionConfigTraits.value("2/3"),
                 ),
                 new CompNodeConfigElement(
                   "Rational",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("3/4")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("3/4"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(Rational("1/12")))
@@ -103,9 +103,9 @@ class SubtractSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Dollar",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("15.00")
-                )
-              )
+                  CommonOptionConfigTraits.value("15.00"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Subtrahends",
@@ -113,22 +113,22 @@ class SubtractSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Dollar",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1.23")
+                  CommonOptionConfigTraits.value("1.23"),
                 ),
                 new CompNodeConfigElement(
                   "Dollar",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("4.56")
+                  CommonOptionConfigTraits.value("4.56"),
                 ),
                 new CompNodeConfigElement(
                   "Dollar",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("7.89")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("7.89"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(Dollar("1.32")))
@@ -145,9 +145,9 @@ class SubtractSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("40")
-                )
-              )
+                  CommonOptionConfigTraits.value("40"),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Subtrahends",
@@ -155,52 +155,52 @@ class SubtractSpec extends AnyFunSpec:
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("0")
+                  CommonOptionConfigTraits.value("0"),
                 ),
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("1")
+                  CommonOptionConfigTraits.value("1"),
                 ),
                 new CompNodeConfigElement(
                   "Rational",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("0/1")
+                  CommonOptionConfigTraits.value("0/1"),
                 ),
                 new CompNodeConfigElement(
                   "Rational",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("2/3")
+                  CommonOptionConfigTraits.value("2/3"),
                 ),
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("4")
+                  CommonOptionConfigTraits.value("4"),
                 ),
                 new CompNodeConfigElement(
                   "Dollar",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("5.67")
+                  CommonOptionConfigTraits.value("5.67"),
                 ),
                 new CompNodeConfigElement(
                   "Rational",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("8/9")
+                  CommonOptionConfigTraits.value("8/9"),
                 ),
                 new CompNodeConfigElement(
                   "Dollar",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("10.11")
+                  CommonOptionConfigTraits.value("10.11"),
                 ),
                 new CompNodeConfigElement(
                   "Int",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("12")
-                )
-              )
-            )
-          )
-        )
+                  CommonOptionConfigTraits.value("12"),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(Dollar("5.66")))
@@ -218,9 +218,9 @@ class SubtractSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Int",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("1")
-                  )
-                )
+                    CommonOptionConfigTraits.value("1"),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Subtrahends",
@@ -228,12 +228,12 @@ class SubtractSpec extends AnyFunSpec:
                   CompNodeConfigElement(
                     "Rational",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("2/3")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("2/3"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
 
         assert(node.get(0) == Result.Complete(Rational("1/3")))
@@ -252,9 +252,9 @@ class SubtractSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Int",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("5")
-                  )
-                )
+                    CommonOptionConfigTraits.value("5"),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Subtrahends",
@@ -262,12 +262,12 @@ class SubtractSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Dollar",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("2.34")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("2.34"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
 
         assert(node.get(0) == Result.Complete(Dollar("2.66")))
@@ -286,9 +286,9 @@ class SubtractSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Rational",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("5/4")
-                  )
-                )
+                    CommonOptionConfigTraits.value("5/4"),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Subtrahends",
@@ -296,12 +296,12 @@ class SubtractSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Dollar",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("1.23")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("1.23"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
 
         assert(node.get(0) == Result.Complete(Dollar("0.02")))
@@ -319,9 +319,9 @@ class SubtractSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Day",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("2024-01-10")
-                  )
-                )
+                    CommonOptionConfigTraits.value("2024-01-10"),
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Subtrahends",
@@ -329,12 +329,12 @@ class SubtractSpec extends AnyFunSpec:
                   new CompNodeConfigElement(
                     "Days",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("1")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("1"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
 
         assert(node.get(0) == Result.Complete(Day("2024-01-09")))
@@ -354,9 +354,9 @@ class SubtractSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "String",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("Hello")
-                    )
-                  )
+                      CommonOptionConfigTraits.value("Hello"),
+                    ),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "Subtrahends",
@@ -364,12 +364,12 @@ class SubtractSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "String",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("World")
-                    )
-                  )
-                )
-              )
-            )
+                      CommonOptionConfigTraits.value("World"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           )
         }
       }
@@ -388,9 +388,9 @@ class SubtractSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "Int",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("3")
-                    )
-                  )
+                      CommonOptionConfigTraits.value("3"),
+                    ),
+                  ),
                 ),
                 new CompNodeConfigElement(
                   "Subtrahends",
@@ -398,12 +398,12 @@ class SubtractSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "String",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("Stooges")
-                    )
-                  )
-                )
-              )
-            )
+                      CommonOptionConfigTraits.value("Stooges"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           )
         }
       }

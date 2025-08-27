@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class Floor extends AnyFunSpec:
   describe("Floor") {
@@ -35,7 +35,6 @@ class Floor extends AnyFunSpec:
             ),
           ),
         )
-
 
       assert(node.get(0) == Result.Complete(0))
       assert(integerNode.get(0) == Result.Complete(1))
@@ -69,7 +68,6 @@ class Floor extends AnyFunSpec:
             ),
           ),
         )
-
 
       assert(node.get(0) == Result.Complete(-1))
       assert(integerNode.get(0) == Result.Complete(-1))

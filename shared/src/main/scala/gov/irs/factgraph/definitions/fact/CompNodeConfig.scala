@@ -3,7 +3,6 @@ package gov.irs.factgraph.definitions.fact
 import gov.irs.factgraph.exceptions.FactGraphValidationException
 import org.w3c.dom.Node
 
-
 case class CompNodeConfig(
     typeName: String,
     children: Iterable[CompNodeConfigTrait],

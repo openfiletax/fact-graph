@@ -1,8 +1,8 @@
 package gov.irs.factgraph.types
 
-import scala.util.matching.Regex
 import gov.irs.factgraph.util.Math
-import scala.scalajs.js.annotation.{JSExportTopLevel, JSExport, JSExportAll}
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
+import scala.util.matching.Regex
 import upickle.default.ReadWriter
 
 @JSExportTopLevel("Rational")
@@ -50,7 +50,7 @@ object Rational:
   def apply(str: String): Rational =
     Numeric[Rational].parseString(str) match
       case Some(x) => x
-      case None =>
+      case None    =>
         throw new NumberFormatException(s"""For input string: "$str"""")
 
   implicit object RationalIsFractional extends Fractional[Rational]:

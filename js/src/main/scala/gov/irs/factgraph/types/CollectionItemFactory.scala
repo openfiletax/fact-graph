@@ -1,7 +1,7 @@
 package gov.irs.factgraph.types
-import scala.scalajs.js
 import gov.irs.factgraph.types.CollectionItem
 import java.util.UUID
+import scala.scalajs.js
 
 object CollectionItemFactory:
   @js.annotation.JSExportTopLevel("CollectionItemFactory")

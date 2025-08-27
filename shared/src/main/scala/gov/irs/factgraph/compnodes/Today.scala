@@ -1,12 +1,12 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
-import gov.irs.factgraph.operators.UnaryOperator
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.operators.UnaryOperator
 import gov.irs.factgraph.types.Day
-import java.time.ZoneId
 import java.time.LocalDate
+import java.time.ZoneId
 
 object Today extends CompNodeFactory:
   override val Key: String = "Today"
@@ -21,23 +21,25 @@ object Today extends CompNodeFactory:
       ),
     )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     CompNode.getConfigChildNode(e) match
       case x: IntNode => this(x)
-      case _ =>
+      case _          =>
         throw new UnsupportedOperationException(
           s"invalid child type: ${e.typeName}",
         )
-private final class TodayOperator extends UnaryOperator[Day, Int]:
+final private class TodayOperator extends UnaryOperator[Day, Int]:
   override protected def operation(x: Int): Day = ???
 
   override def apply(offsetDep: Result[Int]): Result[Day] =
     val offset = offsetDep match
       case Result.Complete(v)    => v
       case Result.Placeholder(v) => v
-      case Result.Incomplete =>
+      case Result.Incomplete     =>
         throw new IllegalArgumentException(
           s"Today's offset must be complete",
         )

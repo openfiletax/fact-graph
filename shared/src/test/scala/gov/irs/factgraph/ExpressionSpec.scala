@@ -1,18 +1,17 @@
 package gov.irs.factgraph
 
-import org.scalatest.funspec.AnyFunSpec
+import gov.irs.factgraph.compnodes.given_FactDictionary
 import gov.irs.factgraph.compnodes.IntNode
 import gov.irs.factgraph.definitions.*
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
   FactConfigElement,
-  WritableConfigElement
+  WritableConfigElement,
 }
-import gov.irs.factgraph.operators.UnaryOperator
 import gov.irs.factgraph.monads.Result
-import gov.irs.factgraph.compnodes.given_FactDictionary
-
+import gov.irs.factgraph.operators.UnaryOperator
+import org.scalatest.funspec.AnyFunSpec
 import scala.annotation.unused
 
 class ExpressionSpec extends AnyFunSpec:
@@ -38,8 +37,8 @@ class ExpressionSpec extends AnyFunSpec:
           "/test",
           Some(new WritableConfigElement("Int")),
           None,
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)
@@ -94,11 +93,11 @@ class ExpressionSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("42")
-            )
+              CommonOptionConfigTraits.value("42"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )
 
       describe(".get") {
@@ -108,10 +107,10 @@ class ExpressionSpec extends AnyFunSpec:
               List(
                 (
                   Expression.Constant(Some(false)),
-                  Expression.Constant(Some(1))
+                  Expression.Constant(Some(1)),
                 ),
-                (completeExpr, Expression.Constant(Some(2)))
-              )
+                (completeExpr, Expression.Constant(Some(2))),
+              ),
             )
 
             assert(expr.get(0) == Result.Complete(2))
@@ -119,14 +118,14 @@ class ExpressionSpec extends AnyFunSpec:
         }
 
         describe(
-          "when there is a placeholder, false case before a complete, true case"
+          "when there is a placeholder, false case before a complete, true case",
         ) {
           it("returns the true case, but marks the result as a placeholder") {
             val expr = Expression.Switch(
               List(
                 (placeholderFalseExpr, Expression.Constant(Some(1))),
-                (completeExpr, Expression.Constant(Some(2)))
-              )
+                (completeExpr, Expression.Constant(Some(2))),
+              ),
             )
 
             assert(expr.get(0) == Result.Placeholder(2))
@@ -134,14 +133,14 @@ class ExpressionSpec extends AnyFunSpec:
         }
 
         describe(
-          "when there is an incomplete case before a complete, true case"
+          "when there is an incomplete case before a complete, true case",
         ) {
           it("returns the true case, but marks the result as a placeholder") {
             val expr = Expression.Switch(
               List(
                 (incompleteExpr, Expression.Constant(Some(1))),
-                (completeExpr, Expression.Constant(Some(2)))
-              )
+                (completeExpr, Expression.Constant(Some(2))),
+              ),
             )
 
             assert(expr.get(0) == Result.Placeholder(2))
@@ -149,20 +148,20 @@ class ExpressionSpec extends AnyFunSpec:
         }
 
         describe(
-          "when there is a placeholder, true case before a complete, true case"
+          "when there is a placeholder, true case before a complete, true case",
         ) {
           it(
-            "returns the placeholder case, and marks the result as a placeholder"
+            "returns the placeholder case, and marks the result as a placeholder",
           ) {
             val expr = Expression.Switch(
               List(
                 (
                   Expression.Constant(Some(false)),
-                  Expression.Constant(Some(1))
+                  Expression.Constant(Some(1)),
                 ),
                 (placeholderExpr, Expression.Constant(Some(2))),
-                (completeExpr, Expression.Constant(Some(3)))
-              )
+                (completeExpr, Expression.Constant(Some(3))),
+              ),
             )
 
             assert(expr.get(0) == Result.Placeholder(2))
@@ -175,10 +174,10 @@ class ExpressionSpec extends AnyFunSpec:
               List(
                 (
                   Expression.Constant(Some(false)),
-                  Expression.Constant(Some(1))
+                  Expression.Constant(Some(1)),
                 ),
-                (Expression.Constant(Some(false)), Expression.Constant(Some(2)))
-              )
+                (Expression.Constant(Some(false)), Expression.Constant(Some(2))),
+              ),
             )
 
             assert(expr.get(0) == Result.Incomplete)
@@ -195,10 +194,10 @@ class ExpressionSpec extends AnyFunSpec:
               List(
                 (
                   Expression.Constant(Some(false)),
-                  Expression.Constant(Some(1))
+                  Expression.Constant(Some(1)),
                 ),
-                (canaryExpr { canary = true }, Expression.Constant(Some(2)))
-              )
+                (canaryExpr { canary = true }, Expression.Constant(Some(2))),
+              ),
             )
             .getThunk(0)
 
@@ -212,20 +211,20 @@ class ExpressionSpec extends AnyFunSpec:
       describe(".explain") {
         describe("when there is a complete, true case") {
           it(
-            "explains all the predicates prior to that case, and the selected result"
+            "explains all the predicates prior to that case, and the selected result",
           ) {
             val expr = Expression.Switch(
               List(
                 (
                   Expression.Constant(Some(false)),
-                  Expression.Constant(Some(1))
+                  Expression.Constant(Some(1)),
                 ),
                 (completeExpr, Expression.Constant(Some(2))),
                 (
                   Expression.Constant(Some(false)),
-                  Expression.Constant(Some(3))
-                )
-              )
+                  Expression.Constant(Some(3)),
+                ),
+              ),
             )
 
             assert(
@@ -234,31 +233,31 @@ class ExpressionSpec extends AnyFunSpec:
                   List(Explanation.Constant /*false*/ ),
                   List(
                     Explanation.Constant /*true*/,
-                    Explanation.Constant /*2*/
-                  )
-                )
-              )
+                    Explanation.Constant, /*2*/
+                  ),
+                ),
+              ),
             )
           }
         }
 
         describe(
-          "when there is a placeholder, false case before a complete, true case"
+          "when there is a placeholder, false case before a complete, true case",
         ) {
           it("explains only the incomplete predicate, not the placeholders") {
             val expr = Expression.Switch(
               List(
                 (placeholderFalseExpr, Expression.Constant(Some(1))),
-                (completeExpr, Expression.Constant(Some(2)))
-              )
+                (completeExpr, Expression.Constant(Some(2))),
+              ),
             )
 
             assert(
               expr.explain(0) == Explanation.Operation(
                 List(
-                  List(Explanation.Operation(List(List(Explanation.Constant))))
-                )
-              )
+                  List(Explanation.Operation(List(List(Explanation.Constant)))),
+                ),
+              ),
             )
           }
         }
@@ -269,19 +268,19 @@ class ExpressionSpec extends AnyFunSpec:
               List(
                 (
                   Expression.Constant(Some(false)),
-                  Expression.Constant(Some(1))
+                  Expression.Constant(Some(1)),
                 ),
-                (Expression.Constant(Some(false)), Expression.Constant(Some(2)))
-              )
+                (Expression.Constant(Some(false)), Expression.Constant(Some(2))),
+              ),
             )
 
             assert(
               expr.explain(0) == Explanation.Operation(
                 List(
                   List(Explanation.Constant /*false*/ ),
-                  List(Explanation.Constant /*false*/ )
-                )
-              )
+                  List(Explanation.Constant /*false*/ ),
+                ),
+              ),
             )
           }
         }
@@ -298,11 +297,11 @@ class ExpressionSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("42")
-            )
+              CommonOptionConfigTraits.value("42"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       FactDefinition.fromConfig(
@@ -313,11 +312,11 @@ class ExpressionSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("0")
-            )
+              CommonOptionConfigTraits.value("0"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)
@@ -355,8 +354,8 @@ class ExpressionSpec extends AnyFunSpec:
               true,
               Path("/placeholder"),
               Path("../value"),
-              List(List(Explanation.Constant))
-            )
+              List(List(Explanation.Constant)),
+            ),
           )
         }
 
@@ -367,14 +366,14 @@ class ExpressionSpec extends AnyFunSpec:
               false,
               Path("/placeholder"),
               Path("../missing"),
-              List()
-            )
+              List(),
+            ),
           )
         }
       }
 
       describe(
-        "when the dependency navigates via a placeholder fact reference"
+        "when the dependency navigates via a placeholder fact reference",
       ) {
         describe(".get") {
           it("marks the result as a placeholder") {} // TODO
@@ -397,11 +396,11 @@ class ExpressionSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("42")
-            )
+              CommonOptionConfigTraits.value("42"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       FactDefinition.fromConfig(
         FactConfigElement(
@@ -411,11 +410,11 @@ class ExpressionSpec extends AnyFunSpec:
             CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("0")
-            )
+              CommonOptionConfigTraits.value("0"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)

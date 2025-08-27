@@ -1,7 +1,7 @@
 package gov.irs.factgraph.persisters
 import gov.irs.factgraph.types.WritableType
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import scala.scalajs.js
+import scala.scalajs.js.annotation.{ JSExport, JSExportTopLevel }
 
 @JSExportTopLevel("JSPersister")
 object InMemoryPersisterJS:

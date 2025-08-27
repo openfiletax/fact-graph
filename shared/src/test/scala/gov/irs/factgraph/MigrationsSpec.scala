@@ -1,9 +1,9 @@
 package gov.irs.factgraph
 
 import gov.irs.factgraph.compnodes.IntNode
-import gov.irs.factgraph.definitions.fact.{FactConfigElement, WritableConfigElement}
-import gov.irs.factgraph.persisters.{InMemoryPersister, IntWrapper}
-import gov.irs.factgraph.types.{Address, AddressValidationFailure}
+import gov.irs.factgraph.definitions.fact.{ FactConfigElement, WritableConfigElement }
+import gov.irs.factgraph.persisters.{ InMemoryPersister, IntWrapper }
+import gov.irs.factgraph.types.{ Address, AddressValidationFailure }
 import org.scalatest.funspec.AnyFunSpec
 
 class MigrationsSpec extends AnyFunSpec {
@@ -17,7 +17,8 @@ class MigrationsSpec extends AnyFunSpec {
       val persister = InMemoryPersister(jsonFactGraph)
 
       val testFact = persister.store(Path("/test")).asInstanceOf[Int]
-      val expectedSerialization = """{"/test":{"$type":"IntWrapper","item":42},"/meta/migrationsApplied":{"$type":"IntWrapper","item":2}}"""
+      val expectedSerialization =
+        """{"/test":{"$type":"IntWrapper","item":42},"/meta/migrationsApplied":{"$type":"IntWrapper","item":2}}"""
       assert(testFact == 42)
       assert(persister.toJson() == expectedSerialization)
     }

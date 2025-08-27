@@ -1,16 +1,11 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
-import gov.irs.factgraph.monads.Result
-import gov.irs.factgraph.types.{Collection, CollectionItem}
 import gov.irs.factgraph.*
-import gov.irs.factgraph.definitions.fact.{
-  CompNodeConfigElement,
-  FactConfigElement,
-  WritableConfigElement
-}
-
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigElement, FactConfigElement, WritableConfigElement }
+import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.types.{ Collection, CollectionItem }
 import java.util.UUID
+import org.scalatest.funspec.AnyFunSpec
 
 class FindSpec extends AnyFunSpec:
   describe("Find") {
@@ -23,13 +18,13 @@ class FindSpec extends AnyFunSpec:
           new CompNodeConfigElement(
             "Find",
             Seq(
-              new CompNodeConfigElement("Dependency", Seq.empty, "bool")
+              new CompNodeConfigElement("Dependency", Seq.empty, "bool"),
             ),
-            "/collection"
-          )
+            "/collection",
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -37,8 +32,8 @@ class FindSpec extends AnyFunSpec:
         "/collection",
         Some(new WritableConfigElement("Collection")),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -46,8 +41,8 @@ class FindSpec extends AnyFunSpec:
         "/collection/*/bool",
         Some(new WritableConfigElement("Boolean")),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -55,8 +50,8 @@ class FindSpec extends AnyFunSpec:
         "/collection/*/string",
         Some(new WritableConfigElement("String")),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     val graph = Graph(dictionary)
@@ -108,10 +103,10 @@ class FindSpec extends AnyFunSpec:
             "/anotherTest",
             None,
             Some(
-              new CompNodeConfigElement("Find", Seq.empty, "/fakeCollection")
+              new CompNodeConfigElement("Find", Seq.empty, "/fakeCollection"),
             ),
-            None
-          )
+            None,
+          ),
         )
 
         definition.meta
@@ -128,13 +123,13 @@ class FindSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Find",
                 Seq(
-                  new CompNodeConfigElement("Dependency", Seq.empty, "string")
+                  new CompNodeConfigElement("Dependency", Seq.empty, "string"),
                 ),
-                "/collection"
-              )
+                "/collection",
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         definition.meta

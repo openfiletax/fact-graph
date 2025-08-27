@@ -1,24 +1,22 @@
 package gov.irs.factgraph.persisters
 
-import gov.irs.factgraph.Fact
-import gov.irs.factgraph.Path
-import gov.irs.factgraph.Migrations
-import gov.irs.factgraph.PersisterSyncIssue
-import gov.irs.factgraph.types._
+import gov.irs.factgraph.compnodes.{ BooleanNode, CompNode, DollarNode, IntNode, StringNode }
 import gov.irs.factgraph.definitions.fact.LimitLevel
 import gov.irs.factgraph.limits.LimitViolation
 import gov.irs.factgraph.monads.Result
-import gov.irs.factgraph.compnodes.{CompNode, BooleanNode, DollarNode, IntNode, StringNode}
-
+import gov.irs.factgraph.types._
+import gov.irs.factgraph.Fact
+import gov.irs.factgraph.FactDictionary
+import gov.irs.factgraph.Graph
+import gov.irs.factgraph.Migrations
+import gov.irs.factgraph.Path
+import gov.irs.factgraph.PersisterSyncIssue
+import java.util.UUID
 import scala.collection.mutable
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
-import upickle.default.{write, read}
-import gov.irs.factgraph.Graph
-import gov.irs.factgraph.FactDictionary
+import scala.scalajs.js.annotation.{ JSExport, JSExportTopLevel }
 import ujson.Value
-
-import java.util.UUID;
+import upickle.default.{ read, write };
 
 final class InMemoryPersister(var store: Map[Path, WritableType]) extends Persister:
   private val live = mutable.Map[Path, WritableType]() ++= store
@@ -66,7 +64,7 @@ final class InMemoryPersister(var store: Map[Path, WritableType]) extends Persis
       graph: Graph,
   ) =
     path.getMemberId match
-      case None => false
+      case None     => false
       case Some(id) =>
         !graph
           .getCollectionPaths(path.asAbstract.toString)
@@ -137,41 +135,40 @@ final class InMemoryPersister(var store: Map[Path, WritableType]) extends Persis
         (true, None)
 
   override def syncWithDictionary(graph: Graph): Seq[PersisterSyncIssue] =
-    val results = live.flatMap((path, writableType) => {
-        val dictionaryPath = path.isCollectionMember match
-          case true => path.asAbstract
-          case false => path
+    val results = live.flatMap { (path, writableType) =>
+      val dictionaryPath = path.isCollectionMember match
+        case true  => path.asAbstract
+        case false => path
 
-        val (keepFact, optionalMessage) =
-          if (pathHasBadItemId(path, graph))
-            (false, Some("Removed bad item ID path from persister"))
-          else if (!pathExistsAndIsWritable(dictionaryPath, graph.dictionary))
-            (false, Some("Removed unknown or non-writable path from persister"))
-          else
-            writableType match
-              case _: WritableType =>
-                checkTypeMapping(
-                  writableType,
-                  graph.dictionary(dictionaryPath).get.value.getClass,
-                )
-
-        if (keepFact)
-          val toWrite = writableType match
-            case _ => writableType
-          graph.set(path, toWrite)
-          if (optionalMessage.nonEmpty)
-            Some(PersisterSyncIssue(path.toString, optionalMessage.get))
-          else None
+      val (keepFact, optionalMessage) =
+        if (pathHasBadItemId(path, graph))
+          (false, Some("Removed bad item ID path from persister"))
+        else if (!pathExistsAndIsWritable(dictionaryPath, graph.dictionary))
+          (false, Some("Removed unknown or non-writable path from persister"))
         else
-          live -= path
-          Some(
-            PersisterSyncIssue(
-              path.toString,
-              optionalMessage.getOrElse("Description is missing for this error"),
-            ),
-          )
-      })
-      .toSeq
+          writableType match
+            case _: WritableType =>
+              checkTypeMapping(
+                writableType,
+                graph.dictionary(dictionaryPath).get.value.getClass,
+              )
+
+      if (keepFact)
+        val toWrite = writableType match
+          case _ => writableType
+        graph.set(path, toWrite)
+        if (optionalMessage.nonEmpty)
+          Some(PersisterSyncIssue(path.toString, optionalMessage.get))
+        else None
+      else
+        live -= path
+        Some(
+          PersisterSyncIssue(
+            path.toString,
+            optionalMessage.getOrElse("Description is missing for this error"),
+          ),
+        )
+    }.toSeq
 
     save()
     results

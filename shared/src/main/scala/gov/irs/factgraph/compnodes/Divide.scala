@@ -1,11 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.types.{*, given}
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
-import gov.irs.factgraph.operators.{BinaryOperator, ReduceOperator}
+import gov.irs.factgraph.operators.{ BinaryOperator, ReduceOperator }
+import gov.irs.factgraph.types.{ *, given }
 import gov.irs.factgraph.util.Seq.itemsHaveSameRuntimeClass
-
 import scala.annotation.unused
 
 object Divide extends CompNodeFactory:
@@ -17,7 +16,9 @@ object Divide extends CompNodeFactory:
     else
       nodes.reduceLeft(binaryDivide)
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val dividend = CompNode.getConfigChildNode(e, "Dividend")
@@ -127,7 +128,7 @@ object Divide extends CompNodeFactory:
           s"cannot Divide a ${lhs.getClass.getName} and a ${rhs.getClass.getName}",
         )
 
-private final class DivideReduceOperator[A: Fractional] extends ReduceOperator[A]:
+final private class DivideReduceOperator[A: Fractional] extends ReduceOperator[A]:
   override protected def reduce(x: A, y: A): A = Fractional[A].div(x, y)
 
 @unused

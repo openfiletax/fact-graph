@@ -1,8 +1,8 @@
 package gov.irs.factgraph.compnodes
 
-import scala.collection.mutable
-import gov.irs.factgraph.{FactDictionary, Factual}
+import gov.irs.factgraph.{ FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.WritableConfigTrait
+import scala.collection.mutable
 
 object WritableNode:
   // Note: When adding your type here, also remember to add its
@@ -33,7 +33,9 @@ object WritableNode:
 
   def register(n: WritableNodeFactory): Unit = nodes(n.Key) = n
 
-  def fromConfig(e: WritableConfigTrait)(using Factual)(using
+  def fromConfig(e: WritableConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val factory = nodes.getOrElse(

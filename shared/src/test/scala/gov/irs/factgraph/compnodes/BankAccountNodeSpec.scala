@@ -1,18 +1,17 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
+import gov.irs.factgraph.compnodes.BankAccountNode
 import gov.irs.factgraph.definitions.fact.*
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.BankAccount
-
-import gov.irs.factgraph.compnodes.BankAccountNode
 import gov.irs.factgraph.types.BankAccountValidationFailure
+import org.scalatest.funspec.AnyFunSpec
 class BankAccountNodeSpec extends AnyFunSpec:
   def buildBankAccount(
       accountType: String = "Checking",
       routingNumber: String = "323075880", // DC Credit Union
-      accountNumber: String = "12345"
+      accountNumber: String = "12345",
   ) =
     new BankAccount(accountType, routingNumber, accountNumber)
 
@@ -24,7 +23,7 @@ class BankAccountNodeSpec extends AnyFunSpec:
         val node = buildNode()
 
         assert(
-          node.get(0) == Result.Complete(buildBankAccount())
+          node.get(0) == Result.Complete(buildBankAccount()),
         )
       }
     }
@@ -33,13 +32,13 @@ class BankAccountNodeSpec extends AnyFunSpec:
       it("can create a new node with an expression") {
         val node = BankAccountNode(Expression.Constant(None))
         val newNode = node.fromExpression(
-          Expression.Constant(Some(buildBankAccount()))
+          Expression.Constant(Some(buildBankAccount())),
         )
 
         assert(
           newNode.get(0) == Result.Complete(
-            buildBankAccount()
-          )
+            buildBankAccount(),
+          ),
         )
       }
     }
@@ -51,11 +50,11 @@ class BankAccountNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("BankAccount")
+              new WritableConfigElement("BankAccount"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         Graph(dictionary)

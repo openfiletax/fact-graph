@@ -1,19 +1,16 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.definitions.fact.{
-  CommonOptionConfigTraits,
-  CompNodeConfigElement
-}
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.{
-  Explanation,
-  FactDictionary,
   canaryExpr,
   incompleteExpr,
   placeholderExpr,
-  placeholderFalseExpr
+  placeholderFalseExpr,
+  Explanation,
+  FactDictionary,
 }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigElement }
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class AnySpec extends AnyFunSpec:
   describe("Any") {
@@ -23,8 +20,8 @@ class AnySpec extends AnyFunSpec:
         Seq(
           new CompNodeConfigElement("False"),
           new CompNodeConfigElement("False"),
-          new CompNodeConfigElement("True")
-        )
+          new CompNodeConfigElement("True"),
+        ),
       )
       val node = CompNode.fromDerivedConfig(config)
       assert(node.get(0) == Result.Complete(true))
@@ -36,8 +33,8 @@ class AnySpec extends AnyFunSpec:
         Seq(
           new CompNodeConfigElement("False"),
           new CompNodeConfigElement("False"),
-          new CompNodeConfigElement("False")
-        )
+          new CompNodeConfigElement("False"),
+        ),
       )
       val node = CompNode.fromDerivedConfig(config)
       assert(node.get(0) == Result.Complete(false))
@@ -51,8 +48,8 @@ class AnySpec extends AnyFunSpec:
           BooleanNode(true),
           BooleanNode(canaryExpr {
             canary = true
-          })
-        )
+          }),
+        ),
       ).get(0)
 
       assert(!canary)
@@ -63,8 +60,8 @@ class AnySpec extends AnyFunSpec:
           BooleanNode(true),
           BooleanNode(canaryExpr {
             canary = true
-          })
-        )
+          }),
+        ),
       ).get(0)
     }
 
@@ -72,8 +69,8 @@ class AnySpec extends AnyFunSpec:
       val test1 = Any(
         List(
           BooleanNode(incompleteExpr),
-          BooleanNode(true)
-        )
+          BooleanNode(true),
+        ),
       ).get(0)
 
       assert(test1 == Result.Complete(true))
@@ -83,8 +80,8 @@ class AnySpec extends AnyFunSpec:
           BooleanNode(incompleteExpr),
           BooleanNode(incompleteExpr),
           BooleanNode(placeholderExpr),
-          BooleanNode(incompleteExpr)
-        )
+          BooleanNode(incompleteExpr),
+        ),
       ).get(0)
 
       assert(test2 == Result.Placeholder(true))
@@ -93,8 +90,8 @@ class AnySpec extends AnyFunSpec:
         List(
           BooleanNode(incompleteExpr),
           BooleanNode(incompleteExpr),
-          BooleanNode(incompleteExpr)
-        )
+          BooleanNode(incompleteExpr),
+        ),
       ).get(0)
 
       assert(test3 == Result.Incomplete)
@@ -104,8 +101,8 @@ class AnySpec extends AnyFunSpec:
       val test1 = Any(
         List(
           BooleanNode(false),
-          BooleanNode(incompleteExpr)
-        )
+          BooleanNode(incompleteExpr),
+        ),
       ).get(0)
 
       assert(test1 == Result.Incomplete)
@@ -113,8 +110,8 @@ class AnySpec extends AnyFunSpec:
       val test2 = Any(
         List(
           BooleanNode(incompleteExpr),
-          BooleanNode(false)
-        )
+          BooleanNode(false),
+        ),
       ).get(0)
 
       assert(test2 == Result.Incomplete)
@@ -124,8 +121,8 @@ class AnySpec extends AnyFunSpec:
       val test1 = Any(
         List(
           BooleanNode(placeholderFalseExpr),
-          BooleanNode(incompleteExpr)
-        )
+          BooleanNode(incompleteExpr),
+        ),
       ).get(0)
 
       assert(test1 == Result.Incomplete)
@@ -133,21 +130,21 @@ class AnySpec extends AnyFunSpec:
       val test2 = Any(
         List(
           BooleanNode(incompleteExpr),
-          BooleanNode(placeholderFalseExpr)
-        )
+          BooleanNode(placeholderFalseExpr),
+        ),
       ).get(0)
 
       assert(test2 == Result.Incomplete)
     }
 
     it(
-      "evaluates (Placeholder(False), Complete(False)) to Placeholder(False)"
+      "evaluates (Placeholder(False), Complete(False)) to Placeholder(False)",
     ) {
       val test1 = Any(
         List(
           BooleanNode(placeholderFalseExpr),
-          BooleanNode(false)
-        )
+          BooleanNode(false),
+        ),
       ).get(0)
 
       assert(test1 == Result.Placeholder(false))
@@ -155,21 +152,21 @@ class AnySpec extends AnyFunSpec:
       val test2 = Any(
         List(
           BooleanNode(false),
-          BooleanNode(placeholderFalseExpr)
-        )
+          BooleanNode(placeholderFalseExpr),
+        ),
       ).get(0)
 
       assert(test2 == Result.Placeholder(false))
     }
 
     it(
-      "evaluates (Placeholder(False), Placeholder(False)) to Placeholder(False)"
+      "evaluates (Placeholder(False), Placeholder(False)) to Placeholder(False)",
     ) {
       val test1 = Any(
         List(
           BooleanNode(placeholderFalseExpr),
-          BooleanNode(placeholderFalseExpr)
-        )
+          BooleanNode(placeholderFalseExpr),
+        ),
       ).get(0)
 
       assert(test1 == Result.Placeholder(false))
@@ -179,8 +176,8 @@ class AnySpec extends AnyFunSpec:
       val test1 = Any(
         List(
           BooleanNode(false),
-          BooleanNode(false)
-        )
+          BooleanNode(false),
+        ),
       ).get(0)
 
       assert(test1 == Result.Complete(false))
@@ -190,8 +187,8 @@ class AnySpec extends AnyFunSpec:
       val test1 = Any(
         List(
           BooleanNode(placeholderExpr),
-          BooleanNode(incompleteExpr)
-        )
+          BooleanNode(incompleteExpr),
+        ),
       ).get(0)
 
       assert(test1 == Result.Placeholder(true))
@@ -199,21 +196,21 @@ class AnySpec extends AnyFunSpec:
       val test2 = Any(
         List(
           BooleanNode(incompleteExpr),
-          BooleanNode(placeholderExpr)
-        )
+          BooleanNode(placeholderExpr),
+        ),
       ).get(0)
 
       assert(test2 == Result.Placeholder(true))
     }
 
     it(
-      "evaluates (Placeholder(True), Placeholder(False)) to Placeholder(True)"
+      "evaluates (Placeholder(True), Placeholder(False)) to Placeholder(True)",
     ) {
       val test1 = Any(
         List(
           BooleanNode(placeholderExpr),
-          BooleanNode(placeholderFalseExpr)
-        )
+          BooleanNode(placeholderFalseExpr),
+        ),
       ).get(0)
 
       assert(test1 == Result.Placeholder(true))
@@ -221,8 +218,8 @@ class AnySpec extends AnyFunSpec:
       val test2 = Any(
         List(
           BooleanNode(placeholderFalseExpr),
-          BooleanNode(placeholderExpr)
-        )
+          BooleanNode(placeholderExpr),
+        ),
       ).get(0)
 
       assert(test2 == Result.Placeholder(true))
@@ -232,8 +229,8 @@ class AnySpec extends AnyFunSpec:
       val test1 = Any(
         List(
           BooleanNode(placeholderExpr),
-          BooleanNode(false)
-        )
+          BooleanNode(false),
+        ),
       ).get(0)
 
       assert(test1 == Result.Placeholder(true))
@@ -241,8 +238,8 @@ class AnySpec extends AnyFunSpec:
       val test2 = Any(
         List(
           BooleanNode(false),
-          BooleanNode(placeholderExpr)
-        )
+          BooleanNode(placeholderExpr),
+        ),
       ).get(0)
 
       assert(test2 == Result.Placeholder(true))
@@ -255,14 +252,14 @@ class AnySpec extends AnyFunSpec:
           new CompNodeConfigElement(
             "String",
             Seq.empty,
-            CommonOptionConfigTraits.value("Hello")
+            CommonOptionConfigTraits.value("Hello"),
           ),
           new CompNodeConfigElement(
             "String",
             Seq.empty,
-            CommonOptionConfigTraits.value("World")
-          )
-        )
+            CommonOptionConfigTraits.value("World"),
+          ),
+        ),
       )
       assertThrows[UnsupportedOperationException] {
         CompNode.fromDerivedConfig(config)
@@ -278,17 +275,17 @@ class AnySpec extends AnyFunSpec:
             BooleanNode(true),
             BooleanNode(placeholderExpr),
             BooleanNode(placeholderFalseExpr),
-            BooleanNode(incompleteExpr)
-          )
+            BooleanNode(incompleteExpr),
+          ),
         )
         assert(
           node.explain(0) == Explanation.Operation(
             List(
               List(
-                Explanation.Constant
-              )
-            )
-          )
+                Explanation.Constant,
+              ),
+            ),
+          ),
         )
       }
 
@@ -298,8 +295,8 @@ class AnySpec extends AnyFunSpec:
             BooleanNode(false),
             BooleanNode(placeholderExpr),
             BooleanNode(placeholderFalseExpr),
-            BooleanNode(incompleteExpr)
-          )
+            BooleanNode(incompleteExpr),
+          ),
         )
         assert(node.explain(0).children.length == 4)
       }

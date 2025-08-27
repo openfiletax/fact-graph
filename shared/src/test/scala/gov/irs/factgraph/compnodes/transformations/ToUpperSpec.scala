@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class ToUpperSpec extends AnyFunSpec:
   describe("ToUpper") {
@@ -16,10 +16,10 @@ class ToUpperSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "String",
                 Seq.empty,
-                CommonOptionConfigTraits.value("nO MuD")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("nO MuD"),
+              ),
+            ),
+          ),
         )
         .asInstanceOf[StringNode]
       assert(node.get(0) == Result.Complete(String("NO MUD")))

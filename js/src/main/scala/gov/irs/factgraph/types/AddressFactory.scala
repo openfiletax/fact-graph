@@ -1,8 +1,8 @@
 package gov.irs.factgraph.types
-import scala.scalajs.js.annotation.JSExportTopLevel
-import scala.util.matching.Regex
 import gov.irs.factgraph.monads.JSEither
-import scala.util.{Try, Success, Failure}
+import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.util.{ Failure, Success, Try }
+import scala.util.matching.Regex
 
 object AddressFactory:
   @JSExportTopLevel("AddressFactory")
@@ -41,7 +41,7 @@ object AddressFactory:
       ) match
         case Success(v)                           => JSEither.Right(v)
         case Failure(e: AddressValidationFailure) => JSEither.Left(e)
-        case Failure(exception) =>
+        case Failure(exception)                   =>
           JSEither.Left(
             AddressValidationFailure(
               "Invalid Address case 1",

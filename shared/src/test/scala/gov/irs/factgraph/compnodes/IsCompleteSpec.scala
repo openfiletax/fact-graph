@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{completeExpr, placeholderExpr, incompleteExpr}
+import gov.irs.factgraph.{ completeExpr, incompleteExpr, placeholderExpr }
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class IsCompleteSpec extends AnyFunSpec:
   describe("IsComplete") {
@@ -29,8 +29,8 @@ class IsCompleteSpec extends AnyFunSpec:
       val node = CompNode.fromDerivedConfig(
         new CompNodeConfigElement(
           "IsComplete",
-          Seq(new CompNodeConfigElement("True"))
-        )
+          Seq(new CompNodeConfigElement("True")),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(true))

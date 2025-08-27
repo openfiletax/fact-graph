@@ -1,9 +1,8 @@
 package gov.irs.factgraph.operators
 
-import org.scalatest.funspec.AnyFunSpec
-
 import gov.irs.factgraph.*
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class BinaryOperatorSpec extends AnyFunSpec:
   describe("BinaryOperator") {
@@ -17,12 +16,12 @@ class BinaryOperatorSpec extends AnyFunSpec:
             Expression
               .Binary(placeholderExpr, incompleteExpr, operator)
               .get(0) ==
-              Result.Incomplete
+              Result.Incomplete,
           )
 
           assert(
             Expression.Binary(incompleteExpr, completeExpr, operator).get(0) ==
-              Result.Incomplete
+              Result.Incomplete,
           )
         }
       }
@@ -31,12 +30,12 @@ class BinaryOperatorSpec extends AnyFunSpec:
         it("returns a placeholder") {
           assert(
             Expression.Binary(completeExpr, placeholderExpr, operator).get(0) ==
-              Result.Placeholder(true)
+              Result.Placeholder(true),
           )
 
           assert(
             Expression.Binary(placeholderExpr, completeExpr, operator).get(0) ==
-              Result.Placeholder(true)
+              Result.Placeholder(true),
           )
         }
       }
@@ -45,7 +44,7 @@ class BinaryOperatorSpec extends AnyFunSpec:
         it("returns complete") {
           assert(
             Expression.Binary(completeExpr, completeExpr, operator).get(0) ==
-              Result.Complete(true)
+              Result.Complete(true),
           )
         }
       }
@@ -92,10 +91,10 @@ class BinaryOperatorSpec extends AnyFunSpec:
               List(
                 List(
                   Explanation.Constant,
-                  Explanation.Constant
-                )
-              )
-            )
+                  Explanation.Constant,
+                ),
+              ),
+            ),
         )
       }
     }

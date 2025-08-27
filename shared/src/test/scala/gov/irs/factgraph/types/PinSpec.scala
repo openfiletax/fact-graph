@@ -6,30 +6,27 @@ class PinSpec extends AnyFunSpec:
   describe("Pin") {
     describe("preconditions for the pin fields") {
       it("throws an error because pin is the wrong length") {
-        try {
+        try
           new Pin("123")
-        } catch {
-          case e: PinValidationFailure => {
+        catch {
+          case e: PinValidationFailure =>
             assert(e.validationMessage.toString() == "InvalidPin")
-          }
         }
       }
       it("throws an error because pin has invalid characters") {
-        try {
+        try
           new Pin("abcde")
-        } catch {
-          case e: PinValidationFailure => {
+        catch {
+          case e: PinValidationFailure =>
             assert(e.validationMessage.toString() == "InvalidPin")
-          }
         }
       }
       it("throws an error because pin has all zeroes") {
-        try {
+        try
           new Pin("00000")
-        } catch {
-          case e: PinValidationFailure => {
+        catch {
+          case e: PinValidationFailure =>
             assert(e.validationMessage.toString() == "InvalidAllZerosPin")
-          }
         }
       }
     }

@@ -1,10 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.*
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.Tin
+import org.scalatest.funspec.AnyFunSpec
 
 class TinNodeSpec extends AnyFunSpec:
   describe("TinNode") {
@@ -25,7 +25,7 @@ class TinNodeSpec extends AnyFunSpec:
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("False"))
+                  Seq(new CompNodeConfigElement("False")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -33,18 +33,18 @@ class TinNodeSpec extends AnyFunSpec:
                     CompNodeConfigElement(
                       "TIN",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("999-99-0000")
-                    )
-                  )
-                )
-              )
+                      CommonOptionConfigTraits.value("999-99-0000"),
+                    ),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Case",
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("True"))
+                  Seq(new CompNodeConfigElement("True")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -52,13 +52,13 @@ class TinNodeSpec extends AnyFunSpec:
                     CompNodeConfigElement(
                       "TIN",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("999-99-0001")
-                    )
-                  )
-                )
-              )
-            )
-          )
+                      CommonOptionConfigTraits.value("999-99-0001"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
 
@@ -77,11 +77,11 @@ class TinNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "TIN",
               Seq.empty,
-              CommonOptionConfigTraits.value("999-99-0000")
-            )
+              CommonOptionConfigTraits.value("999-99-0000"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       FactDefinition.fromConfig(
@@ -92,11 +92,11 @@ class TinNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Dependency",
               Seq.empty,
-              CommonOptionConfigTraits.path("../value")
-            )
+              CommonOptionConfigTraits.path("../value"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)
@@ -125,11 +125,11 @@ class TinNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("TIN")
+              new WritableConfigElement("TIN"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -153,12 +153,12 @@ class TinNodeSpec extends AnyFunSpec:
             Some(
               new WritableConfigElement(
                 "TIN",
-                CommonOptionConfigTraits.allowAllZeros("true")
-              )
+                CommonOptionConfigTraits.allowAllZeros("true"),
+              ),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -180,11 +180,11 @@ class TinNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("TIN")
+              new WritableConfigElement("TIN"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -204,11 +204,11 @@ class TinNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("TIN")
+              new WritableConfigElement("TIN"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -233,11 +233,11 @@ class TinNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("TIN")
+              new WritableConfigElement("TIN"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -257,11 +257,11 @@ class TinNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("TIN")
+              new WritableConfigElement("TIN"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -293,11 +293,11 @@ class TinNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("TIN")
+              new WritableConfigElement("TIN"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -317,11 +317,11 @@ class TinNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("TIN")
+              new WritableConfigElement("TIN"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)

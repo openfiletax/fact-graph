@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.*
 import gov.irs.factgraph.monads.Result
+import org.scalatest.funspec.AnyFunSpec
 
 class StringNodeSpec extends AnyFunSpec:
   describe("StringNode") {
@@ -21,8 +21,8 @@ class StringNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("yo")
-            )
+              CommonOptionConfigTraits.value("yo"),
+            ),
           )
           .asInstanceOf[StringNode]
         assert(node.get(0) == Result.Complete("yo"))
@@ -39,7 +39,7 @@ class StringNodeSpec extends AnyFunSpec:
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("False"))
+                  Seq(new CompNodeConfigElement("False")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -47,18 +47,18 @@ class StringNodeSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "String",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("Larry")
-                    )
-                  )
-                )
-              )
+                      CommonOptionConfigTraits.value("Larry"),
+                    ),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Case",
               Seq(
                 new CompNodeConfigElement(
                   "When",
-                  Seq(new CompNodeConfigElement("True"))
+                  Seq(new CompNodeConfigElement("True")),
                 ),
                 new CompNodeConfigElement(
                   "Then",
@@ -66,13 +66,13 @@ class StringNodeSpec extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "String",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("Moe")
-                    )
-                  )
-                )
-              )
-            )
-          )
+                      CommonOptionConfigTraits.value("Moe"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )
         val node = CompNode.fromDerivedConfig(config)
 
@@ -90,11 +90,11 @@ class StringNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "String",
               Seq.empty,
-              CommonOptionConfigTraits.value("Hello world")
-            )
+              CommonOptionConfigTraits.value("Hello world"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       FactDefinition.fromConfig(
@@ -105,11 +105,11 @@ class StringNodeSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Dependency",
               Seq.empty,
-              CommonOptionConfigTraits.path("../value")
-            )
+              CommonOptionConfigTraits.path("../value"),
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)
@@ -138,11 +138,11 @@ class StringNodeSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("String")
+              new WritableConfigElement("String"),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)

@@ -1,9 +1,8 @@
 package gov.irs.factgraph.definitions.fact
 
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
-
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
+import scala.scalajs.js.annotation.{ JSExport, JSExportTopLevel }
 
 case class CompNodeConfigElement(
     typeName: String,

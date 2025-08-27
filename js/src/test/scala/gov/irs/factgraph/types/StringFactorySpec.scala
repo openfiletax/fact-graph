@@ -19,14 +19,14 @@ class StringFactorySpec extends AnyFunSpec:
       assert(
         StringFactory
           .apply("Firstname", StringFactory.DefaultNamePattern)
-          .right === "Firstname"
+          .right === "Firstname",
       )
     }
     it("multiple words with no invalid characters") {
       assert(
         StringFactory
           .apply("Company Name", StringFactory.DefaultNamePattern)
-          .right === "Company Name"
+          .right === "Company Name",
       )
     }
     it("one word with invalid characters") {
@@ -54,28 +54,28 @@ class StringFactorySpec extends AnyFunSpec:
       assert(
         StringFactory
           .apply("Firstname", StringFactory.EmployerNameLine1Pattern)
-          .right === "Firstname"
+          .right === "Firstname",
       )
     }
     it("multiple words with no invalid characters - test &") {
       assert(
         StringFactory
           .apply("Company & Name", StringFactory.EmployerNameLine1Pattern)
-          .right === "Company & Name"
+          .right === "Company & Name",
       )
     }
     it("multiple words with no invalid characters - test '") {
       assert(
         StringFactory
           .apply("Matt's & Son", StringFactory.EmployerNameLine1Pattern)
-          .right === "Matt's & Son"
+          .right === "Matt's & Son",
       )
     }
     it("multiple words with no invalid characters - test /, ', and & ") {
       assert(
         StringFactory
           .apply("Matt's & Son", StringFactory.EmployerNameLine1Pattern)
-          .right === "Matt's & Son"
+          .right === "Matt's & Son",
       )
     }
     it("one word with invalid characters") {
@@ -121,28 +121,28 @@ class StringFactorySpec extends AnyFunSpec:
       assert(
         StringFactory
           .apply("Firstname", StringFactory.EmployerNameLine2Pattern)
-          .right === "Firstname"
+          .right === "Firstname",
       )
     }
     it("multiple words with no invalid characters - test &") {
       assert(
         StringFactory
           .apply("Company & Name", StringFactory.EmployerNameLine2Pattern)
-          .right === "Company & Name"
+          .right === "Company & Name",
       )
     }
     it("multiple words with no invalid characters - test '") {
       assert(
         StringFactory
           .apply("Matt's & Son", StringFactory.EmployerNameLine2Pattern)
-          .right === "Matt's & Son"
+          .right === "Matt's & Son",
       )
     }
     it("multiple words with no invalid characters - test /, ', and & ") {
       assert(
         StringFactory
           .apply("c/o Matt's & Son", StringFactory.EmployerNameLine2Pattern)
-          .right === "c/o Matt's & Son"
+          .right === "c/o Matt's & Son",
       )
     }
     it("multiple words with no invalid characters - test /, ', %, and & ") {
@@ -150,9 +150,9 @@ class StringFactorySpec extends AnyFunSpec:
         StringFactory
           .apply(
             "c/o Matt's & Son % Junior",
-            StringFactory.EmployerNameLine2Pattern
+            StringFactory.EmployerNameLine2Pattern,
           )
-          .right === "c/o Matt's & Son % Junior"
+          .right === "c/o Matt's & Son % Junior",
       )
     }
     it("one word with invalid characters") {
@@ -198,14 +198,14 @@ class StringFactorySpec extends AnyFunSpec:
       assert(
         StringFactory
           .apply("Firstname", "[\\sA-Za-z0-9]+")
-          .right === "Firstname"
+          .right === "Firstname",
       )
     }
     it("multiple words with no invalid characters") {
       assert(
         StringFactory
           .apply("Company Name", "[\\sA-Za-z0-9]+")
-          .right === "Company Name"
+          .right === "Company Name",
       )
     }
     it("one word with invalid characters") {
@@ -233,7 +233,7 @@ class StringFactorySpec extends AnyFunSpec:
       assert(
         StringFactory
           .apply("123", StringFactory.NumbersOnlyPattern)
-          .right === "123"
+          .right === "123",
       )
     }
     it("one word with invalid characters") {
@@ -261,7 +261,7 @@ class StringFactorySpec extends AnyFunSpec:
       assert(
         StringFactory
           .apply("1234", StringFactory.Form1099rBox11YearPattern)
-          .right === "1234"
+          .right === "1234",
       )
     }
     it("one word with invalid characters") {
@@ -289,21 +289,21 @@ class StringFactorySpec extends AnyFunSpec:
       val stripCharsResult = StringFactory
         .stripDisallowedCharacters("test$", "A-Za-z")
       assert(
-        stripCharsResult === "test"
+        stripCharsResult === "test",
       )
     }
     it("returns the same string if it doesn't have invalid characters") {
       val stripCharsResult = StringFactory
         .stripDisallowedCharacters("test", "A-Za-z")
       assert(
-        stripCharsResult === "test"
+        stripCharsResult === "test",
       )
     }
     it("empty string returns an empty string") {
       val stripCharsResult = StringFactory
         .stripDisallowedCharacters("", "A-Za-z")
       assert(
-        stripCharsResult === ""
+        stripCharsResult === "",
       )
     }
   }

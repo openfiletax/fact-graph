@@ -1,17 +1,16 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
-import gov.irs.factgraph.monads.Result
-import gov.irs.factgraph.types.{Collection, CollectionItem}
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
   FactConfigElement,
-  WritableConfigElement
+  WritableConfigElement,
 }
-
+import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.types.{ Collection, CollectionItem }
 import java.util.UUID
+import org.scalatest.funspec.AnyFunSpec
 
 class IndexOfSpec extends AnyFunSpec {
   describe("IndexOf") {
@@ -30,9 +29,9 @@ class IndexOfSpec extends AnyFunSpec {
                   new CompNodeConfigElement(
                     "Dependency",
                     Seq.empty,
-                    "/collection"
-                  )
-                )
+                    "/collection",
+                  ),
+                ),
               ),
               new CompNodeConfigElement(
                 "Index",
@@ -40,15 +39,15 @@ class IndexOfSpec extends AnyFunSpec {
                   CompNodeConfigElement(
                     "Int",
                     Seq(),
-                    CommonOptionConfigTraits.value("1")
-                  )
-                )
-              )
-            )
-          )
+                    CommonOptionConfigTraits.value("1"),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -56,8 +55,8 @@ class IndexOfSpec extends AnyFunSpec {
         "/collection",
         Some(new WritableConfigElement("Collection")),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -65,8 +64,8 @@ class IndexOfSpec extends AnyFunSpec {
         "/collection/*/string",
         Some(new WritableConfigElement("String")),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -74,10 +73,10 @@ class IndexOfSpec extends AnyFunSpec {
         "/secondString",
         None,
         Some(
-          new CompNodeConfigElement("Dependency", Seq.empty, "/test/string")
+          new CompNodeConfigElement("Dependency", Seq.empty, "/test/string"),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     val graph = Graph(dictionary)
@@ -140,9 +139,9 @@ class IndexOfSpec extends AnyFunSpec {
                         CompNodeConfigElement(
                           "Int",
                           Seq(),
-                          CommonOptionConfigTraits.value("2")
-                        )
-                      )
+                          CommonOptionConfigTraits.value("2"),
+                        ),
+                      ),
                     ),
                     new CompNodeConfigElement(
                       "Index",
@@ -150,15 +149,15 @@ class IndexOfSpec extends AnyFunSpec {
                         CompNodeConfigElement(
                           "Int",
                           Seq(),
-                          CommonOptionConfigTraits.value("1")
-                        )
-                      )
-                    )
-                  )
-                )
+                          CommonOptionConfigTraits.value("1"),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-              None
-            )
+              None,
+            ),
           )(using dictionary)
           val graph2 = Graph(dictionary)
           graph2.get("/test2")
@@ -181,9 +180,9 @@ class IndexOfSpec extends AnyFunSpec {
                         new CompNodeConfigElement(
                           "Dependency",
                           Seq.empty,
-                          "/collection"
-                        )
-                      )
+                          "/collection",
+                        ),
+                      ),
                     ),
                     new CompNodeConfigElement(
                       "Index",
@@ -191,15 +190,15 @@ class IndexOfSpec extends AnyFunSpec {
                         CompNodeConfigElement(
                           "Dollar",
                           Seq(),
-                          CommonOptionConfigTraits.value("1.00")
-                        )
-                      )
-                    )
-                  )
-                )
+                          CommonOptionConfigTraits.value("1.00"),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-              None
-            )
+              None,
+            ),
           )(using dictionary)
           val graph2 = Graph(dictionary)
           graph2.get("/test2")

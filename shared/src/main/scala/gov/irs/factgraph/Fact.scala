@@ -1,10 +1,9 @@
 package gov.irs.factgraph
 
-import gov.irs.factgraph.compnodes.{CollectionItemNode, CollectionNode, CompNode, RootNode}
-import gov.irs.factgraph.monads.*
-import gov.irs.factgraph.types.{Collection, CollectionItem, WritableType}
+import gov.irs.factgraph.compnodes.{ CollectionItemNode, CollectionNode, CompNode, RootNode }
 import gov.irs.factgraph.limits.*
-
+import gov.irs.factgraph.monads.*
+import gov.irs.factgraph.types.{ Collection, CollectionItem, WritableType }
 import java.util.UUID
 import scala.annotation.tailrec
 import scala.scalajs.js.annotation.JSExport
@@ -35,7 +34,7 @@ final class Fact(
     }
 
     graph.resultCache
-      .getOrElseUpdate(path, { value.get })
+      .getOrElseUpdate(path, value.get)
       .asInstanceOf[MaybeVector[Result[value.Value]]]
 
   override def getThunk: MaybeVector[Thunk[Result[value.Value]]] =
@@ -208,18 +207,18 @@ final class Fact(
 
   private def getChild(key: PathItem): Option[Fact] =
     val childPath = path :+ key
-    graph.factCache.getOrElseUpdate(childPath, { makeFact(key) })
+    graph.factCache.getOrElseUpdate(childPath, makeFact(key))
 
   private def getMember(key: PathItem): Option[Fact] =
     val memberPath = path :+ key
-    graph.factCache.getOrElseUpdate(memberPath, { makeExtract(key) })
+    graph.factCache.getOrElseUpdate(memberPath, makeExtract(key))
 
   private def makeFact(key: PathItem): Option[Fact] =
-    makeExtract(key).orElse({
+    makeExtract(key).orElse(
       graph
         .dictionary(meta.abstractPath :+ key)
-        .map(_.attachToGraph(this, key))
-    })
+        .map(_.attachToGraph(this, key)),
+    )
 
   private def makeExtract(key: PathItem): Option[Fact] =
     value

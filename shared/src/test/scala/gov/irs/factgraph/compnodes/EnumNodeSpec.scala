@@ -1,17 +1,13 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.*
-import gov.irs.factgraph.definitions.meta.{
-  EnumDeclarationOptionsTrait,
-  EnumDeclarationTrait,
-  MetaConfigTrait
-}
+import gov.irs.factgraph.definitions.meta.{ EnumDeclarationOptionsTrait, EnumDeclarationTrait, MetaConfigTrait }
+import gov.irs.factgraph.limits.ContainsLimit
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.persisters.InMemoryPersister
 import gov.irs.factgraph.types.*
-import gov.irs.factgraph.limits.ContainsLimit
+import org.scalatest.funspec.AnyFunSpec
 
 class EnumNodeSpec extends AnyFunSpec {
   describe("EnumNode") {
@@ -21,8 +17,8 @@ class EnumNodeSpec extends AnyFunSpec {
           EnumNode(Enum("test", "/enum-options"))
         assert(
           node.get(0) == Result.Complete(
-            Enum("test", "/enum-options")
-          )
+            Enum("test", "/enum-options"),
+          ),
         )
       }
     }
@@ -39,16 +35,16 @@ class EnumNodeSpec extends AnyFunSpec {
               CommonOptionConfigTraits.create(
                 Seq(
                   (CommonOptionConfigTraits.ENUM_OPTIONS_PATH, "/options-path"),
-                  (CommonOptionConfigTraits.VALUE, "A")
-                )
-              )
-            )
+                  (CommonOptionConfigTraits.VALUE, "A"),
+                ),
+              ),
+            ),
           )(using given_Factual)(using dictionary)
           .asInstanceOf[EnumNode]
       assert(
         node.get(0) == Result.Complete(
-          Enum("A", "/options-path")
-        )
+          Enum("A", "/options-path"),
+        ),
       )
     }
 
@@ -62,10 +58,10 @@ class EnumNodeSpec extends AnyFunSpec {
               Seq.empty,
               CommonOptionConfigTraits.create(
                 Seq(
-                  (CommonOptionConfigTraits.VALUE, "C")
-                )
-              )
-            )
+                  (CommonOptionConfigTraits.VALUE, "C"),
+                ),
+              ),
+            ),
           )(using given_Factual)(using dictionary)
       }
     }
@@ -82,7 +78,7 @@ class EnumNodeSpec extends AnyFunSpec {
             Seq(
               new CompNodeConfigElement(
                 "When",
-                Seq(new CompNodeConfigElement("False"))
+                Seq(new CompNodeConfigElement("False")),
               ),
               new CompNodeConfigElement(
                 "Then",
@@ -94,22 +90,22 @@ class EnumNodeSpec extends AnyFunSpec {
                       Seq(
                         (
                           CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                          "/options-path"
+                          "/options-path",
                         ),
-                        (CommonOptionConfigTraits.VALUE, "A")
-                      )
-                    )
-                  )
-                )
-              )
-            )
+                        (CommonOptionConfigTraits.VALUE, "A"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
           new CompNodeConfigElement(
             "Case",
             Seq(
               new CompNodeConfigElement(
                 "When",
-                Seq(new CompNodeConfigElement("True"))
+                Seq(new CompNodeConfigElement("True")),
               ),
               new CompNodeConfigElement(
                 "Then",
@@ -121,26 +117,26 @@ class EnumNodeSpec extends AnyFunSpec {
                       Seq(
                         (
                           CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                          "/options-path"
+                          "/options-path",
                         ),
-                        (CommonOptionConfigTraits.VALUE, "B")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                        (CommonOptionConfigTraits.VALUE, "B"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
       val node =
         CompNode.fromDerivedConfig(config)(using given_Factual)(using
-          dictionary
+          dictionary,
         )
       assert(
         node.get(0) == Result.Complete(
-          Enum("B", "/options-path")
-        )
+          Enum("B", "/options-path"),
+        ),
       )
     }
   }
@@ -159,13 +155,13 @@ class EnumNodeSpec extends AnyFunSpec {
             CommonOptionConfigTraits.create(
               Seq(
                 (CommonOptionConfigTraits.ENUM_OPTIONS_PATH, "/options-path"),
-                (CommonOptionConfigTraits.VALUE, "C")
-              )
-            )
-          )
+                (CommonOptionConfigTraits.VALUE, "C"),
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -176,11 +172,11 @@ class EnumNodeSpec extends AnyFunSpec {
           new CompNodeConfigElement(
             "Dependency",
             Seq.empty,
-            CommonOptionConfigTraits.path("../value")
-          )
+            CommonOptionConfigTraits.path("../value"),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     val graph = Graph(dictionary)
@@ -190,8 +186,8 @@ class EnumNodeSpec extends AnyFunSpec {
       assert(dependent.value.isInstanceOf[EnumNode])
       assert(
         dependent.get(0) == Result.Complete(
-          Enum("C", "/options-path")
-        )
+          Enum("C", "/options-path"),
+        ),
       )
     }
   }
@@ -201,11 +197,11 @@ class EnumNodeSpec extends AnyFunSpec {
       val node = EnumNode(Expression.Constant(None), "/options-path")
       val newNode =
         node.fromExpression(
-          Expression.Constant(Some(Enum("B", "/options-path")))
+          Expression.Constant(Some(Enum("B", "/options-path"))),
         )
 
       assert(
-        newNode.get(0) == Result.Complete(Enum("B", "/options-path"))
+        newNode.get(0) == Result.Complete(Enum("B", "/options-path")),
       )
     }
   }
@@ -224,29 +220,29 @@ class EnumNodeSpec extends AnyFunSpec {
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("A")
+                  CommonOptionConfigTraits.value("A"),
                 ),
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("B")
+                  CommonOptionConfigTraits.value("B"),
                 ),
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("C")
+                  CommonOptionConfigTraits.value("C"),
                 ),
                 new CompNodeConfigElement(
                   "String",
                   Seq.empty,
-                  CommonOptionConfigTraits.value("D")
-                )
+                  CommonOptionConfigTraits.value("D"),
+                ),
               ),
-              Seq.empty
-            )
+              Seq.empty,
+            ),
           ),
-          None
-        )
+          None,
+        ),
       )(using dictionary)
       FactDefinition.fromConfig(
         FactConfigElement(
@@ -254,12 +250,12 @@ class EnumNodeSpec extends AnyFunSpec {
           Some(
             new WritableConfigElement(
               "Enum",
-              CommonOptionConfigTraits.optionsPath("/options-path")
-            )
+              CommonOptionConfigTraits.optionsPath("/options-path"),
+            ),
           ),
           None,
-          None
-        )
+          None,
+        ),
       )(using dictionary)
 
       val graph = Graph(dictionary)
@@ -273,8 +269,8 @@ class EnumNodeSpec extends AnyFunSpec {
 
       assert(
         fact.get(0) == Result.Complete(
-          Enum("D", "/options-path")
-        )
+          Enum("D", "/options-path"),
+        ),
       )
     }
 
@@ -287,12 +283,12 @@ class EnumNodeSpec extends AnyFunSpec {
             "/anotherName",
             Some(
               new WritableConfigElement(
-                "Enum"
-              )
+                "Enum",
+              ),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -318,29 +314,29 @@ class EnumNodeSpec extends AnyFunSpec {
                   new CompNodeConfigElement(
                     "String",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("A")
+                    CommonOptionConfigTraits.value("A"),
                   ),
                   new CompNodeConfigElement(
                     "String",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("B")
+                    CommonOptionConfigTraits.value("B"),
                   ),
                   new CompNodeConfigElement(
                     "String",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("C")
+                    CommonOptionConfigTraits.value("C"),
                   ),
                   new CompNodeConfigElement(
                     "String",
                     Seq.empty,
-                    CommonOptionConfigTraits.value("D")
-                  )
+                    CommonOptionConfigTraits.value("D"),
+                  ),
                 ),
-                Seq.empty
-              )
+                Seq.empty,
+              ),
             ),
-            None
-          )
+            None,
+          ),
         )(using dictionary)
         FactDefinition.fromConfig(
           FactConfigElement(
@@ -348,12 +344,12 @@ class EnumNodeSpec extends AnyFunSpec {
             Some(
               new WritableConfigElement(
                 "Enum",
-                CommonOptionConfigTraits.optionsPath("/options-path")
-              )
+                CommonOptionConfigTraits.optionsPath("/options-path"),
+              ),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(
@@ -361,9 +357,9 @@ class EnumNodeSpec extends AnyFunSpec {
           InMemoryPersister(
             "/alreadySaved" -> Enum(
               Some("D"),
-              "/options-path"
-            )
-          )
+              "/options-path",
+            ),
+          ),
         )
         val fact = graph(Path("/alreadySaved"))(0).get
 
@@ -377,10 +373,10 @@ class EnumNodeSpec extends AnyFunSpec {
                   new CompNodeConfigElement(
                     "Dependency",
                     Seq.empty,
-                    CommonOptionConfigTraits.path("../alreadySaved")
-                  )
+                    CommonOptionConfigTraits.path("../alreadySaved"),
+                  ),
                 ),
-                Seq.empty
+                Seq.empty,
               ),
               new CompNodeConfigElement(
                 "Right",
@@ -392,16 +388,16 @@ class EnumNodeSpec extends AnyFunSpec {
                       Seq(
                         (
                           CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                          "/options-path"
+                          "/options-path",
                         ),
-                        (CommonOptionConfigTraits.VALUE, "D")
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
+                        (CommonOptionConfigTraits.VALUE, "D"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         )(using fact)(using dictionary)
 
         assert(node.get(using fact)(0) == Result.Complete(true))

@@ -1,16 +1,12 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{FactDefinition, FactDictionary, Graph, Path}
-import gov.irs.factgraph.definitions.fact.{
-  CompNodeConfigElement,
-  FactConfigElement,
-  WritableConfigElement
-}
+import gov.irs.factgraph.{ FactDefinition, FactDictionary, Graph, Path }
+import gov.irs.factgraph.definitions.fact.{ CompNodeConfigElement, FactConfigElement, WritableConfigElement }
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.*
-import org.scalatest.BeforeAndAfter
-import org.scalatest.funspec.AnyFunSpec
 import java.util.UUID
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.BeforeAndAfter
 
 class MaximumSpec extends AnyFunSpec with BeforeAndAfter:
   val uuid1: UUID = UUID.fromString("59a3c760-2fac-45e2-a6cd-0792c4aef83e")
@@ -31,13 +27,13 @@ class MaximumSpec extends AnyFunSpec with BeforeAndAfter:
               new CompNodeConfigElement(
                 "Dependency",
                 Seq.empty,
-                "/collection/*/int"
-              )
-            )
-          )
+                "/collection/*/int",
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -51,13 +47,13 @@ class MaximumSpec extends AnyFunSpec with BeforeAndAfter:
               new CompNodeConfigElement(
                 "Dependency",
                 Seq.empty,
-                "/collection/*/rational"
-              )
-            )
-          )
+                "/collection/*/rational",
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -71,13 +67,13 @@ class MaximumSpec extends AnyFunSpec with BeforeAndAfter:
               new CompNodeConfigElement(
                 "Dependency",
                 Seq.empty,
-                "/collection/*/dollar"
-              )
-            )
-          )
+                "/collection/*/dollar",
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
@@ -91,79 +87,79 @@ class MaximumSpec extends AnyFunSpec with BeforeAndAfter:
               new CompNodeConfigElement(
                 "Dependency",
                 Seq.empty,
-                "/collection/*/day"
-              )
-            )
-          )
+                "/collection/*/day",
+              ),
+            ),
+          ),
         ),
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection",
         Some(
-          new WritableConfigElement("Collection")
+          new WritableConfigElement("Collection"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/int",
         Some(
-          new WritableConfigElement("Int")
+          new WritableConfigElement("Int"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/rational",
         Some(
-          new WritableConfigElement("Rational")
+          new WritableConfigElement("Rational"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/dollar",
         Some(
-          new WritableConfigElement("Dollar")
+          new WritableConfigElement("Dollar"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/day",
         Some(
-          new WritableConfigElement("Day")
+          new WritableConfigElement("Day"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     FactDefinition.fromConfig(
       FactConfigElement(
         "/collection/*/string",
         Some(
-          new WritableConfigElement("String")
+          new WritableConfigElement("String"),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
 
     val graph = Graph(dictionary)
@@ -201,7 +197,7 @@ class MaximumSpec extends AnyFunSpec with BeforeAndAfter:
       }
 
       it(
-        "finds the maximum in a collection and returns incomplete if not all items are complete"
+        "finds the maximum in a collection and returns incomplete if not all items are complete",
       ) {
         val fact = factGraph(Path("/intTest"))(0).get
 
@@ -239,7 +235,7 @@ class MaximumSpec extends AnyFunSpec with BeforeAndAfter:
       }
 
       it(
-        "finds the maximum in a collection and returns incomplete if not all items are complete"
+        "finds the maximum in a collection and returns incomplete if not all items are complete",
       ) {
         val fact = factGraph(Path("/dollarTest"))(0).get
 
@@ -278,7 +274,7 @@ class MaximumSpec extends AnyFunSpec with BeforeAndAfter:
       }
 
       it(
-        "finds the maximum in a collection and returns incomplete if not all items are complete"
+        "finds the maximum in a collection and returns incomplete if not all items are complete",
       ) {
         val fact = factGraph(Path("/dayTest"))(0).get
 
@@ -317,7 +313,7 @@ class MaximumSpec extends AnyFunSpec with BeforeAndAfter:
       }
 
       it(
-        "finds the maximum in a collection and returns incomplete if not all items are complete"
+        "finds the maximum in a collection and returns incomplete if not all items are complete",
       ) {
         val fact = factGraph(Path("/rationalTest"))(0).get
 
@@ -348,13 +344,13 @@ class MaximumSpec extends AnyFunSpec with BeforeAndAfter:
                     new CompNodeConfigElement(
                       "Dependency",
                       Seq.empty,
-                      "/collection/*/string"
-                    )
-                  )
-                )
+                      "/collection/*/string",
+                    ),
+                  ),
+                ),
               ),
-              None
-            )
+              None,
+            ),
           )(using factDictionary)
 
           definition.meta

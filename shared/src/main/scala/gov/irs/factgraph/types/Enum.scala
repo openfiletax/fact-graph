@@ -1,7 +1,7 @@
 package gov.irs.factgraph.types
 
 import gov.irs.factgraph.FactDictionary
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
+import scala.scalajs.js.annotation.{ JSExport, JSExportTopLevel }
 import upickle.default.ReadWriter
 
 final case class Enum(

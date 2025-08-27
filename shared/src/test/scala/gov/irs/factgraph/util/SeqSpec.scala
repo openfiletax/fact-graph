@@ -1,8 +1,7 @@
 package gov.irs.factgraph.util
 
-import org.scalatest.funspec.AnyFunSpec
-
 import gov.irs.factgraph.util.Seq.*
+import org.scalatest.funspec.AnyFunSpec
 
 class SeqSpec extends AnyFunSpec:
   describe("itemsHaveSameRuntimeClass()") {

@@ -1,14 +1,14 @@
 package gov.irs.factgraph.compnodes
 
-import org.scalatest.funspec.AnyFunSpec
-import gov.irs.factgraph.definitions.fact.CompNodeConfigElement
-import gov.irs.factgraph.monads.Result
-import gov.irs.factgraph.definitions.fact.FactConfigElement
-import gov.irs.factgraph.Graph
-import gov.irs.factgraph.FactDictionary
-import gov.irs.factgraph.FactDefinition
-import gov.irs.factgraph.definitions.fact.WritableConfigElement
 import gov.irs.factgraph.definitions.fact.CommonOptionConfigTraits
+import gov.irs.factgraph.definitions.fact.CompNodeConfigElement
+import gov.irs.factgraph.definitions.fact.FactConfigElement
+import gov.irs.factgraph.definitions.fact.WritableConfigElement
+import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.FactDefinition
+import gov.irs.factgraph.FactDictionary
+import gov.irs.factgraph.Graph
+import org.scalatest.funspec.AnyFunSpec
 
 class OverrideSpec extends AnyFunSpec:
   describe("Override") {
@@ -16,8 +16,8 @@ class OverrideSpec extends AnyFunSpec:
       assertThrows[UnsupportedOperationException] {
         CompNode.fromDerivedConfig(
           new CompNodeConfigElement(
-            "Override"
-          )
+            "Override",
+          ),
         )
       }
     }
@@ -28,21 +28,21 @@ class OverrideSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("String")
+              new WritableConfigElement("String"),
             ),
             None,
             None,
             Some(
-              new CompNodeConfigElement("True")
+              new CompNodeConfigElement("True"),
             ),
             Some(
               CompNodeConfigElement(
                 "String",
                 Seq.empty,
-                CommonOptionConfigTraits.value("default")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("default"),
+              ),
+            ),
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -62,21 +62,21 @@ class OverrideSpec extends AnyFunSpec:
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("String")
+              new WritableConfigElement("String"),
             ),
             None,
             None,
             Some(
-              new CompNodeConfigElement("False")
+              new CompNodeConfigElement("False"),
             ),
             Some(
               CompNodeConfigElement(
                 "String",
                 Seq.empty,
-                CommonOptionConfigTraits.value("default")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("default"),
+              ),
+            ),
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)

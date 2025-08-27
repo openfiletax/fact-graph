@@ -1,10 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
-import gov.irs.factgraph.types.*
 import gov.irs.factgraph.monads.Result
+import gov.irs.factgraph.types.*
+import gov.irs.factgraph.FactDictionary
+import org.scalatest.funspec.AnyFunSpec
 
 class LesserOfSpec extends AnyFunSpec:
   describe("LesserOf") {
@@ -16,20 +16,20 @@ class LesserOfSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("1")
+              CommonOptionConfigTraits.value("1"),
             ),
             new CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("2")
+              CommonOptionConfigTraits.value("2"),
             ),
             new CompNodeConfigElement(
               "Int",
               Seq.empty,
-              CommonOptionConfigTraits.value("3")
-            )
-          )
-        )
+              CommonOptionConfigTraits.value("3"),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(1))
@@ -43,20 +43,20 @@ class LesserOfSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Rational",
               Seq.empty,
-              CommonOptionConfigTraits.value("2/4")
+              CommonOptionConfigTraits.value("2/4"),
             ),
             new CompNodeConfigElement(
               "Rational",
               Seq.empty,
-              CommonOptionConfigTraits.value("3/4")
+              CommonOptionConfigTraits.value("3/4"),
             ),
             new CompNodeConfigElement(
               "Rational",
               Seq.empty,
-              CommonOptionConfigTraits.value("1/4")
-            )
-          )
-        )
+              CommonOptionConfigTraits.value("1/4"),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(Rational("1/4")))
@@ -70,20 +70,20 @@ class LesserOfSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Dollar",
               Seq.empty,
-              CommonOptionConfigTraits.value("4.56")
+              CommonOptionConfigTraits.value("4.56"),
             ),
             new CompNodeConfigElement(
               "Dollar",
               Seq.empty,
-              CommonOptionConfigTraits.value("7.89")
+              CommonOptionConfigTraits.value("7.89"),
             ),
             new CompNodeConfigElement(
               "Dollar",
               Seq.empty,
-              CommonOptionConfigTraits.value("1.23")
-            )
-          )
-        )
+              CommonOptionConfigTraits.value("1.23"),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(Dollar("1.23")))
@@ -97,20 +97,20 @@ class LesserOfSpec extends AnyFunSpec:
             new CompNodeConfigElement(
               "Day",
               Seq.empty,
-              CommonOptionConfigTraits.value("2022-01-03")
+              CommonOptionConfigTraits.value("2022-01-03"),
             ),
             new CompNodeConfigElement(
               "Day",
               Seq.empty,
-              CommonOptionConfigTraits.value("2022-01-02")
+              CommonOptionConfigTraits.value("2022-01-02"),
             ),
             new CompNodeConfigElement(
               "Day",
               Seq.empty,
-              CommonOptionConfigTraits.value("2022-01-01")
-            )
-          )
-        )
+              CommonOptionConfigTraits.value("2022-01-01"),
+            ),
+          ),
+        ),
       )
 
       assert(node.get(0) == Result.Complete(Day("2022-01-01")))
@@ -125,15 +125,15 @@ class LesserOfSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "String",
                 Seq.empty,
-                CommonOptionConfigTraits.value("Hello")
+                CommonOptionConfigTraits.value("Hello"),
               ),
               new CompNodeConfigElement(
                 "String",
                 Seq.empty,
-                CommonOptionConfigTraits.value("World")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("World"),
+              ),
+            ),
+          ),
         )
       }
 
@@ -145,15 +145,15 @@ class LesserOfSpec extends AnyFunSpec:
               new CompNodeConfigElement(
                 "Int",
                 Seq.empty,
-                CommonOptionConfigTraits.value("1")
+                CommonOptionConfigTraits.value("1"),
               ),
               new CompNodeConfigElement(
                 "Dollar",
                 Seq.empty,
-                CommonOptionConfigTraits.value("2.34")
-              )
-            )
-          )
+                CommonOptionConfigTraits.value("2.34"),
+              ),
+            ),
+          ),
         )
       }
     }

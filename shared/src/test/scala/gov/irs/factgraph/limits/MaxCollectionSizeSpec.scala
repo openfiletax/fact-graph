@@ -3,9 +3,8 @@ package gov.irs.factgraph.limits
 import gov.irs.factgraph.*
 import gov.irs.factgraph.definitions.fact.*
 import gov.irs.factgraph.types.Collection
+import java.util.{ Date, UUID }
 import org.scalatest.funspec.AnyFunSpec
-
-import java.util.{Date, UUID}
 
 class MaxCollectionSizeSpec extends AnyFunSpec {
   private def generate(date: Date, a: Int, b: Int): UUID =
@@ -18,7 +17,7 @@ class MaxCollectionSizeSpec extends AnyFunSpec {
       override def node: CompNodeConfigTrait = new CompNodeConfigElement(
         "Int",
         Seq.empty,
-        CommonOptionConfigTraits.value("100")
+        CommonOptionConfigTraits.value("100"),
       )
 
     val dictionary = FactDictionary()
@@ -26,11 +25,11 @@ class MaxCollectionSizeSpec extends AnyFunSpec {
       FactConfigElement(
         "/collection",
         Some(
-          new WritableConfigElement("Collection", Seq.empty, Seq(limit))
+          new WritableConfigElement("Collection", Seq.empty, Seq(limit)),
         ),
         None,
-        None
-      )
+        None,
+      ),
     )(using dictionary)
     val graph = Graph(dictionary)
 
@@ -67,11 +66,11 @@ class MaxCollectionSizeSpec extends AnyFunSpec {
           FactConfigElement(
             "/string",
             Some(
-              new WritableConfigElement("String", Seq.empty, Seq(limit))
+              new WritableConfigElement("String", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
         val graph = Graph(dictionary)
         graph.set("/string", "test")

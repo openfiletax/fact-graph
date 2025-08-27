@@ -1,7 +1,7 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path}
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait, WritableConfigTrait }
 import gov.irs.factgraph.types.Dollar
 
 final case class DollarNode(expr: Expression[Dollar]) extends CompNode:
@@ -16,7 +16,9 @@ final case class DollarNode(expr: Expression[Dollar]) extends CompNode:
 object DollarNode extends CompNodeFactory with WritableNodeFactory:
   override val Key: String = "Dollar"
 
-  override def fromWritableConfig(e: WritableConfigTrait)(using Factual)(using
+  override def fromWritableConfig(e: WritableConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     new DollarNode(
@@ -27,7 +29,9 @@ object DollarNode extends CompNodeFactory with WritableNodeFactory:
     Expression.Constant(Some(value)),
   )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     this(Dollar(e.getOptionValue(CommonOptionConfigTraits.VALUE).get))

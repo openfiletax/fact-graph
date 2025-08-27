@@ -9,14 +9,14 @@ class DayFactorySpec extends AnyFunSpec:
 
   describe("Day with limit not exceeded") {
     assert(
-      DayFactory("2010-10-10", "2010-10-11").right.toString === "2010-10-10"
+      DayFactory("2010-10-10", "2010-10-11").right.toString === "2010-10-10",
     )
   }
 
   describe("Day with limit exceeded") {
     val errorReason = DayFactory(
       "2010-10-10",
-      "2010-10-10"
+      "2010-10-10",
     ).left.validationMessage.toUserFriendlyReason().toString()
     assert(errorReason === "ExceedsMaxLimit")
   }
@@ -24,7 +24,7 @@ class DayFactorySpec extends AnyFunSpec:
   describe("Day with invalid limit set") {
     val errorReason = DayFactory(
       "2010-10-10",
-      "2010/10/11"
+      "2010/10/11",
     ).left.validationMessage.toUserFriendlyReason().toString()
     assert(errorReason === "InvalidLimit")
   }

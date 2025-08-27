@@ -13,8 +13,8 @@ class PhoneNumberSpec extends AnyFunSpec:
           assert(
             (
               number.countryCode,
-              number.subscriberNumber
-            ) == (country, subscriber)
+              number.subscriberNumber,
+            ) == (country, subscriber),
           )
         }
       }
@@ -28,7 +28,7 @@ class PhoneNumberSpec extends AnyFunSpec:
         val (country, subscriber) = ("54", "1115123456789")
         val number = new InternationalPhoneNumber(country, subscriber)
         assert(
-          (number.countryCode, number.subscriberNumber) == (country, subscriber)
+          (number.countryCode, number.subscriberNumber) == (country, subscriber),
         )
         assertThrows[IllegalArgumentException] {
           new InternationalPhoneNumber(country, s"${subscriber}9")
@@ -53,7 +53,7 @@ class PhoneNumberSpec extends AnyFunSpec:
   describe("UsPhoneNumber") {
     describe("constructor") {
       it(
-        "requires 3-digit area codes, 3-digit office codes, and 4 digit subscriber numbers"
+        "requires 3-digit area codes, 3-digit office codes, and 4 digit subscriber numbers",
       ) {
         val validNumberArguments = ("555", "555", "0100")
         val invalidPhoneNumberArguments = List(
@@ -61,21 +61,21 @@ class PhoneNumberSpec extends AnyFunSpec:
           ("555", "5555", "0010"),
           ("555", "555", "00100"),
           ("555", "55", "0100"),
-          ("555", "555", "100")
+          ("555", "555", "100"),
         )
         val validNumber = (UsPhoneNumber.apply _).tupled(validNumberArguments)
         assert(
           (
             validNumber.areaCode,
             validNumber.officeCode,
-            validNumber.lineNumber
-          ) == validNumberArguments
+            validNumber.lineNumber,
+          ) == validNumberArguments,
         )
-        invalidPhoneNumberArguments.foreach(args => {
+        invalidPhoneNumberArguments.foreach(args =>
           assertThrows[IllegalArgumentException] {
             (UsPhoneNumber.apply _).tupled(args)
-          }
-        })
+          },
+        )
       }
       it("Assembles an E.164 subscriber number out of the smaller units") {
         val (area, exchange, serial) = ("555", "555", "0100")
@@ -91,13 +91,13 @@ class PhoneNumberSpec extends AnyFunSpec:
           ("155", "555", " 0500"),
           ("555", "055", "0100"),
           ("555", "155", " 0500"),
-          ("595", "555", "0100")
+          ("595", "555", "0100"),
         )
-        invalidPhoneNumberArguments.foreach(args => {
+        invalidPhoneNumberArguments.foreach(args =>
           assertThrows[IllegalArgumentException] {
             (UsPhoneNumber.apply _).tupled(args)
-          }
-        })
+          },
+        )
 
       }
     }
@@ -130,16 +130,15 @@ class PhoneNumberSpec extends AnyFunSpec:
 
   describe("E164NumberFailureReason") {
     describe(".toUserFriendlyReason") {
-      for (detailedFailureReason <- E164NumberFailureReason.values) {
+      for (detailedFailureReason <- E164NumberFailureReason.values)
         it(
-          s"converts $detailedFailureReason into a valid UserFriendlyFailureReason"
+          s"converts $detailedFailureReason into a valid UserFriendlyFailureReason",
         ) {
           val userFriendlyReason = detailedFailureReason.toUserFriendlyReason()
           assert(
             userFriendlyReason
-              .isInstanceOf[UserFriendlyPhoneNumberFailureReason]
+              .isInstanceOf[UserFriendlyPhoneNumberFailureReason],
           )
         }
-      }
     }
   }

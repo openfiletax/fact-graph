@@ -1,6 +1,6 @@
 package gov.irs.factgraph.limits
 
-import gov.irs.factgraph.{FactDefinition, FactDictionary, Graph, Path}
+import gov.irs.factgraph.{ FactDefinition, FactDictionary, Graph, Path }
 import gov.irs.factgraph.definitions.fact.{
   CommonOptionConfigTraits,
   CompNodeConfigElement,
@@ -8,7 +8,7 @@ import gov.irs.factgraph.definitions.fact.{
   FactConfigElement,
   LimitConfigTrait,
   LimitLevel,
-  WritableConfigElement
+  WritableConfigElement,
 }
 import gov.irs.factgraph.monads.Result
 import org.scalatest.funspec.AnyFunSpec
@@ -24,18 +24,18 @@ class MatchSpec extends AnyFunSpec {
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "String",
             Seq.empty,
-            CommonOptionConfigTraits.value("a*")
+            CommonOptionConfigTraits.value("a*"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("String", Seq.empty, Seq(limit))
+              new WritableConfigElement("String", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -57,18 +57,18 @@ class MatchSpec extends AnyFunSpec {
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "String",
             Seq.empty,
-            CommonOptionConfigTraits.value("a*")
+            CommonOptionConfigTraits.value("a*"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("String", Seq.empty, Seq(limit))
+              new WritableConfigElement("String", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)
@@ -95,18 +95,18 @@ class MatchSpec extends AnyFunSpec {
           override def node: CompNodeConfigTrait = new CompNodeConfigElement(
             "String",
             Seq.empty,
-            CommonOptionConfigTraits.value("a*")
+            CommonOptionConfigTraits.value("a*"),
           )
         val dictionary = FactDictionary()
         FactDefinition.fromConfig(
           FactConfigElement(
             "/test",
             Some(
-              new WritableConfigElement("String", Seq.empty, Seq(limit))
+              new WritableConfigElement("String", Seq.empty, Seq(limit)),
             ),
             None,
-            None
-          )
+            None,
+          ),
         )(using dictionary)
 
         val graph = Graph(dictionary)

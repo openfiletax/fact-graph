@@ -1,6 +1,6 @@
 package gov.irs.factgraph.operators
 
-import gov.irs.factgraph.{Explanation, Expression, Factual, Path}
+import gov.irs.factgraph.{ Explanation, Expression, Factual, Path }
 import gov.irs.factgraph.monads.*
 import gov.irs.factgraph.types.CollectionItem
 

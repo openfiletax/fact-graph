@@ -1,17 +1,16 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{FactDefinition, FactDictionary, Factual, Graph, Path}
+import gov.irs.factgraph.{ FactDefinition, FactDictionary, Factual, Graph, Path }
 import gov.irs.factgraph.definitions.fact.*
-import org.scalatest.funspec.AnyFunSpec
 import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.types.*
-
+import org.scalatest.funspec.AnyFunSpec
 import scala.collection.immutable.Seq
 
 class EnumOptionsContains extends AnyFunSpec:
   describe("EnumOptionsContains") {
     it(
-      "has enum options as the first parameter and finds element"
+      "has enum options as the first parameter and finds element",
     ) {
       val node = CompNode.fromDerivedConfig(
         new CompNodeConfigElement(
@@ -26,17 +25,17 @@ class EnumOptionsContains extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "String",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("A")
+                      CommonOptionConfigTraits.value("A"),
                     ),
                     new CompNodeConfigElement(
                       "String",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("B")
-                    )
+                      CommonOptionConfigTraits.value("B"),
+                    ),
                   ),
-                  Seq.empty
-                )
-              )
+                  Seq.empty,
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Value",
@@ -48,22 +47,22 @@ class EnumOptionsContains extends AnyFunSpec:
                     Seq(
                       (
                         CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                        "/options-path"
+                        "/options-path",
                       ),
-                      (CommonOptionConfigTraits.VALUE, "A")
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                      (CommonOptionConfigTraits.VALUE, "A"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
       assert(node.get(0) == Result.Complete(true))
     }
 
     it(
-      "has enum options as the first parameter and doesn't find element"
+      "has enum options as the first parameter and doesn't find element",
     ) {
       val node = CompNode.fromDerivedConfig(
         new CompNodeConfigElement(
@@ -78,17 +77,17 @@ class EnumOptionsContains extends AnyFunSpec:
                     new CompNodeConfigElement(
                       "String",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("A")
+                      CommonOptionConfigTraits.value("A"),
                     ),
                     new CompNodeConfigElement(
                       "String",
                       Seq.empty,
-                      CommonOptionConfigTraits.value("B")
-                    )
+                      CommonOptionConfigTraits.value("B"),
+                    ),
                   ),
-                  Seq.empty
-                )
-              )
+                  Seq.empty,
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Value",
@@ -100,22 +99,22 @@ class EnumOptionsContains extends AnyFunSpec:
                     Seq(
                       (
                         CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                        "/options-path"
+                        "/options-path",
                       ),
-                      (CommonOptionConfigTraits.VALUE, "C")
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                      (CommonOptionConfigTraits.VALUE, "C"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
       assert(node.get(0) == Result.Complete(false))
     }
 
     it(
-      "has MultiEnum options as the first parameter and finds element"
+      "has MultiEnum options as the first parameter and finds element",
     ) {
       val node = CompNode.fromDerivedConfig(
         new CompNodeConfigElement(
@@ -131,13 +130,13 @@ class EnumOptionsContains extends AnyFunSpec:
                     Seq(
                       (
                         CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                        "/options-path"
+                        "/options-path",
                       ),
-                      (CommonOptionConfigTraits.VALUE, "A,B")
-                    )
-                  )
-                )
-              )
+                      (CommonOptionConfigTraits.VALUE, "A,B"),
+                    ),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Value",
@@ -149,22 +148,22 @@ class EnumOptionsContains extends AnyFunSpec:
                     Seq(
                       (
                         CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                        "/options-path"
+                        "/options-path",
                       ),
-                      (CommonOptionConfigTraits.VALUE, "B")
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                      (CommonOptionConfigTraits.VALUE, "B"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
       assert(node.get(0) == Result.Complete(true))
     }
 
     it(
-      "has MultiEnum options as the first parameter and doesn't find element"
+      "has MultiEnum options as the first parameter and doesn't find element",
     ) {
       val node = CompNode.fromDerivedConfig(
         new CompNodeConfigElement(
@@ -180,13 +179,13 @@ class EnumOptionsContains extends AnyFunSpec:
                     Seq(
                       (
                         CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                        "/options-path"
+                        "/options-path",
                       ),
-                      (CommonOptionConfigTraits.VALUE, "A,B")
-                    )
-                  )
-                )
-              )
+                      (CommonOptionConfigTraits.VALUE, "A,B"),
+                    ),
+                  ),
+                ),
+              ),
             ),
             new CompNodeConfigElement(
               "Value",
@@ -198,16 +197,16 @@ class EnumOptionsContains extends AnyFunSpec:
                     Seq(
                       (
                         CommonOptionConfigTraits.ENUM_OPTIONS_PATH,
-                        "/options-path"
+                        "/options-path",
                       ),
-                      (CommonOptionConfigTraits.VALUE, "C")
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                      (CommonOptionConfigTraits.VALUE, "C"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       )
       assert(node.get(0) == Result.Complete(false))
     }

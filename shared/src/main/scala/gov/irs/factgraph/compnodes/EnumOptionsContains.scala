@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
-import gov.irs.factgraph.monads.{MaybeVector, Result, Thunk}
-import gov.irs.factgraph.operators.{AggregateOperator, BinaryOperator, UnaryOperator}
+import gov.irs.factgraph.monads.{ MaybeVector, Result, Thunk }
+import gov.irs.factgraph.operators.{ AggregateOperator, BinaryOperator, UnaryOperator }
 
 object EnumOptionsContains extends CompNodeFactory:
   override val Key: String = "EnumOptionsContains"
@@ -28,7 +28,9 @@ object EnumOptionsContains extends CompNodeFactory:
           ),
         )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val lhs = CompNode.getConfigChildNode(e, "Options")
@@ -43,7 +45,7 @@ object EnumOptionsContains extends CompNodeFactory:
       this(lhs.asInstanceOf[EnumOptionsNode], rhs.asInstanceOf[EnumNode])
     else this(lhs.asInstanceOf[MultiEnumNode], rhs.asInstanceOf[EnumNode])
 
-private final class EnumContainsOperator() extends BinaryOperator[Boolean, List[String], gov.irs.factgraph.types.Enum]:
+final private class EnumContainsOperator() extends BinaryOperator[Boolean, List[String], gov.irs.factgraph.types.Enum]:
   override protected def operation(
       options: List[String],
       enumm: gov.irs.factgraph.types.Enum,
@@ -52,7 +54,7 @@ private final class EnumContainsOperator() extends BinaryOperator[Boolean, List[
       case Some(value) => options.contains(value)
       case None        => true // Not having picked an option is always valid
 
-private final class MultiEnumContainsOperator()
+final private class MultiEnumContainsOperator()
     extends BinaryOperator[
       Boolean,
       gov.irs.factgraph.types.MultiEnum,

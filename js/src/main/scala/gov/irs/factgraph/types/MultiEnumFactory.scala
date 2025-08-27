@@ -1,12 +1,11 @@
 package gov.irs.factgraph.types
 
-import java.lang.{Enum => JavaEnum}
-import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
-import scala.util.matching.Regex
-import scala.util.{Try, Success, Failure}
-
 import gov.irs.factgraph.monads.JSEither
-import gov.irs.factgraph.validation.{ValidationFailure, ValidationFailureReason}
+import gov.irs.factgraph.validation.{ ValidationFailure, ValidationFailureReason }
+import java.lang.{ Enum => JavaEnum }
+import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
+import scala.util.{ Failure, Success, Try }
+import scala.util.matching.Regex
 
 // NOTE: These classes and types are specified just to simplify some front-end logstics
 // This pattern may need some reconsideration to minimize boilerplate
@@ -35,7 +34,7 @@ object MultiEnumFactory:
       enumOptionsPath: String,
   ): JSEither[MultiEnumValidationFailure, MultiEnum] =
     Try(new MultiEnum(value, enumOptionsPath)) match
-      case Success(v) => JSEither.Right(v)
+      case Success(v)         => JSEither.Right(v)
       case Failure(exception) =>
         JSEither.Left(
           MultiEnumValidationFailure(

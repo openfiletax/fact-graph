@@ -8,7 +8,7 @@ class EmailAddressSpec extends AnyFunSpec:
       it("it requires an @ in an email address") {
         assert(
           EmailAddress("example@example.com")
-            .toString() == "example@example.com"
+            .toString() == "example@example.com",
         )
         assertThrows[IllegalArgumentException] {
           EmailAddress("example&example.com")

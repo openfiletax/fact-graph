@@ -1,9 +1,9 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
 import gov.irs.factgraph.operators.UnaryOperator
-import gov.irs.factgraph.types.{Dollar, Enum, EmailAddress, Ein, Tin}
+import gov.irs.factgraph.types.{ Dollar, Ein, EmailAddress, Enum, Tin }
 
 object AsString extends CompNodeFactory:
   override val Key: String = "AsString"
@@ -56,7 +56,9 @@ object AsString extends CompNodeFactory:
           s"cannot execute AsString on a ${node.getClass.getName}",
         )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     CompNode.getConfigChildNode(e) match
@@ -65,22 +67,22 @@ object AsString extends CompNodeFactory:
       case x: DollarNode       => this(x)
       case x: EinNode          => this(x)
       case x: TinNode          => this(x)
-      case _ =>
+      case _                   =>
         throw new UnsupportedOperationException(
           s"invalid child type: ${e.typeName}",
         )
 
-private final class EnumAsStringOperator extends UnaryOperator[String, Enum]:
+final private class EnumAsStringOperator extends UnaryOperator[String, Enum]:
   override protected def operation(x: Enum): String = x.getValue()
 
-private final class EmailAsStringOperator extends UnaryOperator[String, EmailAddress]:
+final private class EmailAsStringOperator extends UnaryOperator[String, EmailAddress]:
   override protected def operation(x: EmailAddress): String = x.toString()
 
-private final class DollarAsStringOperator extends UnaryOperator[String, Dollar]:
+final private class DollarAsStringOperator extends UnaryOperator[String, Dollar]:
   override protected def operation(x: Dollar): String = x.toString()
 
-private final class EinAsStringOperator extends UnaryOperator[String, Ein]:
+final private class EinAsStringOperator extends UnaryOperator[String, Ein]:
   override protected def operation(x: Ein): String = x.toString()
 
-private final class TinAsStringOperator extends UnaryOperator[String, Tin]:
+final private class TinAsStringOperator extends UnaryOperator[String, Tin]:
   override protected def operation(x: Tin): String = x.toString()

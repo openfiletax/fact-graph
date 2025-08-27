@@ -1,13 +1,11 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait}
-import gov.irs.factgraph.operators.AggregateOperator
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path, PathItem }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait }
 import gov.irs.factgraph.monads.*
+import gov.irs.factgraph.operators.AggregateOperator
 import gov.irs.factgraph.types.*
-
 import math.Ordered.orderingToOrdered
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path, PathItem}
-
 import scala.annotation.unused
 
 object Minimum extends CompNodeFactory:
@@ -47,12 +45,14 @@ object Minimum extends CompNodeFactory:
           s"cannot execute minimum on a ${node.getClass.getName}",
         )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     this(CompNode.getConfigChildNode(e))
 
-private final class MinimumOperator[A: Ordering] extends AggregateOperator[A, A]:
+final private class MinimumOperator[A: Ordering] extends AggregateOperator[A, A]:
   override def apply(vect: MaybeVector[Thunk[Result[A]]]): Result[A] =
     vect.toList match
       case Nil =>

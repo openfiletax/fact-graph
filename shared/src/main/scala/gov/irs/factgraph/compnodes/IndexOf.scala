@@ -1,11 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.definitions.fact.{CommonOptionConfigTraits, CompNodeConfigTrait}
-import gov.irs.factgraph.operators.{BinaryOperator, CollectOperator}
-import gov.irs.factgraph.types.{Collection, CollectionItem}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual, Path, PathItem }
+import gov.irs.factgraph.definitions.fact.{ CommonOptionConfigTraits, CompNodeConfigTrait }
 import gov.irs.factgraph.monads.*
-import gov.irs.factgraph.{Expression, FactDictionary, Factual, Path, PathItem}
-
+import gov.irs.factgraph.operators.{ BinaryOperator, CollectOperator }
+import gov.irs.factgraph.types.{ Collection, CollectionItem }
 import java.util.UUID
 
 object IndexOf extends CompNodeFactory:
@@ -22,7 +21,9 @@ object IndexOf extends CompNodeFactory:
       collection.alias,
     )
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val collection = CompNode.getConfigChildNode(e, "Collection")
@@ -33,7 +34,7 @@ object IndexOf extends CompNodeFactory:
       )
     this(collection.asInstanceOf[CollectionNode], index.asInstanceOf[IntNode])
 
-private final class IndexOfOperator extends BinaryOperator[CollectionItem, Collection, Int]:
+final private class IndexOfOperator extends BinaryOperator[CollectionItem, Collection, Int]:
   override def apply(
       lhs: Result[Collection],
       rhs: Thunk[Result[Int]],

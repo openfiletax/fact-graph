@@ -1,11 +1,10 @@
 package gov.irs.factgraph.compnodes
 
-import gov.irs.factgraph.types.{*, given}
-import gov.irs.factgraph.{Expression, FactDictionary, Factual}
+import gov.irs.factgraph.{ Expression, FactDictionary, Factual }
 import gov.irs.factgraph.definitions.fact.CompNodeConfigTrait
-import gov.irs.factgraph.operators.{BinaryOperator, ReduceOperator}
+import gov.irs.factgraph.operators.{ BinaryOperator, ReduceOperator }
+import gov.irs.factgraph.types.{ *, given }
 import gov.irs.factgraph.util.Seq.itemsHaveSameRuntimeClass
-
 import scala.annotation.unused
 
 object Multiply extends CompNodeFactory:
@@ -17,7 +16,9 @@ object Multiply extends CompNodeFactory:
     else
       nodes.reduceLeft(binaryMultiply)
 
-  override def fromDerivedConfig(e: CompNodeConfigTrait)(using Factual)(using
+  override def fromDerivedConfig(e: CompNodeConfigTrait)(using
+      Factual,
+  )(using
       FactDictionary,
   ): CompNode =
     val factors = CompNode.getConfigChildNodes(e)
@@ -130,7 +131,7 @@ object Multiply extends CompNodeFactory:
           s"cannot Multiply a ${lhs.getClass.getName} and a ${rhs.getClass.getName}",
         )
 
-private final class MultiplyReduceOperator[A: Numeric] extends ReduceOperator[A]:
+final private class MultiplyReduceOperator[A: Numeric] extends ReduceOperator[A]:
   override protected def reduce(x: A, y: A): A = Numeric[A].times(x, y)
 
 @unused
