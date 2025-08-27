@@ -7,10 +7,10 @@ import gov.irs.factgraph.monads.Result
 import gov.irs.factgraph.persisters.*
 import gov.irs.factgraph.types.{ Day, Dollar, Enum, WritableType }
 import gov.irs.factgraph.Expression.Writable
-import js.JSConverters._
 import scala.annotation.switch
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
+import scala.scalajs.js.JSConverters._
 
 @JSExportTopLevel("Graph")
 @JSExportAll
