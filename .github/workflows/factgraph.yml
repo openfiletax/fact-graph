@@ -37,6 +37,10 @@ jobs:
       with:
         path: fact-graph # Leaving this as is just in case a dependency gets added later
 
+    - name: Format Scala code
+      working-directory: ${{ env.FG_PATH }}
+      run: make ci_format_check
+
     - name: Run Tests
       working-directory: ${{ env.FG_PATH }}
       run: make ci_test
