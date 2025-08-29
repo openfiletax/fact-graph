@@ -18,7 +18,34 @@ env:
   FG_PATH: fact-graph
 
 jobs:
+
+  check-commit-emails:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout Fact Graph
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        path: ${{ env.FG_PATH }}
+        fetch-depth: 0
+
+    - name: Check commit emails
+      working-directory: ${{ env.FG_PATH }}
+      run: |
+          git fetch origin ${{ github.base_ref }}
+          echo ${{ github.base_ref }}
+          git log origin/${{ github.base_ref }}..HEAD --pretty=format:"%ae%n%ce" | sort -u > emails.txt
+          echo "Found email(s):"
+          cat emails.txt
+          if grep -Evi '(^noreply@github\.com$|@users\.noreply\.github\.com$)' emails.txt | grep -v '^\s*$' > invalid.txt; then
+            echo "Invalid email(s):"
+            cat invalid.txt
+            exit 1
+          fi
+
   build:
+
+    needs: check-commit-emails
 
     runs-on: ubuntu-latest
 
