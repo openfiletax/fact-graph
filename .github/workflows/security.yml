@@ -1,0 +1,55 @@
+name: Fact Graph Security Scan
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Cancel redundant builds on same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # do not cancel redundant builds on main or release branches
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/heads/release/') }}
+
+env:
+  JAVA_VERSION: 21
+  FACT_GRAPH_PATH: fact-graph
+
+jobs:
+
+  security-scan:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout Fact Graph
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        repository: IRSDigitalService/${{ env.FACT_GRAPH_PATH }}
+        path: ${{ env.FACT_GRAPH_PATH }}
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c #v6.0.0
+      with:
+        python-version: '3.12'
+
+    - name: Install pipx 1.7.1
+      working-directory: ${{ env.FACT_GRAPH_PATH   }}
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install --user pipx==1.7.1
+        python -m pipx ensurepath
+
+    - name: Install Semgrep (via requirements.txt)
+      working-directory: ${{ env.FACT_GRAPH_PATH }}
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Semgrep security-focused static analysis
+      working-directory: ${{ env.FACT_GRAPH_PATH }}
+      run: |
+        make ci_security_scan
