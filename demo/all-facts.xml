@@ -14653,7 +14653,7 @@
                                 <Dependency module="eitc" path="/eitcQualified"/>
 
                                 <!-- If you said you don't have a TIN (it's not not none ;), then we don't need it. Otherwise, we do! -->
-                                <!-- Also, if you don't have a TIN, you don't have a PIN, per Form 15227  -->
+                                <!-- Also, if you don't have a TIN, you don't have a PIN, per Form 15227 -->
                                 <Any>
                                     <Dependency path="../hasTinTypeOfNone"/>
                                     <All>
