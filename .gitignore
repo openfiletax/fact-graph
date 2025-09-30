@@ -1,6 +1,5 @@
 # sbt
 target/
-project/
 
 # node
 node_modules/
