@@ -1,0 +1,29 @@
+name: public-sync
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  FG_PATH: fact-graph
+
+jobs:
+  sync-to-public:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fact graph
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          path: ${{ env.FG_PATH }}
+          fetch-depth: 0
+
+      - name: Mirror to IRS-Public/fact-graph
+        env:
+          PAT: ${{ secrets.IRS_PUBLIC_FACT_GRAPH_SVC_ACCT_PAT }}
+        working-directory: ${{ env.FG_PATH }}
+        run: |
+          git config --global user.name "df-svc-acct"
+          git config --global user.email "df-svc-acct@users.noreply.github.com"
+          git remote add public https://df-svc-acct:${PAT}@github.com/IRS-Public/fact-graph.git
+          git fetch public
+          git push public HEAD:main --force-with-lease
