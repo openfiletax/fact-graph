@@ -84,6 +84,7 @@ object CompNode:
     GreaterThanOrEqual,
     IndexOf,
     IsComplete,
+    LastDayOfMonth,
     Length,
     LesserOf,
     LessThan,
