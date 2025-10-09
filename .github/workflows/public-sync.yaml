@@ -22,8 +22,8 @@ jobs:
           PAT: ${{ secrets.IRS_PUBLIC_FACT_GRAPH_SVC_ACCT_PAT }}
         working-directory: ${{ env.FG_PATH }}
         run: |
-          git config --global user.name "df-svc-acct"
-          git config --global user.email "df-svc-acct@users.noreply.github.com"
-          git remote add public https://df-svc-acct:${PAT}@github.com/IRS-Public/fact-graph.git
+          git config --global user.name "df-irs-svc"
+          git config --global user.email "df-irs-svc@users.noreply.github.com"
+          git remote add public https://df-irs-svc:${PAT}@github.com/IRS-Public/fact-graph.git
           git fetch public
           git push public HEAD:main --force-with-lease
