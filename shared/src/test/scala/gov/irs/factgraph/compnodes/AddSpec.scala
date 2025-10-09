@@ -205,6 +205,30 @@ class AddSpec extends AnyFunSpec:
       }
     }
 
+    describe("when adding Days and a Day") {
+      it("returns a Day") {
+        val node = CompNode.fromDerivedConfig(
+          new CompNodeConfigElement(
+            "Add",
+            Seq(
+              CompNodeConfigElement(
+                "Day",
+                Seq.empty,
+                CommonOptionConfigTraits.value("2024-01-10"),
+              ),
+              CompNodeConfigElement(
+                "Days",
+                Seq.empty,
+                CommonOptionConfigTraits.value("22"),
+              ),
+            ),
+          ),
+        )
+
+        assert(node.get(0) == Result.Complete(Day("2024-02-01")))
+      }
+    }
+
     describe("when the inputs are not numbers") {
       it("throws an exception") {
         val config = new CompNodeConfigElement(

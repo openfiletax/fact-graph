@@ -61,6 +61,7 @@ object CompNode:
 
     // Operation nodes
     Add,
+    AddPayrollMonths,
     All,
     Any,
     Today,
@@ -91,6 +92,7 @@ object CompNode:
     LessThanOrEqual,
     Maximum,
     Minimum,
+    Modulo,
     Multiply,
     Not,
     NotEqual,

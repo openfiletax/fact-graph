@@ -128,6 +128,14 @@ object Add extends CompNodeFactory:
             summon[AddBinaryOperator[Dollar, Dollar, Rational]],
           ),
         )
+      case (lhs: DayNode, rhs: DaysNode) =>
+        DayNode(
+          Expression.Binary(
+            lhs.expr,
+            rhs.expr,
+            summon[AddBinaryOperator[Day, Day, Days]],
+          ),
+        )
       case _ =>
         throw new UnsupportedOperationException(
           s"cannot add a ${lhs.getClass.getName} and a ${rhs.getClass.getName}",
@@ -168,3 +176,5 @@ private object AddBinaryOperator:
     (lhs: Dollar, rhs: Rational) => Numeric[Dollar].plus(lhs, rhs)
   implicit val rationalDollarOperator: AddBinaryOperator[Dollar, Rational, Dollar] =
     (lhs: Rational, rhs: Dollar) => Numeric[Dollar].plus(lhs, rhs)
+  implicit val dayDaysOperator: AddBinaryOperator[Day, Day, Days] =
+    (lhs: Day, rhs: Days) => lhs + rhs

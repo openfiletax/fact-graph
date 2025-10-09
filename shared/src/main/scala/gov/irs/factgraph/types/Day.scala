@@ -1,4 +1,5 @@
 package gov.irs.factgraph.types
+import java.time.temporal.TemporalAdjusters
 import scala.annotation.targetName
 import scala.beans.BeanProperty
 import scala.scalajs.js.annotation.{ JSExport, JSExportAll, JSExportTopLevel }
@@ -22,7 +23,19 @@ final case class Day(@BeanProperty date: java.time.LocalDate) derives ReadWriter
 
   def -(y: Days): Day = this.minusDays(y)
 
+  def +(y: Days): Day = this.plusDays(y)
+
   def minusDays(y: Days): Day = Day(this.date.minusDays(y.longValue))
+
+  def plusDays(y: Days): Day = Day(this.date.plusDays(y.longValue))
+
+  def addPayrollMonths(months: Int): Day =
+    val isLastDayOfMonth = this.date.`with`(TemporalAdjusters.lastDayOfMonth()).isEqual(this.date)
+    if (isLastDayOfMonth) {
+      Day(this.date.plusMonths(months.toLong).`with`(TemporalAdjusters.lastDayOfMonth()))
+    } else {
+      Day(this.date.plusMonths(months.toLong))
+    }
 
   @JSExport
   def year: Int = date.getYear()

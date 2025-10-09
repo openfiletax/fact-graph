@@ -307,8 +307,8 @@ class SubtractSpec extends AnyFunSpec:
         assert(node.get(0) == Result.Complete(Dollar("0.02")))
       }
     }
-    describe("when subtracting a Days and a Day") {
-      it("returns a Dollar") {
+    describe("when subtracting Days and a Day") {
+      it("returns a Day") {
         val node = CompNode.fromDerivedConfig(
           new CompNodeConfigElement(
             "Subtract",
