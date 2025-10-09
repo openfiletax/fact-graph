@@ -4,6 +4,7 @@ import gov.irs.factgraph.FactDictionary
 import scala.scalajs.js.annotation.{ JSExport, JSExportTopLevel }
 import upickle.default.ReadWriter
 
+@JSExportTopLevel("MultiEnum")
 final case class MultiEnum(
     values: Set[String],
     enumOptionsPath: String,
