@@ -23,7 +23,7 @@ jobs:
         working-directory: ${{ env.FG_PATH }}
         run: |
           git config --global user.name "df-irs-svc"
-          git config --global user.email "df-irs-svc@users.noreply.github.com"
+          git config --global user.email "200273578+df-irs-svc@users.noreply.github.com"
           git remote add public https://df-irs-svc:${PAT}@github.com/IRS-Public/fact-graph.git
           git fetch public
           git push public HEAD:main --force-with-lease
