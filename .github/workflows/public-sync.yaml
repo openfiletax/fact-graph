@@ -4,26 +4,55 @@ on:
   push:
     branches: [ "main" ]
 
+# Cancel redundant builds on same branch
+concurrency:
+  group: public-sync
+  cancel-in-progress: true
+
 env:
-  FG_PATH: fact-graph
+  FACT_GRAPH_PATH: fact-graph
+
+permissions:
+  contents: read
 
 jobs:
   sync-to-public:
+    name: Sync to IRS-Public/fact-graph ${{ inputs.dry_run && '(dry-run)' || '' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout fact graph
+      - name: Checkout ${{ env.FACT_GRAPH_PATH }}
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          path: ${{ env.FG_PATH }}
+          path: ${{ env.FACT_GRAPH_PATH }}
           fetch-depth: 0
+          persist-credentials: false
 
-      - name: Mirror to IRS-Public/fact-graph
+      - name: Remove checkout auth header
+        run: |
+          git config --global --unset-all http.https://github.com/.extraheader || true
+
+      - name: Mirror to IRS-Public/${{ env.FACT_GRAPH_PATH }}
         env:
           PAT: ${{ secrets.IRS_PUBLIC_FACT_GRAPH_SVC_ACCT_PAT }}
-        working-directory: ${{ env.FG_PATH }}
+          USER: df-irs-svc
+          REPO: ${{ env.FACT_GRAPH_PATH }}
+        working-directory: ${{ env.FACT_GRAPH_PATH }}
         run: |
-          git config --global user.name "df-irs-svc"
+          set -uxo pipefail
+          : "${PAT:?missing IRS_PUBLIC_FACT_GRAPH_SVC_ACCT_PAT}"
+          : "${USER:?missing service account username}"
+
+          git config --global user.name "$USER"
           git config --global user.email "200273578+df-irs-svc@users.noreply.github.com"
-          git remote add public https://df-irs-svc:${PAT}@github.com/IRS-Public/fact-graph.git
-          git fetch public
+
+          REMOTE_URL="https://${USER}:${PAT}@github.com/IRS-Public/${REPO}.git"
+
+          # Create/update remote
+          git remote remove public 2>/dev/null || true
+          git remote add public "$REMOTE_URL"
+          
+          git fetch public --prune || true
+
+          git remote -v
+          git config --global --get-all http.https://github.com/.extraheader || echo "no extraheader"
           git push public HEAD:main --force-with-lease
