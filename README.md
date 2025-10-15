@@ -7,6 +7,8 @@
 > The Internal Revenue Service (IRS) does not endorse, maintain, or guarantee the accuracy, completeness, or functionality of the code in this repository.
 > The IRS assumes no responsibility or liability for any use of the code by external parties, including individuals, developers, or organizations.
 > This includes—but is not limited to—any tax consequences, computation errors, data loss, or other outcomes resulting from the use or modification of this code.
+>
+> Use of the code in this repository is at your own risk. Users of this repository are responsible for complying with any open source or third-party licenses.
 
 ## What is the Fact Graph?
 
