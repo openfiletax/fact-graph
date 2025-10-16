@@ -31,3 +31,18 @@ This repository is updated frequently. Development occurs in a private repositor
 ## Useful documentation
 * [ScalaTest](https://www.scalatest.org/) - the testing framework we use
 * [scala-xml](https://www.scala-lang.org/api/2.12.19/scala-xml/scala/xml/) - the standard implementation of XML (don't be put off by the sparse-seeming API docs, the function definitions have very good examples)
+
+  
+## Authorities
+Legal foundations for this work include:
+* Source Code Harmonization And Reuse in Information Technology Act" of 2024, Public Law 118 - 187
+* OMB Memorandum M-16-21, “Federal Source Code Policy: Achieving Efficiency,
+Transparency, and Innovation through Reusable and Open Source Software,” August 8,
+2016
+* Federal Acquisition Regulation (FAR) Part 27 – Patents, Data, and Copyrights
+* Digital Government Strategy: “Digital Government: Building a 21st Century Platform to
+Better Serve the American People,” May 23, 2012
+* Federal Information Technology Acquisition Reform Act (FITARA), December 2014
+(National Defense Authorization Act for Fiscal Year 2015, Title VIII, Subtitle D)
+* E-Government Act of 2002, Public Law 107-347
+* Clinger-Cohen Act of 1996, Public Law 104-106
