@@ -7,4 +7,4 @@ import upickle.default.ReadWriter
 
 final case class Collection(@BeanProperty items: Vector[UUID]) derives ReadWriter:
   @JSExport
-  def getItemsAsStrings() = items.toList.map(_.toString())
+  def getItemsAsStrings() = items.map(_.toString()).toList
