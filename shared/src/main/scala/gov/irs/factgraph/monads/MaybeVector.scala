@@ -37,8 +37,8 @@ enum MaybeVector[+A]:
       MaybeVector(mvs.flatMap(mv => mv.toVector), complete)
 
   def foreach(f: A => Unit): Unit = this match
-    case Single(x)          => f(x)
-    case Multiple(vect)     => vect.foreach(f)
+    case Single(x)      => f(x)
+    case Multiple(vect, c_) => vect.foreach(f)
 
   def toMultiple: MaybeVector[A] = this match
     case Single(x) => MaybeVector(Vector(x), true)
