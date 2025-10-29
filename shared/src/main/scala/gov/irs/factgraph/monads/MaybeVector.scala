@@ -38,7 +38,7 @@ enum MaybeVector[+A]:
 
   def foreach(f: A => Unit): Unit = this match
     case Single(x)          => f(x)
-    case Multiple(vect, c_) => vect.map(f)
+    case Multiple(vect)     => vect.foreach(f)
 
   def toMultiple: MaybeVector[A] = this match
     case Single(x) => MaybeVector(Vector(x), true)
