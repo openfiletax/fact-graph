@@ -37,6 +37,10 @@ enum JSEither[+A, +B] {
     case Left(e)  => lf(e)
     case Right(v) => rf(v)
 
-  // TODO: All of the other useful methods for monads are TK
+  @JSExport
+  def flatMap[C](f: js.Function1[B, JSEither[A, C]]): JSEither[A, C] = this match
+    case Right(v) => f(v)
+    case Left(v) => this.asInstanceOf[JSEither[A, C]]
 
+  // TODO: All of the other useful methods for monads are TK
 }
